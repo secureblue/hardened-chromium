@@ -1,0 +1,3 @@
+[submodule "chromium"]
+	path = chromium
+	url = https://src.fedoraproject.org/rpms/chromium.git

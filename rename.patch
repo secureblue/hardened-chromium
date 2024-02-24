@@ -1,0 +1,20 @@
+diff --git a/chromium.conf b/ungoogled-chromium.conf
+similarity index 100%
+rename from chromium.conf
+rename to ungoogled-chromium.conf
+diff --git a/chromium-browser.desktop b/ungoogled-chromium.desktop
+similarity index 100%
+rename from chromium-browser.desktop
+rename to ungoogled-chromium.desktop
+diff --git a/chromium-browser.sh b/ungoogled-chromium.sh
+similarity index 100%
+rename from chromium-browser.sh
+rename to ungoogled-chromium.sh
+diff --git a/chromium.spec b/ungoogled-chromium.spec
+similarity index 100%
+rename from chromium.spec
+rename to ungoogled-chromium.spec
+diff --git a/chromium-browser.xml b/ungoogled-chromium.xml
+similarity index 100%
+rename from chromium-browser.xml
+rename to ungoogled-chromium.xml
