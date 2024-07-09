@@ -8,10 +8,10 @@ cd ungoogled-chromium-copr
 rpkg --path ./chromium sources
 
 # Patch the spec file to build with the ungoogled-chromium patches
-patch -d ./chromium -p1 < modify.patch
+patch -d ./chromium -p1 < vanadium.patch
 
 # Rename files that are called chromium-browser to ungoogled-chromium to avoid name clashes
-patch -d ./chromium -p1 < rename.patch
+# patch -d ./chromium -p1 < rename.patch
 
 # Move all the source files into the parent directory for the COPR build system to find them
 mv ./chromium/* ../

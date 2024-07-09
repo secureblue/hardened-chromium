@@ -1,0 +1,49 @@
+diff --git a/chromium.spec b/chromium.spec
+index 5c6a9ed..c3f441c 100644
+--- a/chromium.spec
++++ b/chromium.spec
+@@ -563,6 +563,11 @@ Patch413: fix-unknown-warning-option-messages.diff
+ # 64kpage support on el8
+ Patch500: chromium-124-el8-support-64kpage.patch
+ 
++# Vanadium patches
++# Using the 0001 patch as a test
++Patch2000: %{vanadium_root}/patches/0001-Vanadium-string-rebranding.patch
++
++
+ # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
+ # http://build.chromium.org/buildbot/official/
+ # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
+@@ -596,6 +601,9 @@ Source14: https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-%{esbuild_ve
+ Source15: https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-%{esbuild_version}.tgz
+ %endif
+ 
++%global vanadium_revision 126.0.6478.122.3
++Source500: https://github.com/GrapheneOS/Vanadium/archive/refs/tags/%{vanadium_revision}.tar.gz
++
+ # esbuild binary from fedora
+ %if 0%{?fedora}
+ BuildRequires: golang-github-evanw-esbuild
+@@ -1126,8 +1134,12 @@ without support for alsa, cups, dbus, gconf, gio, kerberos, pulseaudio, or
+ udev.
+ 
+ %prep
++%setup -q -T -n vanadium-%{vanadium_revision} -b 500
+ %setup -q -n chromium-%{version}
+ 
++
+++%global vanadium_root %{_builddir}/vanadium-%{vanadium_revision}
++
+ ### Chromium Fedora Patches ###
+ %patch -P0 -p1 -b .sandboxpie
+ %patch -P1 -p1 -b .etc
+@@ -1327,6 +1339,9 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
+ %endif
+ %endif
+ 
++# vanadium patches
++%patch -P2000 -p1 -b
++
+ # Change shebang in all relevant files in this directory and all subdirectories
+ # See `man find` for how the `-exec command {} +` syntax works
+ find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
