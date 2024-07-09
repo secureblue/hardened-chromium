@@ -28,11 +28,11 @@ index 5c6a9ed..c3f441c 100644
  udev.
  
  %prep
-+%setup -q -T -n vanadium-%{vanadium_revision} -b 500
++%setup -q -T -n %{vanadium_revision} -b 500
  %setup -q -n chromium-%{version}
  
 +
-++%global vanadium_root %{_builddir}/vanadium-%{vanadium_revision}
+++%global vanadium_root %{_builddir}/%{vanadium_revision}
 +
  ### Chromium Fedora Patches ###
  %patch -P0 -p1 -b .sandboxpie
