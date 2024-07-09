@@ -8,7 +8,7 @@ index 5c6a9ed..c3f441c 100644
  
 +# Vanadium patches
 +# Using the 0001 patch as a test
-+Patch2000: %{vanadium_root}/patches/0001-Vanadium-string-rebranding.patch
++#Patch2000: %{vanadium_root}/patches/0001-Vanadium-string-rebranding.patch
 +
 +
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
@@ -42,7 +42,7 @@ index 5c6a9ed..c3f441c 100644
  %endif
  
 +# vanadium patches
-+%patch -P2000 -p1
++python3 -B patches.py apply .  %{vanadium_root}/patches
 +
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
