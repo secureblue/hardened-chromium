@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..cca215e 100644
+index 5c6a9ed..8d2b348 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -563,6 +563,9 @@ Patch413: fix-unknown-warning-option-messages.diff
@@ -12,3 +12,12 @@ index 5c6a9ed..cca215e 100644
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
+@@ -1327,6 +1330,8 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
+ %endif
+ %endif
+ 
++%patch -P2000 -p1 -b .0025-disable-sensors-access-by-default
++
+ # Change shebang in all relevant files in this directory and all subdirectories
+ # See `man find` for how the `-exec command {} +` syntax works
+ find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
