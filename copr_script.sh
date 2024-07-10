@@ -7,6 +7,8 @@ cd chromium-copr-experimental
 # Download chromium-%{version}-clean.tar.xz from the Fedora's server
 rpkg --path ./chromium sources
 
+cp patches.py ./chromium
+
 # Patch the spec file to build with the vanadium patches
 patch -d ./chromium -p1 < vanadium.patch
 

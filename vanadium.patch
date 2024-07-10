@@ -8,6 +8,7 @@ index 5c6a9ed..c936098 100644
  
 +%global vanadium_revision 126.0.6478.122.3
 +Source500: https://github.com/GrapheneOS/Vanadium/archive/refs/tags/%{vanadium_revision}.tar.gz
++Source501: patches.py
 +
  # esbuild binary
  %if 0%{?rhel}
