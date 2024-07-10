@@ -1,37 +1,14 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..c936098 100644
+index 5c6a9ed..cca215e 100644
 --- a/chromium.spec
 +++ b/chromium.spec
-@@ -590,6 +590,9 @@ Source12: https://nodejs.org/dist/%{nodejs_version}/node-%{nodejs_version}-linux
- Source13: https://nodejs.org/dist/%{nodejs_version}/node-%{nodejs_version}-linux-arm64.tar.xz
- %endif
+@@ -563,6 +563,9 @@ Patch413: fix-unknown-warning-option-messages.diff
+ # 64kpage support on el8
+ Patch500: chromium-124-el8-support-64kpage.patch
  
-+%global vanadium_revision 126.0.6478.122.3
-+Source500: https://github.com/GrapheneOS/Vanadium/archive/refs/tags/%{vanadium_revision}.tar.gz
-+Source501: patches.py
++# hardening patches
++Patch2000: 0025-disable-sensors-access-by-default.patch
 +
- # esbuild binary
- %if 0%{?rhel}
- Source14: https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-%{esbuild_version}.tgz
-@@ -1126,8 +1129,11 @@ without support for alsa, cups, dbus, gconf, gio, kerberos, pulseaudio, or
- udev.
- 
- %prep
-+%setup -q -T -n Vanadium-%{vanadium_revision} -b 500
- %setup -q -n chromium-%{version}
- 
-+%global vanadium_root %{_builddir}/Vanadium-%{vanadium_revision}
-+
- ### Chromium Fedora Patches ###
- %patch -P0 -p1 -b .sandboxpie
- %patch -P1 -p1 -b .etc
-@@ -1327,6 +1333,9 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
- %endif
- %endif
- 
-+# vanadium patches
-+python3 -B patches.py apply .  %{vanadium_root}/patches
-+
- # Change shebang in all relevant files in this directory and all subdirectories
- # See `man find` for how the `-exec command {} +` syntax works
- find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
+ # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
+ # http://build.chromium.org/buildbot/official/
+ # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
