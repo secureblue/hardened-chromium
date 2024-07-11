@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..05e238d 100644
+index 5c6a9ed..39d2344 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -133,8 +133,8 @@ index 5c6a9ed..05e238d 100644
 +%patch -P2048 -p1 -b .0077-use-Google-Chrome-branding-for-client-hints
 +%patch -P2049 -p1 -b .0115-Derive-high-entropy-client-hints-with-reduced-user-a
 +%patch -P2050 -p1 -b .0122-Use-local-list-of-supported-languages-for-Language-s
-+%patch -P2052 -p1 -b .0165-Enable-content-settings-partitioning-by-default
-+%patch -P2053 -p1 -b .0170-Revert-M122-content-make-disable-jit-actually-disabl
++%patch -P2051 -p1 -b .0165-Enable-content-settings-partitioning-by-default
++%patch -P2052 -p1 -b .0170-Revert-M122-content-make-disable-jit-actually-disabl
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
