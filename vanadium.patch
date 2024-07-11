@@ -1,23 +1,127 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..8d2b348 100644
+index 5c6a9ed..5e27121 100644
 --- a/chromium.spec
 +++ b/chromium.spec
-@@ -563,6 +563,9 @@ Patch413: fix-unknown-warning-option-messages.diff
+@@ -563,6 +563,62 @@ Patch413: fix-unknown-warning-option-messages.diff
  # 64kpage support on el8
  Patch500: chromium-124-el8-support-64kpage.patch
  
 +# hardening patches
-+Patch2000: 0025-disable-sensors-access-by-default.patch
++
++Patch2000: 0011-Checkout-PGO-profiles.patch
++Patch2001: 0012-disable-checkout_nacl.patch
++Patch2002: 0014-disable-seed-based-field-trials.patch
++Patch2003: 0015-disable-fetching-variations.patch
++Patch2004: 0017-disable-navigation-error-correction-by-default.patch
++Patch2005: 0018-disable-contextual-search-by-default.patch
++Patch2006: 0019-disable-network-prediction-by-default.patch
++Patch2007: 0021-disable-hyperlink-auditing-by-default.patch
++Patch2008: 0022-disable-showing-popular-sites-by-default.patch
++Patch2009: 0023-disable-article-suggestions-feature-by-default.patch
++Patch2010: 0024-disable-content-feed-suggestions-by-default.patch
++Patch2011: 0025-disable-sensors-access-by-default.patch
++Patch2012: 0026-block-playing-protected-media-by-default.patch
++Patch2013: 0027-disable-third-party-cookies-by-default.patch
++Patch2014: 0028-disable-background-sync-by-default.patch
++Patch2015: 0029-disable-payment-support-by-default.patch
++Patch2016: 0030-disable-media-router-media-remoting-by-default.patch
++Patch2017: 0031-disable-media-router-by-default.patch
++Patch2018: 0032-disable-offering-translations-by-default.patch
++Patch2019: 0033-disable-browser-sign-in-feature-by-default.patch
++Patch2020: 0034-disable-browser-autologin-by-default.patch
++Patch2000: 0035-disable-safe-browsing-reporting-opt-in-by-default.patch
++Patch2021: 0036-disable-unused-safe-browsing-option-by-default.patch
++Patch2022: 0037-disable-media-DRM-preprovisioning-by-default.patch
++Patch2023: 0038-disable-autofill-server-communication-by-default.patch
++Patch2024: 0039-disable-component-updater-pings-by-default.patch
++Patch2025: 0040-disable-search-provider-logo.patch
++Patch2026: 0041-disable-trivial-subdomain-hiding.patch
++Patch2027: 0042-disable-learn-more-link-in-incognito-new-tab.patch
++Patch2028: 0044-disable-GaiaAuthFetcher-code-due-to-upstream-bug.patch
++Patch2029: 0046-Disable-newer-privacy-sandbox-features-by-default.patch
++Patch2030: 0048-Disable-top-toolbar-button-Translate-option-by-defau.patch
++Patch2031: 0049-always-use-local-new-tab-page.patch
++Patch2032: 0050-mark-non-secure-origins-as-dangerous.patch
++Patch2033: 0051-most-private-WebRTC-IP-handling-policy-by-default.patch
++Patch2034: 0052-stub-out-the-battery-status-API.patch
++Patch2035: 0055-disable-trials-of-privacy-aware-analytics-advertisin.patch
++Patch2036: 0057-disable-appending-variations-header.patch
++Patch2037: 0058-Disable-detailed-language-settings-by-default.patch
++Patch2038: 0059-disable-fetching-optimization-guides-by-default.patch
++Patch2039: 0062-Make-HTTPS-only-mode-the-default.patch
++Patch2040: 0063-require-HTTPS-for-component-updates.patch
++Patch2041: 0069-enable-prefetch-privacy-changes-by-default.patch
++Patch2042: 0070-enable-split-cache-by-default.patch
++Patch2043: 0071-enable-partitioning-connections-by-default.patch
++Patch2044: 0074-Enable-strict-origin-isolation-by-default.patch
++Patch2045: 0075-Enable-reduce-accept-language-header-by-default.patch
++Patch2046: 0076-enable-process-isolated-sandboxed-iframes-by-default.patch
++Patch2047: 0077-use-Google-Chrome-branding-for-client-hints.patch
++Patch2048: 0115-Derive-high-entropy-client-hints-with-reduced-user-a.patch
++Patch2049: 0122-Use-local-list-of-supported-languages-for-Language-s.patch
++Patch2050: 0165-Enable-content-settings-partitioning-by-default.patch
++Patch2051: 0170-Revert-M122-content-make-disable-jit-actually-disabl.patch
 +
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-@@ -1327,6 +1330,8 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
+@@ -1327,6 +1383,59 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
  %endif
  %endif
  
-+%patch -P2000 -p1 -b .0025-disable-sensors-access-by-default
-+
++%patch -P2000 -p1 -b .0011-Checkout-PGO-profiles
++%patch -P2001 -p1 -b .0012-disable-checkout_nacl
++%patch -P2002 -p1 -b .0014-disable-seed-based-field-trials
++%patch -P2003 -p1 -b .0015-disable-fetching-variations
++%patch -P2004 -p1 -b .0017-disable-navigation-error-correction-by-default
++%patch -P2005 -p1 -b .0018-disable-contextual-search-by-default
++%patch -P2006 -p1 -b .0019-disable-network-prediction-by-default
++%patch -P2007 -p1 -b .0021-disable-hyperlink-auditing-by-default
++%patch -P2008 -p1 -b .0022-disable-showing-popular-sites-by-default
++%patch -P2009 -p1 -b .0023-disable-article-suggestions-feature-by-default
++%patch -P2010 -p1 -b .0024-disable-content-feed-suggestions-by-default
++%patch -P2011 -p1 -b .0025-disable-sensors-access-by-default
++%patch -P2012 -p1 -b .0026-block-playing-protected-media-by-default
++%patch -P2013 -p1 -b .0027-disable-third-party-cookies-by-default
++%patch -P2014 -p1 -b .0028-disable-background-sync-by-default
++%patch -P2015 -p1 -b .0029-disable-payment-support-by-default
++%patch -P2016 -p1 -b .0030-disable-media-router-media-remoting-by-default
++%patch -P2017 -p1 -b .0031-disable-media-router-by-default
++%patch -P2018 -p1 -b .0032-disable-offering-translations-by-default
++%patch -P2019 -p1 -b .0033-disable-browser-sign-in-feature-by-default
++%patch -P2020 -p1 -b .0034-disable-browser-autologin-by-default
++%patch -P2000 -p1 -b .0035-disable-safe-browsing-reporting-opt-in-by-default
++%patch -P2021 -p1 -b .0036-disable-unused-safe-browsing-option-by-default
++%patch -P2022 -p1 -b .0037-disable-media-DRM-preprovisioning-by-default
++%patch -P2023 -p1 -b .0038-disable-autofill-server-communication-by-default
++%patch -P2024 -p1 -b .0039-disable-component-updater-pings-by-default
++%patch -P2025 -p1 -b .0040-disable-search-provider-logo
++%patch -P2026 -p1 -b .0041-disable-trivial-subdomain-hiding
++%patch -P2027 -p1 -b .0042-disable-learn-more-link-in-incognito-new-tab
++%patch -P2028 -p1 -b .0044-disable-GaiaAuthFetcher-code-due-to-upstream-bug
++%patch -P2029 -p1 -b .0046-Disable-newer-privacy-sandbox-features-by-default
++%patch -P2030 -p1 -b .0048-Disable-top-toolbar-button-Translate-option-by-defau
++%patch -P2031 -p1 -b .0049-always-use-local-new-tab-page
++%patch -P2032 -p1 -b .0050-mark-non-secure-origins-as-dangerous
++%patch -P2033 -p1 -b .0051-most-private-WebRTC-IP-handling-policy-by-default
++%patch -P2034 -p1 -b .0052-stub-out-the-battery-status-API
++%patch -P2035 -p1 -b .0055-disable-trials-of-privacy-aware-analytics-advertisin
++%patch -P2036 -p1 -b .0057-disable-appending-variations-header
++%patch -P2037 -p1 -b .0058-Disable-detailed-language-settings-by-default
++%patch -P2038 -p1 -b .0059-disable-fetching-optimization-guides-by-default
++%patch -P2039 -p1 -b .0062-Make-HTTPS-only-mode-the-default
++%patch -P2040 -p1 -b .0063-require-HTTPS-for-component-updates
++%patch -P2041 -p1 -b .0069-enable-prefetch-privacy-changes-by-default
++%patch -P2042 -p1 -b .0070-enable-split-cache-by-default
++%patch -P2043 -p1 -b .0071-enable-partitioning-connections-by-default
++%patch -P2044 -p1 -b .0074-Enable-strict-origin-isolation-by-default
++%patch -P2045 -p1 -b .0075-Enable-reduce-accept-language-header-by-default
++%patch -P2046 -p1 -b .0076-enable-process-isolated-sandboxed-iframes-by-default
++%patch -P2047 -p1 -b .0077-use-Google-Chrome-branding-for-client-hints
++%patch -P2048 -p1 -b .0115-Derive-high-entropy-client-hints-with-reduced-user-a
++%patch -P2049 -p1 -b .0122-Use-local-list-of-supported-languages-for-Language-s
++%patch -P2050 -p1 -b .0165-Enable-content-settings-partitioning-by-default
++%patch -P2051 -p1 -b .0170-Revert-M122-content-make-disable-jit-actually-disabl
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
