@@ -1,7 +1,20 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..5e27121 100644
+index 5c6a9ed..d973570 100644
 --- a/chromium.spec
 +++ b/chromium.spec
+@@ -31,10 +31,10 @@
+ 	ninja -j %{numjobs} -C '%1' '%2'
+ 
+ # enable|disable chromedriver
+-%global build_chromedriver 1
++%global build_chromedriver 0
+ 
+ # enable|disable headless client build
+-%global build_headless 1
++%global build_headless 0
+ %ifarch ppc64le
+ %global build_headless 0
+ %endif
 @@ -563,6 +563,62 @@ Patch413: fix-unknown-warning-option-messages.diff
  # 64kpage support on el8
  Patch500: chromium-124-el8-support-64kpage.patch
@@ -29,38 +42,38 @@ index 5c6a9ed..5e27121 100644
 +Patch2018: 0032-disable-offering-translations-by-default.patch
 +Patch2019: 0033-disable-browser-sign-in-feature-by-default.patch
 +Patch2020: 0034-disable-browser-autologin-by-default.patch
-+Patch2021: 0035-disable-safe-browsing-reporting-opt-in-by-default.patch
-+Patch2022: 0036-disable-unused-safe-browsing-option-by-default.patch
-+Patch2023: 0037-disable-media-DRM-preprovisioning-by-default.patch
-+Patch2024: 0038-disable-autofill-server-communication-by-default.patch
-+Patch2025: 0039-disable-component-updater-pings-by-default.patch
-+Patch2026: 0040-disable-search-provider-logo.patch
-+Patch2027: 0041-disable-trivial-subdomain-hiding.patch
-+Patch2028: 0042-disable-learn-more-link-in-incognito-new-tab.patch
-+Patch2029: 0044-disable-GaiaAuthFetcher-code-due-to-upstream-bug.patch
-+Patch2030: 0046-Disable-newer-privacy-sandbox-features-by-default.patch
-+Patch2031: 0048-Disable-top-toolbar-button-Translate-option-by-defau.patch
-+Patch2032: 0049-always-use-local-new-tab-page.patch
-+Patch2033: 0050-mark-non-secure-origins-as-dangerous.patch
-+Patch2034: 0051-most-private-WebRTC-IP-handling-policy-by-default.patch
-+Patch2035: 0052-stub-out-the-battery-status-API.patch
-+Patch2036: 0055-disable-trials-of-privacy-aware-analytics-advertisin.patch
-+Patch2037: 0057-disable-appending-variations-header.patch
-+Patch2038: 0058-Disable-detailed-language-settings-by-default.patch
-+Patch2039: 0059-disable-fetching-optimization-guides-by-default.patch
-+Patch2040: 0062-Make-HTTPS-only-mode-the-default.patch
-+Patch2041: 0063-require-HTTPS-for-component-updates.patch
-+Patch2042: 0069-enable-prefetch-privacy-changes-by-default.patch
-+Patch2043: 0070-enable-split-cache-by-default.patch
-+Patch2044: 0071-enable-partitioning-connections-by-default.patch
-+Patch2045: 0074-Enable-strict-origin-isolation-by-default.patch
-+Patch2046: 0075-Enable-reduce-accept-language-header-by-default.patch
-+Patch2047: 0076-enable-process-isolated-sandboxed-iframes-by-default.patch
-+Patch2048: 0077-use-Google-Chrome-branding-for-client-hints.patch
-+Patch2049: 0115-Derive-high-entropy-client-hints-with-reduced-user-a.patch
-+Patch2050: 0122-Use-local-list-of-supported-languages-for-Language-s.patch
-+Patch2051: 0165-Enable-content-settings-partitioning-by-default.patch
-+Patch2052: 0170-Revert-M122-content-make-disable-jit-actually-disabl.patch
++Patch2000: 0035-disable-safe-browsing-reporting-opt-in-by-default.patch
++Patch2021: 0036-disable-unused-safe-browsing-option-by-default.patch
++Patch2022: 0037-disable-media-DRM-preprovisioning-by-default.patch
++Patch2023: 0038-disable-autofill-server-communication-by-default.patch
++Patch2024: 0039-disable-component-updater-pings-by-default.patch
++Patch2025: 0040-disable-search-provider-logo.patch
++Patch2026: 0041-disable-trivial-subdomain-hiding.patch
++Patch2027: 0042-disable-learn-more-link-in-incognito-new-tab.patch
++Patch2028: 0044-disable-GaiaAuthFetcher-code-due-to-upstream-bug.patch
++Patch2029: 0046-Disable-newer-privacy-sandbox-features-by-default.patch
++Patch2030: 0048-Disable-top-toolbar-button-Translate-option-by-defau.patch
++Patch2031: 0049-always-use-local-new-tab-page.patch
++Patch2032: 0050-mark-non-secure-origins-as-dangerous.patch
++Patch2033: 0051-most-private-WebRTC-IP-handling-policy-by-default.patch
++Patch2034: 0052-stub-out-the-battery-status-API.patch
++Patch2035: 0055-disable-trials-of-privacy-aware-analytics-advertisin.patch
++Patch2036: 0057-disable-appending-variations-header.patch
++Patch2037: 0058-Disable-detailed-language-settings-by-default.patch
++Patch2038: 0059-disable-fetching-optimization-guides-by-default.patch
++Patch2039: 0062-Make-HTTPS-only-mode-the-default.patch
++Patch2040: 0063-require-HTTPS-for-component-updates.patch
++Patch2041: 0069-enable-prefetch-privacy-changes-by-default.patch
++Patch2042: 0070-enable-split-cache-by-default.patch
++Patch2043: 0071-enable-partitioning-connections-by-default.patch
++Patch2044: 0074-Enable-strict-origin-isolation-by-default.patch
++Patch2045: 0075-Enable-reduce-accept-language-header-by-default.patch
++Patch2046: 0076-enable-process-isolated-sandboxed-iframes-by-default.patch
++Patch2047: 0077-use-Google-Chrome-branding-for-client-hints.patch
++Patch2048: 0115-Derive-high-entropy-client-hints-with-reduced-user-a.patch
++Patch2049: 0122-Use-local-list-of-supported-languages-for-Language-s.patch
++Patch2050: 0165-Enable-content-settings-partitioning-by-default.patch
++Patch2051: 0170-Revert-M122-content-make-disable-jit-actually-disabl.patch
 +
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
@@ -90,38 +103,38 @@ index 5c6a9ed..5e27121 100644
 +%patch -P2018 -p1 -b .0032-disable-offering-translations-by-default
 +%patch -P2019 -p1 -b .0033-disable-browser-sign-in-feature-by-default
 +%patch -P2020 -p1 -b .0034-disable-browser-autologin-by-default
-+%patch -P2021 -p1 -b .0035-disable-safe-browsing-reporting-opt-in-by-default
-+%patch -P2022 -p1 -b .0036-disable-unused-safe-browsing-option-by-default
-+%patch -P2023 -p1 -b .0037-disable-media-DRM-preprovisioning-by-default
-+%patch -P2024 -p1 -b .0038-disable-autofill-server-communication-by-default
-+%patch -P2025 -p1 -b .0039-disable-component-updater-pings-by-default
-+%patch -P2026 -p1 -b .0040-disable-search-provider-logo
-+%patch -P2027 -p1 -b .0041-disable-trivial-subdomain-hiding
-+%patch -P2028 -p1 -b .0042-disable-learn-more-link-in-incognito-new-tab
-+%patch -P2029 -p1 -b .0044-disable-GaiaAuthFetcher-code-due-to-upstream-bug
-+%patch -P2030 -p1 -b .0046-Disable-newer-privacy-sandbox-features-by-default
-+%patch -P2031 -p1 -b .0048-Disable-top-toolbar-button-Translate-option-by-defau
-+%patch -P2032 -p1 -b .0049-always-use-local-new-tab-page
-+%patch -P2033 -p1 -b .0050-mark-non-secure-origins-as-dangerous
-+%patch -P2034 -p1 -b .0051-most-private-WebRTC-IP-handling-policy-by-default
-+%patch -P2035 -p1 -b .0052-stub-out-the-battery-status-API
-+%patch -P2036 -p1 -b .0055-disable-trials-of-privacy-aware-analytics-advertisin
-+%patch -P2037 -p1 -b .0057-disable-appending-variations-header
-+%patch -P2038 -p1 -b .0058-Disable-detailed-language-settings-by-default
-+%patch -P2039 -p1 -b .0059-disable-fetching-optimization-guides-by-default
-+%patch -P2040 -p1 -b .0062-Make-HTTPS-only-mode-the-default
-+%patch -P2041 -p1 -b .0063-require-HTTPS-for-component-updates
-+%patch -P2042 -p1 -b .0069-enable-prefetch-privacy-changes-by-default
-+%patch -P2043 -p1 -b .0070-enable-split-cache-by-default
-+%patch -P2044 -p1 -b .0071-enable-partitioning-connections-by-default
-+%patch -P2045 -p1 -b .0074-Enable-strict-origin-isolation-by-default
-+%patch -P2046 -p1 -b .0075-Enable-reduce-accept-language-header-by-default
-+%patch -P2047 -p1 -b .0076-enable-process-isolated-sandboxed-iframes-by-default
-+%patch -P2048 -p1 -b .0077-use-Google-Chrome-branding-for-client-hints
-+%patch -P2049 -p1 -b .0115-Derive-high-entropy-client-hints-with-reduced-user-a
-+%patch -P2050 -p1 -b .0122-Use-local-list-of-supported-languages-for-Language-s
-+%patch -P2051 -p1 -b .0165-Enable-content-settings-partitioning-by-default
-+%patch -P2052 -p1 -b .0170-Revert-M122-content-make-disable-jit-actually-disabl
++%patch -P2000 -p1 -b .0035-disable-safe-browsing-reporting-opt-in-by-default
++%patch -P2021 -p1 -b .0036-disable-unused-safe-browsing-option-by-default
++%patch -P2022 -p1 -b .0037-disable-media-DRM-preprovisioning-by-default
++%patch -P2023 -p1 -b .0038-disable-autofill-server-communication-by-default
++%patch -P2024 -p1 -b .0039-disable-component-updater-pings-by-default
++%patch -P2025 -p1 -b .0040-disable-search-provider-logo
++%patch -P2026 -p1 -b .0041-disable-trivial-subdomain-hiding
++%patch -P2027 -p1 -b .0042-disable-learn-more-link-in-incognito-new-tab
++%patch -P2028 -p1 -b .0044-disable-GaiaAuthFetcher-code-due-to-upstream-bug
++%patch -P2029 -p1 -b .0046-Disable-newer-privacy-sandbox-features-by-default
++%patch -P2030 -p1 -b .0048-Disable-top-toolbar-button-Translate-option-by-defau
++%patch -P2031 -p1 -b .0049-always-use-local-new-tab-page
++%patch -P2032 -p1 -b .0050-mark-non-secure-origins-as-dangerous
++%patch -P2033 -p1 -b .0051-most-private-WebRTC-IP-handling-policy-by-default
++%patch -P2034 -p1 -b .0052-stub-out-the-battery-status-API
++%patch -P2035 -p1 -b .0055-disable-trials-of-privacy-aware-analytics-advertisin
++%patch -P2036 -p1 -b .0057-disable-appending-variations-header
++%patch -P2037 -p1 -b .0058-Disable-detailed-language-settings-by-default
++%patch -P2038 -p1 -b .0059-disable-fetching-optimization-guides-by-default
++%patch -P2039 -p1 -b .0062-Make-HTTPS-only-mode-the-default
++%patch -P2040 -p1 -b .0063-require-HTTPS-for-component-updates
++%patch -P2041 -p1 -b .0069-enable-prefetch-privacy-changes-by-default
++%patch -P2042 -p1 -b .0070-enable-split-cache-by-default
++%patch -P2043 -p1 -b .0071-enable-partitioning-connections-by-default
++%patch -P2044 -p1 -b .0074-Enable-strict-origin-isolation-by-default
++%patch -P2045 -p1 -b .0075-Enable-reduce-accept-language-header-by-default
++%patch -P2046 -p1 -b .0076-enable-process-isolated-sandboxed-iframes-by-default
++%patch -P2047 -p1 -b .0077-use-Google-Chrome-branding-for-client-hints
++%patch -P2048 -p1 -b .0115-Derive-high-entropy-client-hints-with-reduced-user-a
++%patch -P2049 -p1 -b .0122-Use-local-list-of-supported-languages-for-Language-s
++%patch -P2050 -p1 -b .0165-Enable-content-settings-partitioning-by-default
++%patch -P2051 -p1 -b .0170-Revert-M122-content-make-disable-jit-actually-disabl
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
