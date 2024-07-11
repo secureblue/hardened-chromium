@@ -9,7 +9,7 @@ rpkg --path ./chromium sources
 
 cp patches/* ./chromium
 
-# Patch the spec file to build with the vanadium patches
+# Patch the spec file to build with the hardening patches
 patch -d ./chromium -p1 < hardening.patch
 
 # Move all the source files into the parent directory for the COPR build system to find them
