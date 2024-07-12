@@ -71,6 +71,7 @@ index 5c6a9ed..39d2344 100644
 +Patch2051: 0165-Enable-content-settings-partitioning-by-default.patch
 +Patch2052: 0170-Revert-M122-content-make-disable-jit-actually-disabl.patch
 +Patch2053: 0084-temporary-Always-partition-third-party-storage.patch
++Patch2054: 0112-Implement-UI-for-JIT-site-settings.patch
 +
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
@@ -129,6 +130,7 @@ index 5c6a9ed..39d2344 100644
 +%patch -P2051 -p1 -b .0165-Enable-content-settings-partitioning-by-default
 +%patch -P2052 -p1 -b .0170-Revert-M122-content-make-disable-jit-actually-disabl
 +%patch -P2053 -p1 -b .0084-temporary-Always-partition-third-party-storage
++%patch -P2054 -p1 -b .0112-Implement-UI-for-JIT-site-settings
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
