@@ -1,0 +1,13 @@
+diff --git a/extensions/browser/extension_prefs.cc b/extensions/browser/extension_prefs.cc
+index a76ca8e360b6d..3aa68b5855eca 100644
+--- a/extensions/browser/extension_prefs.cc
++++ b/extensions/browser/extension_prefs.cc
+@@ -2125,7 +2125,7 @@ void ExtensionPrefs::RegisterProfilePrefs(
+   registry->RegisterBooleanPref(pref_names::kAppFullscreenAllowed, true);
+ #endif
+ 
+-  registry->RegisterBooleanPref(pref_names::kBlockExternalExtensions, false);
++  registry->RegisterBooleanPref(pref_names::kBlockExternalExtensions, true);
+   registry->RegisterIntegerPref(pref_names::kExtensionUnpublishedAvailability,
+                                 0);
+   registry->RegisterListPref(pref_names::kExtensionInstallTypeBlocklist);

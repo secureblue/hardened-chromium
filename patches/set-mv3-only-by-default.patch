@@ -1,0 +1,13 @@
+diff --git a/extensions/common/extension_features.cc b/extensions/common/extension_features.cc
+index 2104e45b6093d..34670f90ab676 100644
+--- a/extensions/common/extension_features.cc
++++ b/extensions/common/extension_features.cc
+@@ -104,7 +104,7 @@ BASE_FEATURE(kExtensionWebFileHandlers,
+ 
+ BASE_FEATURE(kExtensionsManifestV3Only,
+              "ExtensionsManifestV3Only",
+-             base::FEATURE_DISABLED_BY_DEFAULT);
++             base::FEATURE_ENABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kExtensionsMenuAccessControl,
+              "ExtensionsMenuAccessControl",

@@ -1,0 +1,14 @@
+diff --git a/chrome/browser/media/audio_service_util.cc b/chrome/browser/media/audio_service_util.cc
+index ca7a78dcc0e60..401b1a86d5c1b 100644
+--- a/chrome/browser/media/audio_service_util.cc
++++ b/chrome/browser/media/audio_service_util.cc
+@@ -45,8 +45,7 @@ bool IsAudioServiceSandboxEnabled() {
+ // built with OS_CHROMEOS instead of OS_LINUX.
+ #if BUILDFLAG(IS_WIN) || BUILDFLAG(IS_MAC) || \
+     (BUILDFLAG(IS_LINUX) && !BUILDFLAG(IS_CHROMEOS_LACROS))
+-  return GetPolicyOrFeature(policy::key::kAudioSandboxEnabled,
+-                            features::kAudioServiceSandbox);
++  true;
+ #else
+   return base::FeatureList::IsEnabled(features::kAudioServiceSandbox);
+ #endif

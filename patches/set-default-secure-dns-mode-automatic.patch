@@ -1,0 +1,13 @@
+diff --git a/chrome/browser/net/secure_dns_policy_handler.cc b/chrome/browser/net/secure_dns_policy_handler.cc
+index 27526ac0c574b..0680d2912d381 100644
+--- a/chrome/browser/net/secure_dns_policy_handler.cc
++++ b/chrome/browser/net/secure_dns_policy_handler.cc
+@@ -197,7 +197,7 @@ void SecureDnsPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
+     prefs->SetString(prefs::kDnsOverHttpsMode,
+                      SecureDnsConfig::ParseMode(mode_str)
+                          ? std::string(mode_str)
+-                         : SecureDnsConfig::kModeOff);
++                         : SecureDnsConfig::kAutomatic);
+   }
+ 
+   const base::Value* templates =

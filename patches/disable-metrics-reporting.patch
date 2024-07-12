@@ -1,0 +1,13 @@
+diff --git a/chrome/browser/browser_process_impl.cc b/chrome/browser/browser_process_impl.cc
+index 4c76d3b1be0fa..2454bc1dc8009 100644
+--- a/chrome/browser/browser_process_impl.cc
++++ b/chrome/browser/browser_process_impl.cc
+@@ -373,7 +373,7 @@ void BrowserProcessImpl::Init() {
+   // This preference must be kept in sync with external values; update them
+   // whenever the preference or its controlling policy changes.
+   pref_change_registrar_.Add(metrics::prefs::kMetricsReportingEnabled,
+-                             base::BindRepeating(&ApplyMetricsReportingPolicy));
++                             false);
+ 
+   DCHECK(!webrtc_event_log_manager_);
+   webrtc_event_log_manager_ = WebRtcEventLogManager::CreateSingletonInstance();

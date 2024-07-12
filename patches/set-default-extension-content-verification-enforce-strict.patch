@@ -1,0 +1,13 @@
+diff --git a/chrome/browser/extensions/chrome_content_verifier_delegate.cc b/chrome/browser/extensions/chrome_content_verifier_delegate.cc
+index 33c74c40b02fe..a402714f71c1f 100644
+--- a/chrome/browser/extensions/chrome_content_verifier_delegate.cc
++++ b/chrome/browser/extensions/chrome_content_verifier_delegate.cc
+@@ -143,7 +143,7 @@ ChromeContentVerifierDelegate::GetDefaultMode() {
+       cmdline_value = VerifyInfo::Mode::ENFORCE_STRICT;
+     else
+       // If no value was provided (or the wrong one), just default to enforce.
+-      cmdline_value = VerifyInfo::Mode::ENFORCE;
++      cmdline_value = VerifyInfo::Mode::ENFORCE_STRICT;
+   }
+ 
+   // We don't want to allow the command-line flags to eg disable enforcement

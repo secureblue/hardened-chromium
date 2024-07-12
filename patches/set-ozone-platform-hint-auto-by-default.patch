@@ -1,0 +1,13 @@
+diff --git a/ui/base/ui_base_features.cc b/ui/base/ui_base_features.cc
+index 43fd095c84767..e759031e0c91e 100644
+--- a/ui/base/ui_base_features.cc
++++ b/ui/base/ui_base_features.cc
+@@ -163,7 +163,7 @@ BASE_FEATURE(kWaylandPerSurfaceScale,
+ COMPONENT_EXPORT(UI_BASE_FEATURES)
+ BASE_FEATURE(kOverrideDefaultOzonePlatformHintToAuto,
+              "OverrideDefaultOzonePlatformHintToAuto",
+-             base::FEATURE_DISABLED_BY_DEFAULT);
++             base::FEATURE_ENABLED_BY_DEFAULT);
+ #endif  // BUILDFLAG(IS_LINUX)
+ 
+ // Update of the virtual keyboard settings UI as described in
