@@ -7,7 +7,7 @@ cd chromium-copr-experimental
 # Download chromium-%{version}-clean.tar.xz from the Fedora's server
 rpkg --path ./chromium sources
 
-cp patches/* ./chromium
+cp vanadium_patches/* ./chromium
 
 # Patch the spec file to build with the hardening patches
 patch -d ./chromium -p1 < hardening.patch
