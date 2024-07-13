@@ -150,7 +150,7 @@ index 5c6a9ed..b424541 100644
 +%patch -P2058 -p1 --ignore-whitespace -b .set-browser-defaults
 +%patch -P2059 -p1 --ignore-whitespace -b .disable-disk-cache
 +%patch -P2060 -p1 --ignore-whitespace -b .disable-metrics-reporting
-+%patch -P2061 -p1 --ignore-whitespace -b .disable-promotions-by-default
++#%patch -P2061 -p1 --ignore-whitespace -b .disable-promotions-by-default
 +%patch -P2062 -p1 --ignore-whitespace -b .disable-remote-access-by-default
 +%patch -P2063 -p1 --ignore-whitespace -b .disable-search-suggest-by-default
 +%patch -P2064 -p1 --ignore-whitespace -b .enable-audio-service-sandbox
