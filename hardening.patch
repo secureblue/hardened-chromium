@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..39d2344 100644
+index 5c6a9ed..055c23e 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -15,7 +15,7 @@ index 5c6a9ed..39d2344 100644
  %ifarch ppc64le
  %global build_headless 0
  %endif
-@@ -563,6 +563,62 @@ Patch413: fix-unknown-warning-option-messages.diff
+@@ -563,6 +563,79 @@ Patch413: fix-unknown-warning-option-messages.diff
  # 64kpage support on el8
  Patch500: chromium-124-el8-support-64kpage.patch
  
@@ -95,7 +95,7 @@ index 5c6a9ed..39d2344 100644
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-@@ -1327,6 +1383,59 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
+@@ -1327,6 +1400,76 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
  %endif
  %endif
  
