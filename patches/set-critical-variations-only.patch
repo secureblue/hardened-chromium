@@ -1,0 +1,13 @@
+diff --git a/components/variations/service/variations_service.cc b/components/variations/service/variations_service.cc
+index 914ecd9f396c2..c71a61e5ab60b 100644
+--- a/components/variations/service/variations_service.cc
++++ b/components/variations/service/variations_service.cc
+@@ -566,7 +566,7 @@ void VariationsService::RegisterPrefs(PrefRegistrySimple* registry) {
+   // allows the admin to restrict the set of variations applied.
+   registry->RegisterIntegerPref(
+       prefs::kVariationsRestrictionsByPolicy,
+-      static_cast<int>(RestrictionPolicy::NO_RESTRICTIONS));
++      static_cast<int>(RestrictionPolicy::CRITICAL_ONLY));
+   // This preference will only be written by the policy service, which will fill
+   // it according to a value stored in the User Policy.
+   registry->RegisterStringPref(prefs::kVariationsRestrictParameter,
