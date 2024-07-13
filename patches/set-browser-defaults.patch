@@ -1,9 +1,13 @@
 diff --git a/chrome/browser/ui/browser_ui_prefs.cc b/chrome/browser/ui/browser_ui_prefs.cc
-index c91763f863401..7c1527a50b413 100644
+index c91763f863401..5febbeeca073d 100644
 --- a/chrome/browser/ui/browser_ui_prefs.cc
 +++ b/chrome/browser/ui/browser_ui_prefs.cc
-@@ -94,7 +94,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
-       translate::prefs::kOfferTranslateEnabled, true,
+@@ -91,10 +91,10 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+   registry->RegisterBooleanPref(prefs::kWebAppCreateInAppsMenu, true);
+   registry->RegisterBooleanPref(prefs::kWebAppCreateInQuickLaunchBar, true);
+   registry->RegisterBooleanPref(
+-      translate::prefs::kOfferTranslateEnabled, true,
++      translate::prefs::kOfferTranslateEnabled, false,
        user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
    registry->RegisterStringPref(prefs::kCloudPrintEmail, std::string());
 -  registry->RegisterBooleanPref(prefs::kCloudPrintProxyEnabled, true);
@@ -11,6 +15,15 @@ index c91763f863401..7c1527a50b413 100644
    registry->RegisterDictionaryPref(prefs::kBrowserWindowPlacement);
    registry->RegisterDictionaryPref(prefs::kBrowserWindowPlacementPopup);
    registry->RegisterDictionaryPref(prefs::kAppWindowPlacement);
+@@ -103,7 +103,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+                                 false);
+ #endif
+   registry->RegisterStringPref(prefs::kWebRTCIPHandlingPolicy,
+-                               blink::kWebRTCIPHandlingDefault);
++                               blink::kWebRTCIPHandlingDisableNonProxiedUdp);
+   registry->RegisterStringPref(prefs::kWebRTCUDPPortRange, std::string());
+   registry->RegisterBooleanPref(prefs::kWebRtcEventLogCollectionAllowed, false);
+   registry->RegisterListPref(prefs::kWebRtcLocalIpsAllowedUrls);
 @@ -112,10 +112,10 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
    // We need to register the type of these preferences in order to query
    // them even though they're only typically controlled via policy.
@@ -24,3 +37,12 @@ index c91763f863401..7c1527a50b413 100644
  #endif  // BUILDFLAG(ENABLE_CLICK_TO_CALL)
  
  #if BUILDFLAG(IS_MAC)
+@@ -164,7 +164,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+ #endif
+ 
+   registry->RegisterBooleanPref(
+-      prefs::kHttpsOnlyModeEnabled, false,
++      prefs::kHttpsOnlyModeEnabled, true,
+       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+   registry->RegisterBooleanPref(
+       prefs::kHttpsFirstModeIncognito, true,

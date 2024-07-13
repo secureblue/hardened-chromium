@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..055c23e 100644
+index 5c6a9ed..b424541 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -15,7 +15,7 @@ index 5c6a9ed..055c23e 100644
  %ifarch ppc64le
  %global build_headless 0
  %endif
-@@ -563,6 +563,79 @@ Patch413: fix-unknown-warning-option-messages.diff
+@@ -563,6 +563,76 @@ Patch413: fix-unknown-warning-option-messages.diff
  # 64kpage support on el8
  Patch500: chromium-124-el8-support-64kpage.patch
  
@@ -37,7 +37,6 @@ index 5c6a9ed..055c23e 100644
 +Patch2015: 0029-disable-payment-support-by-default.patch
 +Patch2016: 0030-disable-media-router-media-remoting-by-default.patch
 +Patch2017: 0031-disable-media-router-by-default.patch
-+Patch2018: 0032-disable-offering-translations-by-default.patch
 +Patch2019: 0033-disable-browser-sign-in-feature-by-default.patch
 +Patch2020: 0034-disable-browser-autologin-by-default.patch
 +Patch2021: 0035-disable-safe-browsing-reporting-opt-in-by-default.patch
@@ -51,13 +50,11 @@ index 5c6a9ed..055c23e 100644
 +Patch2031: 0048-Disable-top-toolbar-button-Translate-option-by-defau.patch
 +Patch2032: 0049-always-use-local-new-tab-page.patch
 +Patch2033: 0050-mark-non-secure-origins-as-dangerous.patch
-+Patch2034: 0051-most-private-WebRTC-IP-handling-policy-by-default.patch
 +Patch2035: 0052-stub-out-the-battery-status-API.patch
 +Patch2036: 0055-disable-trials-of-privacy-aware-analytics-advertisin.patch
 +Patch2037: 0057-disable-appending-variations-header.patch
 +Patch2038: 0058-Disable-detailed-language-settings-by-default.patch
 +Patch2039: 0059-disable-fetching-optimization-guides-by-default.patch
-+Patch2040: 0062-Make-HTTPS-only-mode-the-default.patch
 +Patch2041: 0063-require-HTTPS-for-component-updates.patch
 +Patch2042: 0069-enable-prefetch-privacy-changes-by-default.patch
 +Patch2043: 0070-enable-split-cache-by-default.patch
@@ -71,11 +68,11 @@ index 5c6a9ed..055c23e 100644
 +Patch2051: 0165-Enable-content-settings-partitioning-by-default.patch
 +Patch2052: 0170-Revert-M122-content-make-disable-jit-actually-disabl.patch
 +Patch2053: 0084-temporary-Always-partition-third-party-storage.patch
-+Patch2054: disable_javascript_jit_by_default.patch
++Patch2054: disable-javascript-jit-by-default.patch
 +Patch2055: block-external-extensions.patch
 +Patch2056: disable-autofill-by-default.patch
 +Patch2057: disable-background-mode-by-default.patch
-+Patch2058: disable-cloud-print-shared-clipboard-and-click-to-call-by-default.patch
++Patch2058: set-browser-defaults.patch
 +Patch2059: disable-disk-cache.patch
 +Patch2060: disable-metrics-reporting.patch
 +Patch2061: disable-promotions-by-default.patch
@@ -95,7 +92,7 @@ index 5c6a9ed..055c23e 100644
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-@@ -1327,6 +1400,76 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
+@@ -1327,6 +1397,73 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
  %endif
  %endif
  
@@ -115,7 +112,6 @@ index 5c6a9ed..055c23e 100644
 +%patch -P2015 -p1 -b .0029-disable-payment-support-by-default
 +%patch -P2016 -p1 -b .0030-disable-media-router-media-remoting-by-default
 +%patch -P2017 -p1 -b .0031-disable-media-router-by-default
-+%patch -P2018 -p1 -b .0032-disable-offering-translations-by-default
 +%patch -P2019 -p1 -b .0033-disable-browser-sign-in-feature-by-default
 +%patch -P2020 -p1 -b .0034-disable-browser-autologin-by-default
 +%patch -P2021 -p1 -b .0035-disable-safe-browsing-reporting-opt-in-by-default
@@ -129,13 +125,11 @@ index 5c6a9ed..055c23e 100644
 +%patch -P2031 -p1 -b .0048-Disable-top-toolbar-button-Translate-option-by-defau
 +%patch -P2032 -p1 -b .0049-always-use-local-new-tab-page
 +%patch -P2033 -p1 -b .0050-mark-non-secure-origins-as-dangerous
-+%patch -P2034 -p1 -b .0051-most-private-WebRTC-IP-handling-policy-by-default
 +%patch -P2035 -p1 -b .0052-stub-out-the-battery-status-API
 +%patch -P2036 -p1 -b .0055-disable-trials-of-privacy-aware-analytics-advertisin
 +%patch -P2037 -p1 -b .0057-disable-appending-variations-header
 +%patch -P2038 -p1 -b .0058-Disable-detailed-language-settings-by-default
 +%patch -P2039 -p1 -b .0059-disable-fetching-optimization-guides-by-default
-+%patch -P2040 -p1 -b .0062-Make-HTTPS-only-mode-the-default
 +%patch -P2041 -p1 -b .0063-require-HTTPS-for-component-updates
 +%patch -P2042 -p1 -b .0069-enable-prefetch-privacy-changes-by-default
 +%patch -P2043 -p1 -b .0070-enable-split-cache-by-default
@@ -149,11 +143,11 @@ index 5c6a9ed..055c23e 100644
 +%patch -P2051 -p1 -b .0165-Enable-content-settings-partitioning-by-default
 +%patch -P2052 -p1 -b .0170-Revert-M122-content-make-disable-jit-actually-disabl
 +%patch -P2053 -p1 -b .0084-temporary-Always-partition-third-party-storage
-+%patch -P2054 -p1 -b .disable_javascript_jit_by_default
++%patch -P2054 -p1 -b .disable-javascript-jit-by-default
 +%patch -P2055 -p1 -b .block-external-extensions
 +%patch -P2056 -p1 -b .disable-autofill-by-default
 +%patch -P2057 -p1 -b .disable-background-mode-by-default
-+%patch -P2058 -p1 -b .disable-cloud-print-shared-clipboard-and-click-to-call-by-default
++%patch -P2058 -p1 -b .set-browser-defaults
 +%patch -P2059 -p1 -b .disable-disk-cache
 +%patch -P2060 -p1 -b .disable-metrics-reporting
 +%patch -P2061 -p1 -b .disable-promotions-by-default
