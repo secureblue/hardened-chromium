@@ -8,6 +8,7 @@ cd chromium-copr-experimental
 rpkg --path ./chromium sources
 
 cp vanadium_patches/* ./chromium
+cp patches/* ./chromium
 
 # Patch the spec file to build with the hardening patches
 patch -d ./chromium -p1 < hardening.patch
