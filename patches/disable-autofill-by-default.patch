@@ -1,0 +1,30 @@
+diff --git a/components/autofill/core/common/autofill_prefs.cc b/components/autofill/core/common/autofill_prefs.cc
+index 28282ae467544..04dfe52bb7c1f 100644
+--- a/components/autofill/core/common/autofill_prefs.cc
++++ b/components/autofill/core/common/autofill_prefs.cc
+@@ -39,7 +39,7 @@ int GetSyncTransportOptInBitFieldForAccount(const PrefService* prefs,
+ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
+   // Synced prefs. Used for cross-device choices, e.g., credit card Autofill.
+   registry->RegisterBooleanPref(
+-      prefs::kAutofillProfileEnabled, true,
++      prefs::kAutofillProfileEnabled, false,
+       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+   registry->RegisterIntegerPref(
+       prefs::kAutofillLastVersionDeduped, 0,
+@@ -48,13 +48,13 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
+       prefs::kAutofillHasSeenIban, false,
+       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+   registry->RegisterBooleanPref(
+-      prefs::kAutofillCreditCardEnabled, true,
++      prefs::kAutofillCreditCardEnabled, false,
+       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+   registry->RegisterBooleanPref(
+-      prefs::kAutofillPaymentCvcStorage, true,
++      prefs::kAutofillPaymentCvcStorage, false,
+       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+   registry->RegisterBooleanPref(
+-      kAutofillPaymentCardBenefits, true,
++      kAutofillPaymentCardBenefits, false,
+       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+ 
+   // Non-synced prefs. Used for per-device choices, e.g., signin promo.

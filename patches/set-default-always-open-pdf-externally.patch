@@ -1,0 +1,13 @@
+diff --git a/chrome/browser/plugins/plugin_prefs_factory.cc b/chrome/browser/plugins/plugin_prefs_factory.cc
+index 713a8c65f1506..c910648c2313a 100644
+--- a/chrome/browser/plugins/plugin_prefs_factory.cc
++++ b/chrome/browser/plugins/plugin_prefs_factory.cc
+@@ -59,7 +59,7 @@ PluginPrefsFactory::BuildServiceInstanceFor(
+ void PluginPrefsFactory::RegisterProfilePrefs(
+     user_prefs::PrefRegistrySyncable* registry) {
+   registry->RegisterBooleanPref(
+-      prefs::kPluginsAlwaysOpenPdfExternally, false,
++      prefs::kPluginsAlwaysOpenPdfExternally, true,
+       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+ }
+ 

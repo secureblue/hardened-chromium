@@ -1,0 +1,22 @@
+diff --git a/remoting/host/policy_watcher.cc b/remoting/host/policy_watcher.cc
+index 694f832b5f047..078e63cef135d 100644
+--- a/remoting/host/policy_watcher.cc
++++ b/remoting/host/policy_watcher.cc
+@@ -166,7 +166,7 @@ base::Value::Dict PolicyWatcher::GetPlatformPolicies() {
+ 
+ base::Value::Dict PolicyWatcher::GetDefaultPolicies() {
+   base::Value::Dict result;
+-  result.Set(key::kRemoteAccessHostFirewallTraversal, true);
++  result.Set(key::kRemoteAccessHostFirewallTraversal, false);
+   result.Set(key::kRemoteAccessHostClientDomainList, base::Value::List());
+   result.Set(key::kRemoteAccessHostDomainList, base::Value::List());
+   result.Set(key::kRemoteAccessHostAllowRelayedConnection, true);
+@@ -188,7 +188,7 @@ base::Value::Dict PolicyWatcher::GetDefaultPolicies() {
+   result.Set(key::kRemoteAccessHostAllowFileTransfer, true);
+   result.Set(key::kRemoteAccessHostAllowUrlForwarding, true);
+   result.Set(key::kRemoteAccessHostEnableUserInterface, true);
+-  result.Set(key::kRemoteAccessHostAllowRemoteAccessConnections, true);
++  result.Set(key::kRemoteAccessHostAllowRemoteAccessConnections, false);
+   result.Set(key::kRemoteAccessHostMaximumSessionDurationMinutes, 0);
+   result.Set(key::kRemoteAccessHostAllowPinAuthentication, base::Value());
+ #endif
