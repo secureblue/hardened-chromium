@@ -161,7 +161,7 @@ index 5c6a9ed..b424541 100644
 +%patch -P2069 -p1 -b .set-default-extension-install-verification-enforce-strict
 +%patch -P2070 -p1 -b .set-default-secure-dns-mode-automatic
 +%patch -P2071 -p1 -b .set-mv3-only-by-default
-+%patch -P2072 -p1 -b .set-ozone-platform-hint-auto-by-default
++#%patch -P2072 -p1 -b .set-ozone-platform-hint-auto-by-default
 +%patch -P2073 -p1 -b .show-full-urls-by-default
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
