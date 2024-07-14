@@ -150,7 +150,7 @@ index 5c6a9ed..b424541 100644
 +%patch -P2058 -p1 -b .set-browser-defaults
 +%patch -P2059 -p1 -b .disable-disk-cache
 +%patch -P2060 -p1 -b .disable-metrics-reporting
-+#%patch -P2061 -p1 -b .disable-promotions-by-default
++%patch -P2061 -p1 -b .disable-promotions-by-default
 +%patch -P2062 -p1 -b .disable-remote-access-by-default
 +%patch -P2063 -p1 -b .disable-search-suggest-by-default
 +%patch -P2064 -p1 -b .enable-audio-service-sandbox
@@ -161,7 +161,7 @@ index 5c6a9ed..b424541 100644
 +%patch -P2069 -p1 -b .set-default-extension-install-verification-enforce-strict
 +%patch -P2070 -p1 -b .set-default-secure-dns-mode-automatic
 +%patch -P2071 -p1 -b .set-mv3-only-by-default
-+#%patch -P2072 -p1 -b .set-ozone-platform-hint-auto-by-default
++%patch -P2072 -p1 -b .set-ozone-platform-hint-auto-by-default
 +%patch -P2073 -p1 -b .show-full-urls-by-default
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
