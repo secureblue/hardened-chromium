@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..e8dff47 100644
+index 5c6a9ed..aecc84c 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -24,7 +24,7 @@ index 5c6a9ed..e8dff47 100644
  
  # Leave this alone, please.
  %global chromebuilddir out/Release
-@@ -563,6 +563,76 @@ Patch413: fix-unknown-warning-option-messages.diff
+@@ -563,6 +563,77 @@ Patch413: fix-unknown-warning-option-messages.diff
  # 64kpage support on el8
  Patch500: chromium-124-el8-support-64kpage.patch
  
@@ -97,11 +97,12 @@ index 5c6a9ed..e8dff47 100644
 +Patch2071: set-mv3-only-by-default.patch
 +Patch2072: set-ozone-platform-hint-auto-by-default.patch
 +Patch2073: show-full-urls-by-default.patch
++Patch2074: disable-password-manager-prompt-by-default.patch
 +
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-@@ -1327,6 +1397,73 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
+@@ -1327,6 +1398,74 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
  %endif
  %endif
  
@@ -172,6 +173,7 @@ index 5c6a9ed..e8dff47 100644
 +%patch -P2071 -p1 -b .set-mv3-only-by-default
 +#%patch -P2072 -p1 -b .set-ozone-platform-hint-auto-by-default
 +%patch -P2073 -p1 -b .show-full-urls-by-default
++%patch -P2074 -p1 -b .disable-password-manager-prompt-by-default
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
