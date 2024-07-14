@@ -1,5 +1,5 @@
 diff --git a/chrome/browser/ui/browser_ui_prefs.cc b/chrome/browser/ui/browser_ui_prefs.cc
-index c91763f863401..5febbeeca073d 100644
+index c91763f863401..f06d9625ed85a 100644
 --- a/chrome/browser/ui/browser_ui_prefs.cc
 +++ b/chrome/browser/ui/browser_ui_prefs.cc
 @@ -91,10 +91,10 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
@@ -15,7 +15,7 @@ index c91763f863401..5febbeeca073d 100644
    registry->RegisterDictionaryPref(prefs::kBrowserWindowPlacement);
    registry->RegisterDictionaryPref(prefs::kBrowserWindowPlacementPopup);
    registry->RegisterDictionaryPref(prefs::kAppWindowPlacement);
-@@ -103,7 +103,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+@@ -103,19 +103,19 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
                                  false);
  #endif
    registry->RegisterStringPref(prefs::kWebRTCIPHandlingPolicy,
@@ -24,7 +24,9 @@ index c91763f863401..5febbeeca073d 100644
    registry->RegisterStringPref(prefs::kWebRTCUDPPortRange, std::string());
    registry->RegisterBooleanPref(prefs::kWebRtcEventLogCollectionAllowed, false);
    registry->RegisterListPref(prefs::kWebRtcLocalIpsAllowedUrls);
-@@ -112,10 +112,10 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+-  registry->RegisterBooleanPref(prefs::kWebRtcTextLogCollectionAllowed, true);
++  registry->RegisterBooleanPref(prefs::kWebRtcTextLogCollectionAllowed, false);
+ 
    // We need to register the type of these preferences in order to query
    // them even though they're only typically controlled via policy.
    registry->RegisterBooleanPref(policy::policy_prefs::kHideWebStoreIcon, false);
