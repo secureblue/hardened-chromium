@@ -2,7 +2,7 @@
 
 # Download this repo with its submodule https://src.fedoraproject.org/rpms/chromium.git inside the COPR build system
 git clone --depth 1 --recurse-submodules https://github.com/secureblue/hardened-chromium.git
-cd chromium-copr-experimental
+cd hardened-chromium
 
 # Download chromium-%{version}-clean.tar.xz from the Fedora's server
 rpkg --path ./chromium sources
