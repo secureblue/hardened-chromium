@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..aecc84c 100644
+index 5c6a9ed..1dabc63 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -24,6 +24,15 @@ index 5c6a9ed..aecc84c 100644
  
  # Leave this alone, please.
  %global chromebuilddir out/Release
+@@ -309,7 +309,7 @@
+ %global chromoting_client_id %nil
+ %endif
+ 
+-Name:	chromium%{chromium_channel}
++Name:	hardened-chromium%{chromium_channel}
+ Version: 126.0.6478.126
+ Release: 2%{?dist}
+ Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
 @@ -563,6 +563,77 @@ Patch413: fix-unknown-warning-option-messages.diff
  # 64kpage support on el8
  Patch500: chromium-124-el8-support-64kpage.patch
