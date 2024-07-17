@@ -1,0 +1,27 @@
+diff --git a/components/sync/base/command_line_switches.cc b/components/sync/base/command_line_switches.cc
+index 064326ef5273c..0270572cd7c5d 100644
+--- a/components/sync/base/command_line_switches.cc
++++ b/components/sync/base/command_line_switches.cc
+@@ -11,7 +11,7 @@
+ namespace syncer {
+ 
+ bool IsSyncAllowedByFlag() {
+-  return !base::CommandLine::ForCurrentProcess()->HasSwitch(kDisableSync);
++  return base::CommandLine::ForCurrentProcess()->HasSwitch(kEnableSync);
+ }
+ 
+ }  // namespace syncer
+diff --git a/components/sync/base/command_line_switches.h b/components/sync/base/command_line_switches.h
+index 4a6a677e3a492..53caf7160a8bb 100644
+--- a/components/sync/base/command_line_switches.h
++++ b/components/sync/base/command_line_switches.h
+@@ -10,6 +10,9 @@ namespace syncer {
+ // Disables syncing browser data to a Google Account.
+ inline constexpr char kDisableSync[] = "disable-sync";
+ 
++// Enables syncing browser data to a Google Account.
++inline constexpr char kEnableSync[] = "enable-sync";
++
+ // Allows overriding the deferred init fallback timeout.
+ inline constexpr char kSyncDeferredStartupTimeoutSeconds[] =
+     "sync-deferred-startup-timeout-seconds";

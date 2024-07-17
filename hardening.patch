@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..df09258 100644
+index 5c6a9ed..77e0f41 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -33,7 +33,7 @@ index 5c6a9ed..df09258 100644
  Version: 126.0.6478.126
  Release: 2%{?dist}
  Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
-@@ -563,6 +563,78 @@ Patch413: fix-unknown-warning-option-messages.diff
+@@ -563,6 +563,79 @@ Patch413: fix-unknown-warning-option-messages.diff
  # 64kpage support on el8
  Patch500: chromium-124-el8-support-64kpage.patch
  
@@ -108,11 +108,12 @@ index 5c6a9ed..df09258 100644
 +Patch2073: show-full-urls-by-default.patch
 +Patch2074: disable-password-manager-prompt-by-default.patch
 +Patch2075: enable-network-service-sandbox-by-default.patch
++Patch2076: disable-sync-by-default.patch
 +
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-@@ -1327,6 +1399,75 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
+@@ -1327,6 +1400,76 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
  %endif
  %endif
  
@@ -184,11 +185,12 @@ index 5c6a9ed..df09258 100644
 +#%patch -P2072 -p1 -b .set-ozone-platform-hint-auto-by-default
 +%patch -P2073 -p1 -b .show-full-urls-by-default
 +%patch -P2074 -p1 -b .disable-password-manager-prompt-by-default
-+%patch -P2075 -p1 b .enable-network-service-sandbox-by-default
++%patch -P2075 -p1 -b .enable-network-service-sandbox-by-default
++%patch -P2076 -p1 -b .disable-sync-by-default
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
-@@ -1572,7 +1713,7 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
+@@ -1572,7 +1715,7 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
  %endif
  
  CHROMIUM_BROWSER_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
@@ -197,7 +199,7 @@ index 5c6a9ed..df09258 100644
  CHROMIUM_BROWSER_GN_DEFINES+=' enable_widevine=true'
  
  %if %{use_vaapi}
-@@ -1770,15 +1911,15 @@ rm -rf %{buildroot}
+@@ -1770,15 +1913,15 @@ rm -rf %{buildroot}
  
  mkdir -p %{buildroot}%{_bindir} \
           %{buildroot}%{chromium_path}/locales \
@@ -216,7 +218,7 @@ index 5c6a9ed..df09258 100644
  %endif
  
  export BUILD_TARGET=`cat /etc/redhat-release`
-@@ -1939,7 +2080,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
+@@ -1939,7 +2082,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
  cp -a chrome/app/theme/chromium/product_logo_24.png %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/%{chromium_browser_channel}.png
  
  # Install the master_preferences file
@@ -225,7 +227,7 @@ index 5c6a9ed..df09258 100644
  
  mkdir -p %{buildroot}%{_datadir}/applications/
  desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE4}
-@@ -1991,11 +2132,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
+@@ -1991,11 +2134,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
  %doc AUTHORS README.fedora
  %doc chrome_policy_list.html *.json
  %license LICENSE
