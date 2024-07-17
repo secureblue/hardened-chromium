@@ -1,14 +1,22 @@
-diff --git a/chrome/browser/media/audio_service_util.cc b/chrome/browser/media/audio_service_util.cc
-index ca7a78dcc0e60..401b1a86d5c1b 100644
---- a/chrome/browser/media/audio_service_util.cc
-+++ b/chrome/browser/media/audio_service_util.cc
-@@ -45,8 +45,7 @@ bool IsAudioServiceSandboxEnabled() {
- // built with OS_CHROMEOS instead of OS_LINUX.
- #if BUILDFLAG(IS_WIN) || BUILDFLAG(IS_MAC) || \
-     (BUILDFLAG(IS_LINUX) && !BUILDFLAG(IS_CHROMEOS_LACROS))
--  return GetPolicyOrFeature(policy::key::kAudioSandboxEnabled,
--                            features::kAudioServiceSandbox);
-+  true;
+diff --git a/content/public/common/content_features.cc b/content/public/common/content_features.cc
+index 1be9329c1a92f..8c68d5f371d9c 100644
+--- a/content/public/common/content_features.cc
++++ b/content/public/common/content_features.cc
+@@ -47,7 +47,7 @@ BASE_FEATURE(kAudioServiceOutOfProcess,
+ // kAudioServiceOutOfProcess feature is enabled.
+ BASE_FEATURE(kAudioServiceSandbox,
+              "AudioServiceSandbox",
+-#if BUILDFLAG(IS_WIN) || BUILDFLAG(IS_MAC) || BUILDFLAG(IS_FUCHSIA)
++#if BUILDFLAG(IS_WIN) || BUILDFLAG(IS_MAC) || BUILDFLAG(IS_FUCHSIA) || BUILDFLAG(IS_LINUX)
+              base::FEATURE_ENABLED_BY_DEFAULT
  #else
-   return base::FeatureList::IsEnabled(features::kAudioServiceSandbox);
- #endif
+              base::FEATURE_DISABLED_BY_DEFAULT
+@@ -225,7 +225,7 @@ BASE_FEATURE(kCooperativeScheduling,
+ // https://www.w3.org/TR/reporting/#crash-report
+ BASE_FEATURE(kCrashReporting,
+              "CrashReporting",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT);
+ 
+ // Enables deferring the creation of the speculative RFH when the navigation
+ // starts. The creation of a speculative RFH consumes about 2ms and is blocking
