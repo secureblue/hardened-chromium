@@ -1,13 +1,13 @@
-diff --git a/chrome/browser/net/disk_cache_dir_policy_handler.cc b/chrome/browser/net/disk_cache_dir_policy_handler.cc
-index 3e355db8d07c5..3a649b03304e3 100644
---- a/chrome/browser/net/disk_cache_dir_policy_handler.cc
-+++ b/chrome/browser/net/disk_cache_dir_policy_handler.cc
-@@ -34,7 +34,7 @@ void DiskCacheDirPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
-       policy::path_parser::ExpandPathVariables(
-           base::UTF8ToWide(value->GetString()));
- #else
--      policy::path_parser::ExpandPathVariables(value->GetString());
-+      "/dev/null";
- #endif
-   base::FilePath expanded_path(expanded_value);
-   prefs->SetValue(prefs::kDiskCacheDir,
+diff --git a/chrome/browser/chrome_content_browser_client.cc b/chrome/browser/chrome_content_browser_client.cc
+index 1ef3b18394447..05fcdd681d6c1 100644
+--- a/chrome/browser/chrome_content_browser_client.cc
++++ b/chrome/browser/chrome_content_browser_client.cc
+@@ -1561,7 +1561,7 @@ ChromeContentBrowserClient::~ChromeContentBrowserClient() {
+ // static
+ void ChromeContentBrowserClient::RegisterLocalStatePrefs(
+     PrefRegistrySimple* registry) {
+-  registry->RegisterFilePathPref(prefs::kDiskCacheDir, base::FilePath());
++  registry->RegisterFilePathPref(prefs::kDiskCacheDir, base::FilePath("/dev/null"));
+   registry->RegisterIntegerPref(prefs::kDiskCacheSize, 0);
+   registry->RegisterStringPref(prefs::kIsolateOrigins, std::string());
+   registry->RegisterBooleanPref(prefs::kSitePerProcess, false);
