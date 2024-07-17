@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..1384ff2 100644
+index 5c6a9ed..055dc65 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -186,6 +186,15 @@ index 5c6a9ed..1384ff2 100644
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
+@@ -1572,7 +1711,7 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
+ %endif
+ 
+ CHROMIUM_BROWSER_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
+-CHROMIUM_BROWSER_GN_DEFINES+=' enable_hangout_services_extension=true'
++CHROMIUM_BROWSER_GN_DEFINES+=' enable_hangout_services_extension=false'
+ CHROMIUM_BROWSER_GN_DEFINES+=' enable_widevine=true'
+ 
+ %if %{use_vaapi}
 @@ -1770,15 +1909,15 @@ rm -rf %{buildroot}
  
  mkdir -p %{buildroot}%{_bindir} \
