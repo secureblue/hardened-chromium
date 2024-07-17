@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 5c6a9ed..1dabc63 100644
+index 5c6a9ed..1384ff2 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -186,3 +186,47 @@ index 5c6a9ed..1dabc63 100644
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
+@@ -1770,15 +1909,15 @@ rm -rf %{buildroot}
+ 
+ mkdir -p %{buildroot}%{_bindir} \
+          %{buildroot}%{chromium_path}/locales \
+-         %{buildroot}%{_sysconfdir}/%{name}
++         %{buildroot}%{_sysconfdir}/chromium
+ 
+ # install system wide chromium config
+-cp -a %{SOURCE2} %{buildroot}%{_sysconfdir}/%{name}/%{name}.conf
++cp -a %{SOURCE2} %{buildroot}%{_sysconfdir}/chromium/chromium.conf
+ cp -a %{SOURCE3} %{buildroot}%{chromium_path}/%{chromium_browser_channel}.sh
+ 
+ %if ! %{use_vaapi}
+ # remove vaapi flags
+-echo "# system wide chromium flags" > %{buildroot}%{_sysconfdir}/%{name}/%{name}.conf
++echo "# system wide chromium flags" > %{buildroot}%{_sysconfdir}/chromium/chromium.conf
+ %endif
+ 
+ export BUILD_TARGET=`cat /etc/redhat-release`
+@@ -1939,7 +2078,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
+ cp -a chrome/app/theme/chromium/product_logo_24.png %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/%{chromium_browser_channel}.png
+ 
+ # Install the master_preferences file
+-install -m 0644 %{SOURCE11} %{buildroot}%{_sysconfdir}/%{name}/
++install -m 0644 %{SOURCE11} %{buildroot}%{_sysconfdir}/chromium/
+ 
+ mkdir -p %{buildroot}%{_datadir}/applications/
+ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE4}
+@@ -1991,11 +2130,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
+ %doc AUTHORS README.fedora
+ %doc chrome_policy_list.html *.json
+ %license LICENSE
+-%config(noreplace) %{_sysconfdir}/%{name}/chromium.conf
+-%config %{_sysconfdir}/%{name}/master_preferences
+-%config %{_sysconfdir}/%{name}/policies/
++%config(noreplace) %{_sysconfdir}/chromium/chromium.conf
++%config %{_sysconfdir}/chromium/master_preferences
++%config %{_sysconfdir}/chromium/policies/
+ %if %{build_remoting}
+-%exclude %{_sysconfdir}/%{name}/native-messaging-hosts/*
++%exclude %{_sysconfdir}/chromium/native-messaging-hosts/*
+ %endif
+ %{_bindir}/%{chromium_browser_channel}
+ %{chromium_path}/*.bin
