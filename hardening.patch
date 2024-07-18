@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 931b9c0..860d6ab 100644
+index 931b9c0..fe3097a 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -113,6 +113,42 @@ index 931b9c0..860d6ab 100644
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
+@@ -928,7 +1001,7 @@ Requires: libcanberra-gtk3%{_isa}
+ Requires: u2f-hidraw-policy
+ %endif
+ 
+-Requires: chromium-common%{_isa} = %{version}-%{release}
++Requires: hardened-chromium-common%{_isa} = %{version}-%{release}
+ 
+ # rhel 7: x86_64
+ # rhel 8 or newer: x86_64, aarch64
+@@ -1098,7 +1171,7 @@ Requires(preun): systemd
+ Requires(postun): systemd
+ Requires: xorg-x11-server-Xvfb
+ Requires: python3-psutil
+-Requires: chromium-common%{_isa} = %{version}-%{release}
++Requires: hardened-chromium-common%{_isa} = %{version}-%{release}
+ Summary: Remote desktop support for google-chrome & chromium
+ 
+ %description -n chrome-remote-desktop
+@@ -1107,7 +1180,7 @@ Remote desktop support for google-chrome & chromium.
+ 
+ %package -n chromedriver
+ Summary: WebDriver for Google Chrome/Chromium
+-Requires: chromium-common%{_isa} = %{version}-%{release}
++Requires: hardened-chromium-common%{_isa} = %{version}-%{release}
+ 
+ %description -n chromedriver
+ WebDriver is an open source tool for automated testing of webapps across many
+@@ -1118,7 +1191,7 @@ members of the Chromium and WebDriver teams.
+ 
+ %package headless
+ Summary:	A minimal headless shell built from Chromium
+-Requires: chromium-common%{_isa} = %{version}-%{release}
++Requires: hardened-chromium-common%{_isa} = %{version}-%{release}
+ 
+ %description headless
+ A minimal headless client built from Chromium. headless_shell is built
 @@ -1341,6 +1414,76 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
  %endif
  %endif
