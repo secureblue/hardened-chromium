@@ -1,5 +1,5 @@
 diff --git a/chrome/browser/ui/startup/startup_browser_creator.cc b/chrome/browser/ui/startup/startup_browser_creator.cc
-index 8740af9bc6cd6..e7eaae8ea2edb 100644
+index 86ab9563e08bc..dda149a3ce76d 100644
 --- a/chrome/browser/ui/startup/startup_browser_creator.cc
 +++ b/chrome/browser/ui/startup/startup_browser_creator.cc
 @@ -910,7 +910,7 @@ void StartupBrowserCreator::ClearLaunchedProfilesForTesting() {
