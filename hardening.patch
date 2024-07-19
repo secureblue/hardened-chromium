@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 931b9c0..fe3097a 100644
+index 931b9c0..306e63d 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -226,6 +226,15 @@ index 931b9c0..fe3097a 100644
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
+@@ -1393,7 +1536,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
+ %endif
+ 
+ # Hard code extra version
+-sed -i 's/getenv("CHROME_VERSION_EXTRA")/"Fedora Project"/' chrome/common/channel_info_posix.cc
++sed -i 's/getenv("CHROME_VERSION_EXTRA")/"hardened-chromium"/' chrome/common/channel_info_posix.cc
+ 
+ # Fix hardcoded path in remoting code
+ sed -i 's|/opt/google/chrome-remote-desktop|%{crd_path}|g' remoting/host/setup/daemon_controller_delegate_linux.cc
 @@ -1494,9 +1637,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
  
  CHROMIUM_CORE_GN_DEFINES+=' chrome_pgo_phase=0'
