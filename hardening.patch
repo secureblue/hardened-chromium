@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 931b9c0..f4529a9 100644
+index 931b9c0..451591e 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -154,6 +154,23 @@ index 931b9c0..f4529a9 100644
  
  %description headless
  A minimal headless client built from Chromium. headless_shell is built
+@@ -1127,14 +1202,14 @@ udev.
+ 
+ %package qt5-ui
+ Summary: Qt5 UI built from Chromium
+-Requires: chromium%{_isa} = %{version}-%{release}
++Requires: hardened-chromium%{_isa} = %{version}-%{release}
+ 
+ %description qt5-ui
+ Qt5 UI for chromium.
+ 
+ %package qt6-ui
+ Summary: Qt6 UI built from Chromium
+-Requires: chromium%{_isa} = %{version}-%{release}
++Requires: hardened-chromium%{_isa} = %{version}-%{release}
+ 
+ %description qt6-ui
+ Qt6 UI for chromium.
 @@ -1341,6 +1416,78 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
  %endif
  %endif
