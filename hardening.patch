@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 931b9c0..94c4b16 100644
+index 931b9c0..6d9db91 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -33,7 +33,7 @@ index 931b9c0..94c4b16 100644
  Version: 126.0.6478.182
  Release: 1%{?dist}
  Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
-@@ -563,6 +563,80 @@ Patch413: fix-unknown-warning-option-messages.diff
+@@ -563,6 +563,81 @@ Patch413: fix-unknown-warning-option-messages.diff
  # 64kpage support on el8
  Patch500: chromium-124-el8-support-64kpage.patch
  
@@ -110,11 +110,12 @@ index 931b9c0..94c4b16 100644
 +Patch2075: enable-network-service-sandbox-by-default.patch
 +Patch2076: disable-sync-by-default.patch
 +Patch2077: disable-infobar-for-builds-without-api-key.patch
++Patch2078: disable-printing-by-default.patch
 +
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-@@ -928,7 +1002,7 @@ Requires: libcanberra-gtk3%{_isa}
+@@ -928,7 +1003,7 @@ Requires: libcanberra-gtk3%{_isa}
  Requires: u2f-hidraw-policy
  %endif
  
@@ -123,7 +124,7 @@ index 931b9c0..94c4b16 100644
  
  # rhel 7: x86_64
  # rhel 8 or newer: x86_64, aarch64
-@@ -1098,7 +1172,7 @@ Requires(preun): systemd
+@@ -1098,7 +1173,7 @@ Requires(preun): systemd
  Requires(postun): systemd
  Requires: xorg-x11-server-Xvfb
  Requires: python3-psutil
@@ -132,7 +133,7 @@ index 931b9c0..94c4b16 100644
  Summary: Remote desktop support for google-chrome & chromium
  
  %description -n chrome-remote-desktop
-@@ -1107,7 +1181,7 @@ Remote desktop support for google-chrome & chromium.
+@@ -1107,7 +1182,7 @@ Remote desktop support for google-chrome & chromium.
  
  %package -n chromedriver
  Summary: WebDriver for Google Chrome/Chromium
@@ -141,7 +142,7 @@ index 931b9c0..94c4b16 100644
  
  %description -n chromedriver
  WebDriver is an open source tool for automated testing of webapps across many
-@@ -1118,7 +1192,7 @@ members of the Chromium and WebDriver teams.
+@@ -1118,7 +1193,7 @@ members of the Chromium and WebDriver teams.
  
  %package headless
  Summary:	A minimal headless shell built from Chromium
@@ -150,7 +151,7 @@ index 931b9c0..94c4b16 100644
  
  %description headless
  A minimal headless client built from Chromium. headless_shell is built
-@@ -1341,6 +1415,77 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
+@@ -1341,6 +1416,78 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
  %endif
  %endif
  
@@ -225,10 +226,11 @@ index 931b9c0..94c4b16 100644
 +%patch -P2075 -p1 -b .enable-network-service-sandbox-by-default
 +%patch -P2076 -p1 -b .disable-sync-by-default
 +%patch -P2077 -p1 -b .disable-infobar-for-builds-without-api-key
++%patch -P2078 -p1 -b .disable-printing-by-default
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
-@@ -1393,7 +1538,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
+@@ -1393,7 +1540,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
  %endif
  
  # Hard code extra version
@@ -237,7 +239,7 @@ index 931b9c0..94c4b16 100644
  
  # Fix hardcoded path in remoting code
  sed -i 's|/opt/google/chrome-remote-desktop|%{crd_path}|g' remoting/host/setup/daemon_controller_delegate_linux.cc
-@@ -1494,9 +1639,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
+@@ -1494,9 +1641,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
  
  CHROMIUM_CORE_GN_DEFINES+=' chrome_pgo_phase=0'
  
@@ -252,7 +254,7 @@ index 931b9c0..94c4b16 100644
  
  %if %{useapikey}
  CHROMIUM_CORE_GN_DEFINES+=' google_api_key="%{api_key}"'
-@@ -1547,6 +1694,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
+@@ -1547,6 +1696,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
  %endif
  CHROMIUM_CORE_GN_DEFINES+=' enable_iterator_debugging=false'
  CHROMIUM_CORE_GN_DEFINES+=' enable_vr=false'
@@ -262,7 +264,7 @@ index 931b9c0..94c4b16 100644
  CHROMIUM_CORE_GN_DEFINES+=' build_dawn_tests=false enable_perfetto_unittests=false'
  CHROMIUM_CORE_GN_DEFINES+=' disable_fieldtrial_testing_config=true'
  CHROMIUM_CORE_GN_DEFINES+=' symbol_level=%{debug_level} blink_symbol_level=%{debug_level}'
-@@ -1586,8 +1736,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
+@@ -1586,8 +1738,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
  %endif
  
  CHROMIUM_BROWSER_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
@@ -273,7 +275,7 @@ index 931b9c0..94c4b16 100644
  
  %if %{use_vaapi}
  CHROMIUM_BROWSER_GN_DEFINES+=' use_vaapi=true'
-@@ -1784,15 +1934,15 @@ rm -rf %{buildroot}
+@@ -1784,15 +1936,15 @@ rm -rf %{buildroot}
  
  mkdir -p %{buildroot}%{_bindir} \
           %{buildroot}%{chromium_path}/locales \
@@ -292,7 +294,7 @@ index 931b9c0..94c4b16 100644
  %endif
  
  export BUILD_TARGET=`cat /etc/redhat-release`
-@@ -1953,7 +2103,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
+@@ -1953,7 +2105,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
  cp -a chrome/app/theme/chromium/product_logo_24.png %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/%{chromium_browser_channel}.png
  
  # Install the master_preferences file
@@ -301,7 +303,7 @@ index 931b9c0..94c4b16 100644
  
  mkdir -p %{buildroot}%{_datadir}/applications/
  desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE4}
-@@ -2005,11 +2155,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
+@@ -2005,11 +2157,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
  %doc AUTHORS README.fedora
  %doc chrome_policy_list.html *.json
  %license LICENSE

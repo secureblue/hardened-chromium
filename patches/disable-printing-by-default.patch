@@ -1,0 +1,13 @@
+diff --git a/chrome/browser/profiles/profile_impl.cc b/chrome/browser/profiles/profile_impl.cc
+index fbe18f0773bda..15d41c87d6f37 100644
+--- a/chrome/browser/profiles/profile_impl.cc
++++ b/chrome/browser/profiles/profile_impl.cc
+@@ -398,7 +398,7 @@ void ProfileImpl::RegisterProfilePrefs(
+                                std::string());
+ 
+ #if BUILDFLAG(ENABLE_PRINTING)
+-  registry->RegisterBooleanPref(prefs::kPrintingEnabled, true);
++  registry->RegisterBooleanPref(prefs::kPrintingEnabled, false);
+ #endif  // BUILDFLAG(ENABLE_PRINTING)
+ #if BUILDFLAG(ENABLE_OOP_PRINTING)
+   registry->RegisterBooleanPref(prefs::kOopPrintDriversAllowedByPolicy, true);
