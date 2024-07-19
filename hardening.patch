@@ -339,3 +339,22 @@ index 931b9c0..451591e 100644
  %endif
  %{_bindir}/%{chromium_browser_channel}
  %{chromium_path}/*.bin
+diff --git a/master_preferences b/master_preferences
+index 8d732dc..58b079c 100644
+--- a/master_preferences
++++ b/master_preferences
+@@ -1,5 +1,5 @@
+ {
+-  "homepage": "https://fedoraproject.org/start",
++  "homepage": "about:blank",
+   "homepage_is_newtabpage": false,
+   "distribution": {
+      "alternate_shortcut_text": false,
+@@ -11,6 +11,6 @@
+      "verbose_logging": false
+   },
+   "first_run_tabs": [
+-     "https://fedoraproject.org/start"
++     "about:blank"
+   ]
+ }
