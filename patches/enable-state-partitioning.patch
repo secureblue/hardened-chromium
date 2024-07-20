@@ -1,0 +1,13 @@
+diff --git a/net/base/features.cc b/net/base/features.cc
+index 387c7f01e1f5e..a69ddbc33983f 100644
+--- a/net/base/features.cc
++++ b/net/base/features.cc
+@@ -134,7 +134,7 @@ BASE_FEATURE(kSplitCodeCacheByNetworkIsolationKey,
+ 
+ BASE_FEATURE(kPartitionConnectionsByNetworkIsolationKey,
+              "PartitionConnectionsByNetworkIsolationKey",
+-             base::FEATURE_DISABLED_BY_DEFAULT);
++             base::FEATURE_ENABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kTLS13KeyUpdate,
+              "TLS13KeyUpdate",
