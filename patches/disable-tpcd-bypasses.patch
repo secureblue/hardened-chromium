@@ -1,0 +1,26 @@
+diff --git a/components/content_settings/core/common/features.cc b/components/content_settings/core/common/features.cc
+index c1340623701ba..07ef347995154 100644
+--- a/components/content_settings/core/common/features.cc
++++ b/components/content_settings/core/common/features.cc
+@@ -100,7 +100,7 @@ const char kTpcdReadHeuristicsGrantsName[] = "TpcdReadHeuristicsGrants";
+ 
+ BASE_FEATURE(kTpcdHeuristicsGrants,
+              "TpcdHeuristicsGrants",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT);
+ 
+ const base::FeatureParam<bool> kTpcdReadHeuristicsGrants{
+     &kTpcdHeuristicsGrants, kTpcdReadHeuristicsGrantsName, true};
+diff --git a/net/base/features.cc b/net/base/features.cc
+index 387c7f01e1f5e..106176e8d4265 100644
+--- a/net/base/features.cc
++++ b/net/base/features.cc
+@@ -257,7 +257,7 @@ BASE_FEATURE(kTopLevelTpcdTrialSettings,
+ 
+ BASE_FEATURE(kTpcdMetadataGrants,
+              "TpcdMetadataGrants",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kTpcdMetadataStageControl,
+              "TpcdMetadataStageControl",
