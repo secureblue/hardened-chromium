@@ -1,13 +1,14 @@
-diff --git a/ui/base/ui_base_features.cc b/ui/base/ui_base_features.cc
-index 43fd095c84767..e759031e0c91e 100644
---- a/ui/base/ui_base_features.cc
-+++ b/ui/base/ui_base_features.cc
-@@ -163,7 +163,7 @@ BASE_FEATURE(kWaylandPerSurfaceScale,
- COMPONENT_EXPORT(UI_BASE_FEATURES)
- BASE_FEATURE(kOverrideDefaultOzonePlatformHintToAuto,
-              "OverrideDefaultOzonePlatformHintToAuto",
--             base::FEATURE_DISABLED_BY_DEFAULT);
-+             base::FEATURE_ENABLED_BY_DEFAULT);
- #endif  // BUILDFLAG(IS_LINUX)
- 
- // Update of the virtual keyboard settings UI as described in
+diff --git a/ui/linux/display_server_utils.cc b/ui/linux/display_server_utils.cc
+index ecc1fe400843a..1d1f4b00e629b 100644
+--- a/ui/linux/display_server_utils.cc
++++ b/ui/linux/display_server_utils.cc
+@@ -115,8 +115,7 @@ void SetOzonePlatformForLinuxIfNeeded(base::CommandLine& command_line) {
+   // On the desktop, we fix the platform name if necessary.
+   // See https://crbug.com/1246928.
+   if (!command_line.HasSwitch(switches::kOzonePlatform)) {
+-    const auto ozone_platform_hint =
+-        command_line.GetSwitchValueASCII(switches::kOzonePlatformHint);
++    const auto ozone_platform_hint = "auto"
+     if (!ozone_platform_hint.empty()) {
+       command_line.AppendSwitchASCII(switches::kOzonePlatform,
+                                      MaybeFixPlatformName(ozone_platform_hint));

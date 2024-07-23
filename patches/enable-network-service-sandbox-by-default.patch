@@ -1,5 +1,5 @@
 diff --git a/sandbox/policy/features.cc b/sandbox/policy/features.cc
-index 8a0eb26347f8d..5a6ed19d9d98c 100644
+index fb5a05c3e8dfb..4b28e20829022 100644
 --- a/sandbox/policy/features.cc
 +++ b/sandbox/policy/features.cc
 @@ -20,7 +20,7 @@ namespace sandbox::policy::features {

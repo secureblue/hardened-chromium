@@ -1,5 +1,5 @@
 diff --git a/components/autofill/core/common/autofill_prefs.cc b/components/autofill/core/common/autofill_prefs.cc
-index 28282ae467544..04dfe52bb7c1f 100644
+index 5c5988144d677..d7e0e8696f56e 100644
 --- a/components/autofill/core/common/autofill_prefs.cc
 +++ b/components/autofill/core/common/autofill_prefs.cc
 @@ -39,7 +39,7 @@ int GetSyncTransportOptInBitFieldForAccount(const PrefService* prefs,
