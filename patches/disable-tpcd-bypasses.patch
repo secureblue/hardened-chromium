@@ -12,15 +12,15 @@ index c1340623701ba..07ef347995154 100644
  const base::FeatureParam<bool> kTpcdReadHeuristicsGrants{
      &kTpcdHeuristicsGrants, kTpcdReadHeuristicsGrantsName, true};
 diff --git a/net/base/features.cc b/net/base/features.cc
-index 3d473c6a298ef..787a35783e88e 100644
+index 85361b539418f..48f0cbc05f721 100644
 --- a/net/base/features.cc
 +++ b/net/base/features.cc
-@@ -272,7 +272,7 @@ BASE_FEATURE(kTopLevelTpcdTrialSettings,
+@@ -256,7 +256,7 @@ BASE_FEATURE(kTopLevelTpcdTrialSettings,
  
  BASE_FEATURE(kTpcdMetadataGrants,
               "TpcdMetadataGrants",
 -             base::FEATURE_ENABLED_BY_DEFAULT);
 +             base::FEATURE_DISABLED_BY_DEFAULT);
  
- BASE_FEATURE(kTpcdMetadataStagedRollback,
+ BASE_FEATURE(kTpcdMetadataStageControl,
               "TpcdMetadataStageControl",

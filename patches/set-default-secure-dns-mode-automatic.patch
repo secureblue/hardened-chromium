@@ -7,7 +7,7 @@ index 27526ac0c574b..0680d2912d381 100644
                       SecureDnsConfig::ParseMode(mode_str)
                           ? std::string(mode_str)
 -                         : SecureDnsConfig::kModeOff);
-+                         : SecureDnsConfig::kModeAutomatic);
++                         : SecureDnsConfig::kAutomatic);
    }
  
    const base::Value* templates =

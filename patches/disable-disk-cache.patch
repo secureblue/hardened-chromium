@@ -1,8 +1,8 @@
 diff --git a/chrome/browser/chrome_content_browser_client.cc b/chrome/browser/chrome_content_browser_client.cc
-index 1ef3b18394447..05fcdd681d6c1 100644
+index 7c3178793b3fb..4d347b8292142 100644
 --- a/chrome/browser/chrome_content_browser_client.cc
 +++ b/chrome/browser/chrome_content_browser_client.cc
-@@ -1561,7 +1561,7 @@ ChromeContentBrowserClient::~ChromeContentBrowserClient() {
+@@ -1529,7 +1529,7 @@ ChromeContentBrowserClient::~ChromeContentBrowserClient() {
  // static
  void ChromeContentBrowserClient::RegisterLocalStatePrefs(
      PrefRegistrySimple* registry) {

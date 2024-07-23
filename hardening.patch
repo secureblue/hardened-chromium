@@ -242,7 +242,7 @@ index 931b9c0..451591e 100644
 +%patch -P2069 -p1 -b .set-default-extension-install-verification-enforce-strict
 +%patch -P2070 -p1 -b .set-default-secure-dns-mode-automatic
 +%patch -P2071 -p1 -b .set-mv3-only-by-default
-+#%patch -P2072 -p1 -b .set-ozone-platform-hint-auto-by-default
++%patch -P2072 -p1 -b .set-ozone-platform-hint-auto-by-default
 +%patch -P2073 -p1 -b .show-full-urls-by-default
 +%patch -P2074 -p1 -b .disable-password-manager-prompt-by-default
 +%patch -P2075 -p1 -b .enable-network-service-sandbox-by-default
