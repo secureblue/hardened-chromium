@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index 931b9c0..d6fcba9 100644
+index 931b9c0..879a41f 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -31,10 +31,10 @@
@@ -35,7 +35,7 @@ index 931b9c0..d6fcba9 100644
  Release: 1%{?dist}
  Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
  Url: http://www.chromium.org/Home
-@@ -563,6 +563,83 @@ Patch413: fix-unknown-warning-option-messages.diff
+@@ -563,6 +563,81 @@ Patch413: fix-unknown-warning-option-messages.diff
  # 64kpage support on el8
  Patch500: chromium-124-el8-support-64kpage.patch
  
@@ -58,7 +58,6 @@ index 931b9c0..d6fcba9 100644
 +Patch2016: 0030-disable-media-router-media-remoting-by-default.patch
 +Patch2017: 0031-disable-media-router-by-default.patch
 +Patch2019: 0033-disable-browser-sign-in-feature-by-default.patch
-+Patch2020: 0034-disable-browser-autologin-by-default.patch
 +Patch2021: 0035-disable-safe-browsing-reporting-opt-in-by-default.patch
 +Patch2022: 0036-disable-unused-safe-browsing-option-by-default.patch
 +Patch2023: 0037-disable-media-DRM-preprovisioning-by-default.patch
@@ -81,7 +80,6 @@ index 931b9c0..d6fcba9 100644
 +Patch2044: 0071-enable-partitioning-connections-by-default.patch
 +Patch2045: 0074-Enable-strict-origin-isolation-by-default.patch
 +Patch2046: 0075-Enable-reduce-accept-language-header-by-default.patch
-+Patch2047: 0076-enable-process-isolated-sandboxed-iframes-by-default.patch
 +Patch2048: 0077-use-Google-Chrome-branding-for-client-hints.patch
 +Patch2049: 0115-Derive-high-entropy-client-hints-with-reduced-user-a.patch
 +Patch2050: 0122-Use-local-list-of-supported-languages-for-Language-s.patch
@@ -119,7 +117,7 @@ index 931b9c0..d6fcba9 100644
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-@@ -928,7 +1005,7 @@ Requires: libcanberra-gtk3%{_isa}
+@@ -928,7 +1003,7 @@ Requires: libcanberra-gtk3%{_isa}
  Requires: u2f-hidraw-policy
  %endif
  
@@ -128,7 +126,7 @@ index 931b9c0..d6fcba9 100644
  
  # rhel 7: x86_64
  # rhel 8 or newer: x86_64, aarch64
-@@ -1098,7 +1175,7 @@ Requires(preun): systemd
+@@ -1098,7 +1173,7 @@ Requires(preun): systemd
  Requires(postun): systemd
  Requires: xorg-x11-server-Xvfb
  Requires: python3-psutil
@@ -137,7 +135,7 @@ index 931b9c0..d6fcba9 100644
  Summary: Remote desktop support for google-chrome & chromium
  
  %description -n chrome-remote-desktop
-@@ -1107,7 +1184,7 @@ Remote desktop support for google-chrome & chromium.
+@@ -1107,7 +1182,7 @@ Remote desktop support for google-chrome & chromium.
  
  %package -n chromedriver
  Summary: WebDriver for Google Chrome/Chromium
@@ -146,7 +144,7 @@ index 931b9c0..d6fcba9 100644
  
  %description -n chromedriver
  WebDriver is an open source tool for automated testing of webapps across many
-@@ -1118,7 +1195,7 @@ members of the Chromium and WebDriver teams.
+@@ -1118,7 +1193,7 @@ members of the Chromium and WebDriver teams.
  
  %package headless
  Summary:	A minimal headless shell built from Chromium
@@ -155,7 +153,7 @@ index 931b9c0..d6fcba9 100644
  
  %description headless
  A minimal headless client built from Chromium. headless_shell is built
-@@ -1127,14 +1204,14 @@ udev.
+@@ -1127,14 +1202,14 @@ udev.
  
  %package qt5-ui
  Summary: Qt5 UI built from Chromium
@@ -172,7 +170,7 @@ index 931b9c0..d6fcba9 100644
  
  %description qt6-ui
  Qt6 UI for chromium.
-@@ -1341,6 +1418,80 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
+@@ -1341,6 +1416,78 @@ cp /opt/rh/%{toolset}-%{dts_version}/root/usr/include/c++/%{dts_version}/optiona
  %endif
  %endif
  
@@ -193,7 +191,6 @@ index 931b9c0..d6fcba9 100644
 +%patch -P2016 -p1 -b .0030-disable-media-router-media-remoting-by-default
 +%patch -P2017 -p1 -b .0031-disable-media-router-by-default
 +%patch -P2019 -p1 -b .0033-disable-browser-sign-in-feature-by-default
-+%patch -P2020 -p1 -b .0034-disable-browser-autologin-by-default
 +%patch -P2021 -p1 -b .0035-disable-safe-browsing-reporting-opt-in-by-default
 +%patch -P2022 -p1 -b .0036-disable-unused-safe-browsing-option-by-default
 +%patch -P2023 -p1 -b .0037-disable-media-DRM-preprovisioning-by-default
@@ -216,7 +213,6 @@ index 931b9c0..d6fcba9 100644
 +%patch -P2044 -p1 -b .0071-enable-partitioning-connections-by-default
 +%patch -P2045 -p1 -b .0074-Enable-strict-origin-isolation-by-default
 +%patch -P2046 -p1 -b .0075-Enable-reduce-accept-language-header-by-default
-+%patch -P2047 -p1 -b .0076-enable-process-isolated-sandboxed-iframes-by-default
 +%patch -P2048 -p1 -b .0077-use-Google-Chrome-branding-for-client-hints
 +%patch -P2049 -p1 -b .0115-Derive-high-entropy-client-hints-with-reduced-user-a
 +%patch -P2050 -p1 -b .0122-Use-local-list-of-supported-languages-for-Language-s
@@ -253,7 +249,7 @@ index 931b9c0..d6fcba9 100644
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
-@@ -1393,7 +1544,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
+@@ -1393,7 +1540,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
  %endif
  
  # Hard code extra version
@@ -262,7 +258,7 @@ index 931b9c0..d6fcba9 100644
  
  # Fix hardcoded path in remoting code
  sed -i 's|/opt/google/chrome-remote-desktop|%{crd_path}|g' remoting/host/setup/daemon_controller_delegate_linux.cc
-@@ -1494,9 +1645,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
+@@ -1494,9 +1641,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
  
  CHROMIUM_CORE_GN_DEFINES+=' chrome_pgo_phase=0'
  
@@ -277,7 +273,7 @@ index 931b9c0..d6fcba9 100644
  
  %if %{useapikey}
  CHROMIUM_CORE_GN_DEFINES+=' google_api_key="%{api_key}"'
-@@ -1547,6 +1700,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
+@@ -1547,6 +1696,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
  %endif
  CHROMIUM_CORE_GN_DEFINES+=' enable_iterator_debugging=false'
  CHROMIUM_CORE_GN_DEFINES+=' enable_vr=false'
@@ -287,7 +283,7 @@ index 931b9c0..d6fcba9 100644
  CHROMIUM_CORE_GN_DEFINES+=' build_dawn_tests=false enable_perfetto_unittests=false'
  CHROMIUM_CORE_GN_DEFINES+=' disable_fieldtrial_testing_config=true'
  CHROMIUM_CORE_GN_DEFINES+=' symbol_level=%{debug_level} blink_symbol_level=%{debug_level}'
-@@ -1586,8 +1742,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
+@@ -1586,8 +1738,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
  %endif
  
  CHROMIUM_BROWSER_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
@@ -298,7 +294,7 @@ index 931b9c0..d6fcba9 100644
  
  %if %{use_vaapi}
  CHROMIUM_BROWSER_GN_DEFINES+=' use_vaapi=true'
-@@ -1784,15 +1940,15 @@ rm -rf %{buildroot}
+@@ -1784,15 +1936,15 @@ rm -rf %{buildroot}
  
  mkdir -p %{buildroot}%{_bindir} \
           %{buildroot}%{chromium_path}/locales \
@@ -317,7 +313,7 @@ index 931b9c0..d6fcba9 100644
  %endif
  
  export BUILD_TARGET=`cat /etc/redhat-release`
-@@ -1953,7 +2109,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
+@@ -1953,7 +2105,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
  cp -a chrome/app/theme/chromium/product_logo_24.png %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/%{chromium_browser_channel}.png
  
  # Install the master_preferences file
@@ -326,7 +322,7 @@ index 931b9c0..d6fcba9 100644
  
  mkdir -p %{buildroot}%{_datadir}/applications/
  desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE4}
-@@ -2005,11 +2161,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
+@@ -2005,11 +2157,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
  %doc AUTHORS README.fedora
  %doc chrome_policy_list.html *.json
  %license LICENSE
