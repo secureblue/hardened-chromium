@@ -16,3 +16,7 @@ A hardened chromium for desktop Linux inspired by [Vanadium](https://github.com/
 
 * Any changes that sacrifice security for "privacy" (for example, enabling MV2)
 * Any novel functionality that is unrelated to security
+
+## Contributing
+
+Follow the [contributing documentation](CONTRIBUTING.md), and make sure to respect the [CoC](CODE_OF_CONDUCT.md).
