@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index fbb010a..d0c3d5a 100644
+index fbb010a..951038c 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -36,10 +36,10 @@
@@ -24,16 +24,19 @@ index fbb010a..d0c3d5a 100644
  
  # Leave this alone, please.
  %global chromebuilddir out/Release
-@@ -295,7 +295,7 @@
+@@ -295,9 +295,9 @@
  %global chromoting_client_id %nil
  %endif
  
 -Name:	chromium%{chromium_channel}
 +Name:	hardened-chromium%{chromium_channel}
  Version: 127.0.6533.88
- Release: 1%{?dist}
+-Release: 1%{?dist}
++Release: 2%{?dist}
  Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
-@@ -479,6 +479,81 @@ Patch503: chromium-127-ninja-1.21.1-deps-part2.patch
+ Url: http://www.chromium.org/Home
+ License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND GPL-2.0-or-later AND ISC AND OpenSSL AND (MPL-1.1 OR GPL-2.0-only OR LGPL-2.0-only)
+@@ -479,12 +479,87 @@ Patch503: chromium-127-ninja-1.21.1-deps-part2.patch
  Patch504: chromium-127-ninja-1.21.1-deps-part3.patch
  Patch505: chromium-127-crabbyavif.patch
  
@@ -115,7 +118,45 @@ index fbb010a..d0c3d5a 100644
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-@@ -847,7 +922,7 @@ Requires: libcanberra-gtk3%{_isa}
+ # If you want to include the ffmpeg arm sources append the --ffmpegarm switch
+ # https://commondatastorage.googleapis.com/chromium-browser-official/chromium-%%{version}.tar.xz
+-Source0: chromium-%{version}-clean.tar.xz
++# Source0: chromium-%{version}-clean.tar.xz
+ Source1: README.fedora
+ Source2: chromium.conf
+ Source3: chromium-browser.sh
+@@ -501,21 +576,6 @@ Source9: chromium-browser.xml
+ Source10: chrome-remote-desktop@.service
+ Source11: master_preferences
+ 
+-%if ! %{system_nodejs}
+-Source12: https://nodejs.org/dist/%{nodejs_version}/node-%{nodejs_version}-linux-x64.tar.xz
+-Source13: https://nodejs.org/dist/%{nodejs_version}/node-%{nodejs_version}-linux-arm64.tar.xz
+-%endif
+-
+-# esbuild binary
+-%if 0%{?rhel}
+-Source14: https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-%{esbuild_version}.tgz
+-Source15: https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-%{esbuild_version}.tgz
+-%endif
+-
+-# bindgen for epel8
+-Source16: https://than.fedorapeople.org/epel8/bindgen-cli-aarch64.tar.xz
+-Source17: https://than.fedorapeople.org/epel8/bindgen-cli-x86_64.tar.xz
+-
+ # esbuild binary from fedora
+ %if 0%{?fedora}
+ BuildRequires: golang-github-evanw-esbuild
+@@ -644,6 +704,8 @@ BuildRequires: minizip-compat-devel
+ %endif
+ %endif
+ 
++BuildRequires:  python3
++
+ %if %{system_nodejs}
+ BuildRequires: nodejs
+ %endif
+@@ -847,7 +909,7 @@ Requires: libcanberra-gtk3%{_isa}
  Requires: u2f-hidraw-policy
  %endif
  
@@ -124,7 +165,7 @@ index fbb010a..d0c3d5a 100644
  
  # rhel 8 or newer and fedora < 40: x86_64, aarch64
  # fedora 40 or newer: x86_64, aarch64, ppc64le
-@@ -1012,7 +1087,7 @@ Requires(preun): systemd
+@@ -1012,7 +1074,7 @@ Requires(preun): systemd
  Requires(postun): systemd
  Requires: xorg-x11-server-Xvfb
  Requires: python3-psutil
@@ -133,7 +174,7 @@ index fbb010a..d0c3d5a 100644
  Summary: Remote desktop support for google-chrome & chromium
  
  %description -n chrome-remote-desktop
-@@ -1021,7 +1096,7 @@ Remote desktop support for google-chrome & chromium.
+@@ -1021,7 +1083,7 @@ Remote desktop support for google-chrome & chromium.
  
  %package -n chromedriver
  Summary: WebDriver for Google Chrome/Chromium
@@ -142,7 +183,7 @@ index fbb010a..d0c3d5a 100644
  
  %description -n chromedriver
  WebDriver is an open source tool for automated testing of webapps across many
-@@ -1032,7 +1107,7 @@ members of the Chromium and WebDriver teams.
+@@ -1032,7 +1094,7 @@ members of the Chromium and WebDriver teams.
  
  %package headless
  Summary:	A minimal headless shell built from Chromium
@@ -151,7 +192,7 @@ index fbb010a..d0c3d5a 100644
  
  %description headless
  A minimal headless client built from Chromium. headless_shell is built
-@@ -1041,14 +1116,14 @@ udev.
+@@ -1041,19 +1103,20 @@ udev.
  
  %package qt5-ui
  Summary: Qt5 UI built from Chromium
@@ -168,7 +209,13 @@ index fbb010a..d0c3d5a 100644
  
  %description qt6-ui
  Qt6 UI for chromium.
-@@ -1213,6 +1288,78 @@ Qt6 UI for chromium.
+ 
+ %prep
++python3 %{SOURCE6} --version %{version} --stable --ffmpegclean --ffmpegarm --cleansources
+ %setup -q -n chromium-%{version}
+ 
+ ### Chromium Fedora Patches ###
+@@ -1213,6 +1276,78 @@ Qt6 UI for chromium.
  %endif
  %patch -P505 -p1 -b .crabbyavif
  
@@ -247,7 +294,7 @@ index fbb010a..d0c3d5a 100644
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
-@@ -1279,7 +1426,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
+@@ -1279,7 +1414,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
  %endif
  
  # Hard code extra version
@@ -256,7 +303,7 @@ index fbb010a..d0c3d5a 100644
  
  # Fix hardcoded path in remoting code
  sed -i 's|/opt/google/chrome-remote-desktop|%{crd_path}|g' remoting/host/setup/daemon_controller_delegate_linux.cc
-@@ -1375,11 +1522,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
+@@ -1375,11 +1510,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
  
  CHROMIUM_CORE_GN_DEFINES+=' chrome_pgo_phase=0'
  
@@ -272,7 +319,7 @@ index fbb010a..d0c3d5a 100644
  
  %if %{useapikey}
  CHROMIUM_CORE_GN_DEFINES+=' google_api_key="%{api_key}"'
-@@ -1425,6 +1572,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
+@@ -1425,6 +1560,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
  %endif
  CHROMIUM_CORE_GN_DEFINES+=' enable_iterator_debugging=false'
  CHROMIUM_CORE_GN_DEFINES+=' enable_vr=false'
@@ -282,7 +329,7 @@ index fbb010a..d0c3d5a 100644
  CHROMIUM_CORE_GN_DEFINES+=' build_dawn_tests=false enable_perfetto_unittests=false'
  CHROMIUM_CORE_GN_DEFINES+=' disable_fieldtrial_testing_config=true'
  CHROMIUM_CORE_GN_DEFINES+=' symbol_level=%{debug_level} blink_symbol_level=%{debug_level}'
-@@ -1464,8 +1614,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
+@@ -1464,8 +1602,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
  %endif
  
  CHROMIUM_BROWSER_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
@@ -293,7 +340,7 @@ index fbb010a..d0c3d5a 100644
  
  %if %{use_vaapi}
  CHROMIUM_BROWSER_GN_DEFINES+=' use_vaapi=true'
-@@ -1667,15 +1817,15 @@ rm -rf %{buildroot}
+@@ -1667,15 +1805,15 @@ rm -rf %{buildroot}
  
  mkdir -p %{buildroot}%{_bindir} \
           %{buildroot}%{chromium_path}/locales \
@@ -312,7 +359,7 @@ index fbb010a..d0c3d5a 100644
  %endif
  
  export BUILD_TARGET=`cat /etc/redhat-release`
-@@ -1836,7 +1986,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
+@@ -1836,7 +1974,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
  cp -a chrome/app/theme/chromium/product_logo_24.png %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/%{chromium_browser_channel}.png
  
  # Install the master_preferences file
@@ -321,7 +368,7 @@ index fbb010a..d0c3d5a 100644
  
  mkdir -p %{buildroot}%{_datadir}/applications/
  desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE4}
-@@ -1888,11 +2038,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
+@@ -1888,11 +2026,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
  %doc AUTHORS README.fedora
  %doc chrome_policy_list.html *.json
  %license LICENSE
@@ -356,3 +403,16 @@ index 8d732dc..58b079c 100644
 +     "about:blank"
    ]
  }
+diff --git a/sources b/sources
+deleted file mode 100644
+index 7e696d9..0000000
+--- a/sources
++++ /dev/null
+@@ -1,7 +0,0 @@
+-SHA512 (node-v20.6.1-linux-arm64.tar.xz) = adfcaf2c22614797fd69fb46d94c1cbf64dea0213cc817c45d3904b634dbf1f4e62e4ebd95bfa4ba0a9c559747d42115406edc471af294334160ba6e103e31d0
+-SHA512 (node-v20.6.1-linux-x64.tar.xz) = 7e15c05041a9a50f0046266aadb2e092a5aefbec19be1c7c809471add520cb57c7df3c47d88b1888b29bf2979dca3c92adddfd965370fa2a9da4ea02186464fd
+-SHA512 (linux-arm64-0.19.2.tgz) = 8a0d8fec6786fffcd6954d00820037a55d61e60762c74300df0801f8db27057562c221a063bedfb8df56af9ba80abb366336987e881782c5996e6f871abd3dc6
+-SHA512 (linux-x64-0.19.2.tgz) = a31cc74c4bfa54f9b75d735a1cfc944d3b5efb7c06bfba9542da9a642ae0b2d235ea00ae84d3ad0572c406405110fe7b61377af0fd15803806ef78d20fc6f05d
+-SHA512 (bindgen-cli-aarch64.tar.xz) = 1a5ae4e8fdd31d80e8111c4d5f2115336684763ecd3a442ffecdbc2a37bab146f88bdee0bb1ea7a98e1049f81b12e64bd0ce5510529b30a74ce3306488ac129b
+-SHA512 (bindgen-cli-x86_64.tar.xz) = 7ccc9b43b32d3a064a75cfc150e060711356da8fe98e83d855bae017108ef8e9e172fbdd6e2579433c19cfb56ababa5b77a8db6fa57a5e657a3878778ca10a37
+-SHA512 (chromium-127.0.6533.88-clean.tar.xz) = 212160a15e14348d416d2c3df0dd24f7b05da3c0f6fff3bccac1314f697be753bf831ea06039adec7d02f4e34d3a84787d12233bf927fa76727397ac0fde300f
