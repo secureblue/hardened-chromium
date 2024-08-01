@@ -371,7 +371,6 @@ index fbb010a..5ad2d00 100644
  %{_bindir}/%{chromium_browser_channel}
  %{chromium_path}/*.bin
 diff --git a/master_preferences b/master_preferences
-index 8d732dc..58b079c 100644
 --- a/master_preferences
 +++ b/master_preferences
 @@ -1,5 +1,5 @@
@@ -391,7 +390,6 @@ index 8d732dc..58b079c 100644
  }
 diff --git a/sources b/sources
 deleted file mode 100644
-index 7e696d9..0000000
 --- a/sources
 +++ /dev/null
 @@ -1,7 +0,0 @@
@@ -402,3 +400,30 @@ index 7e696d9..0000000
 -SHA512 (bindgen-cli-aarch64.tar.xz) = 1a5ae4e8fdd31d80e8111c4d5f2115336684763ecd3a442ffecdbc2a37bab146f88bdee0bb1ea7a98e1049f81b12e64bd0ce5510529b30a74ce3306488ac129b
 -SHA512 (bindgen-cli-x86_64.tar.xz) = 7ccc9b43b32d3a064a75cfc150e060711356da8fe98e83d855bae017108ef8e9e172fbdd6e2579433c19cfb56ababa5b77a8db6fa57a5e657a3878778ca10a37
 -SHA512 (chromium-127.0.6533.88-clean.tar.xz) = 212160a15e14348d416d2c3df0dd24f7b05da3c0f6fff3bccac1314f697be753bf831ea06039adec7d02f4e34d3a84787d12233bf927fa76727397ac0fde300f
+diff --git a/chromium.conf b/chromium.conf
+--- a/chromium.conf
++++ b/chromium.conf
+@@ -9,7 +9,14 @@ GRAPHIC_DRIVER=default
+ WEB_DARKMODE=off
+ 
+ # NATIVE_WAYLAND=[on|off]
+-NATIVE_WAYLAND=off
++case "$XDG_SESSION_TYPE" in
++   wayland)
++      NATIVE_WAYLAND=on
++      ;;
++   x11)
++      NATIVE_WAYLAND=off
++      ;;
++esac
+ 
+ CHROMIUM_FLAGS=""
+ if [ "$NATIVE_WAYLAND" == "off" ] ; then
+@@ -17,7 +24,6 @@ if [ "$NATIVE_WAYLAND" == "off" ] ; then
+    CHROMIUM_FLAGS+=" --enable-gpu-memory-buffer-video-frames"
+    CHROMIUM_FLAGS+=" --enable-zero-copy"
+    CHROMIUM_FLAGS+=" --ignore-gpu-blocklist --disable-gpu-driver-bug-workaround"
+-   CHROMIUM_FLAGS+=" --enable-chrome-browser-cloud-management"
+    CHROMIUM_FLAGS+=" --enable-gpu-rasterization"
+ fi
+ 
