@@ -9,7 +9,7 @@ index ff1ed1a98cbfe..7c02d25eef176 100644
 +    {"cross-origin-trim-referrer",
 +     flag_descriptions::kCapReferrerToOriginOnCrossOriginName,
 +     kCapReferrerToOriginOnCrossOriginDescription, kOsAll,
-+     SINGLE_VALUE_TYPE(switches::kCapReferrerToOriginOnCrossOrigin)},
++     FEATURE_VALUE_TYPE(switches::kCapReferrerToOriginOnCrossOrigin)},
      {variations::switches::kEnableBenchmarking,
       flag_descriptions::kEnableBenchmarkingName,
       flag_descriptions::kEnableBenchmarkingDescription, kOsAll,
