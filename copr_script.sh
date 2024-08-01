@@ -4,9 +4,6 @@
 git clone --depth 1 --recurse-submodules https://github.com/secureblue/hardened-chromium.git
 cd hardened-chromium
 
-# Download chromium-%{version}-clean.tar.xz from the Fedora's server
-rpkg --path ./chromium sources
-
 cp vanadium_patches/* ./chromium
 cp patches/* ./chromium
 
