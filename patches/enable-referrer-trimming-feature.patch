@@ -1,0 +1,13 @@
+diff --git a/net/base/features.cc b/net/base/features.cc
+index 85361b539418f..82f16ccd3c0d8 100644
+--- a/net/base/features.cc
++++ b/net/base/features.cc
+@@ -21,7 +21,7 @@ BASE_FEATURE(kAvoidH2Reprioritization,
+ 
+ BASE_FEATURE(kCapReferrerToOriginOnCrossOrigin,
+              "CapReferrerToOriginOnCrossOrigin",
+-             base::FEATURE_DISABLED_BY_DEFAULT);
++             base::FEATURE_ENABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kAsyncDns,
+              "AsyncDns",

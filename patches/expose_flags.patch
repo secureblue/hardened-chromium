@@ -1,0 +1,48 @@
+diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
+index ff1ed1a98cbfe..7c02d25eef176 100644
+--- a/chrome/browser/about_flags.cc
++++ b/chrome/browser/about_flags.cc
+@@ -4117,6 +4117,10 @@ const FeatureEntry kFeatureEntries[] = {
+ // //tools/flags/generate_unexpire_flags.py.
+ #include "build/chromeos_buildflags.h"
+ #include "chrome/browser/unexpire_flags_gen.inc"
++    {"cross-origin-trim-referrer",
++     flag_descriptions::kCapReferrerToOriginOnCrossOriginName,
++     kCapReferrerToOriginOnCrossOriginDescription, kOsAll,
++     SINGLE_VALUE_TYPE(switches::kCapReferrerToOriginOnCrossOrigin)},
+     {variations::switches::kEnableBenchmarking,
+      flag_descriptions::kEnableBenchmarkingName,
+      flag_descriptions::kEnableBenchmarkingDescription, kOsAll,
+diff --git a/chrome/browser/flag_descriptions.cc b/chrome/browser/flag_descriptions.cc
+index 186e908582f2b..c9bba492df215 100644
+--- a/chrome/browser/flag_descriptions.cc
++++ b/chrome/browser/flag_descriptions.cc
+@@ -14,6 +14,12 @@
+ 
+ namespace flag_descriptions {
+ 
++const char kCapReferrerToOriginOnCrossOriginName[] =
++    "Cross-origin referrer trimming";
++const char kCapReferrerToOriginOnCrossOriginDescription[] =
++    "Trims the referrer to just the origin on cross origin navigation. "
++    "Defaults to enabled. THIS IS A HARDENED CHROMIUM EXPOSED FEATURE!";
++
+ const char kAccelerated2dCanvasName[] = "Accelerated 2D canvas";
+ const char kAccelerated2dCanvasDescription[] =
+     "Enables the use of the GPU to perform 2d canvas rendering instead of "
+diff --git a/chrome/browser/flag_descriptions.h b/chrome/browser/flag_descriptions.h
+index 705e6df281abb..9bd7b0ed1b50e 100644
+--- a/chrome/browser/flag_descriptions.h
++++ b/chrome/browser/flag_descriptions.h
+@@ -43,6 +43,11 @@
+ 
+ namespace flag_descriptions {
+ 
++// Hardened chromium exposed --------------------------------------------------
++
++extern const char kCapReferrerToOriginOnCrossOriginName[];
++extern const char kCapReferrerToOriginOnCrossOriginDescription[];
++
+ // Cross-platform -------------------------------------------------------------
+ 
+ extern const char kAccelerated2dCanvasName[];
