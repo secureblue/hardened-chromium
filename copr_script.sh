@@ -10,5 +10,9 @@ cp patches/* ./chromium
 # Patch the spec file to build with the hardening patches
 patch -d ./chromium -p1 < hardening.patch
 
+cd chromium
+python3 chromium-latest.py --version 127.0.6533.88 --stable --ffmpegclean --ffmpegarm --cleansources
+cd ..
+
 # Move all the source files into the parent directory for the COPR build system to find them
 mv ./chromium/* ../

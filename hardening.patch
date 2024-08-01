@@ -1,5 +1,5 @@
 diff --git a/chromium.spec b/chromium.spec
-index fbb010a..cccea55 100644
+index fbb010a..5ad2d00 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -36,10 +36,10 @@
@@ -148,16 +148,7 @@ index fbb010a..cccea55 100644
  
  # esbuild binary from fedora
  %if 0%{?fedora}
-@@ -644,6 +703,8 @@ BuildRequires: minizip-compat-devel
- %endif
- %endif
- 
-+BuildRequires:  python3
-+
- %if %{system_nodejs}
- BuildRequires: nodejs
- %endif
-@@ -847,7 +908,7 @@ Requires: libcanberra-gtk3%{_isa}
+@@ -847,7 +906,7 @@ Requires: libcanberra-gtk3%{_isa}
  Requires: u2f-hidraw-policy
  %endif
  
@@ -166,7 +157,7 @@ index fbb010a..cccea55 100644
  
  # rhel 8 or newer and fedora < 40: x86_64, aarch64
  # fedora 40 or newer: x86_64, aarch64, ppc64le
-@@ -1012,7 +1073,7 @@ Requires(preun): systemd
+@@ -1012,7 +1071,7 @@ Requires(preun): systemd
  Requires(postun): systemd
  Requires: xorg-x11-server-Xvfb
  Requires: python3-psutil
@@ -175,7 +166,7 @@ index fbb010a..cccea55 100644
  Summary: Remote desktop support for google-chrome & chromium
  
  %description -n chrome-remote-desktop
-@@ -1021,7 +1082,7 @@ Remote desktop support for google-chrome & chromium.
+@@ -1021,7 +1080,7 @@ Remote desktop support for google-chrome & chromium.
  
  %package -n chromedriver
  Summary: WebDriver for Google Chrome/Chromium
@@ -184,7 +175,7 @@ index fbb010a..cccea55 100644
  
  %description -n chromedriver
  WebDriver is an open source tool for automated testing of webapps across many
-@@ -1032,7 +1093,7 @@ members of the Chromium and WebDriver teams.
+@@ -1032,7 +1091,7 @@ members of the Chromium and WebDriver teams.
  
  %package headless
  Summary:	A minimal headless shell built from Chromium
@@ -193,7 +184,7 @@ index fbb010a..cccea55 100644
  
  %description headless
  A minimal headless client built from Chromium. headless_shell is built
-@@ -1041,19 +1102,20 @@ udev.
+@@ -1041,14 +1100,14 @@ udev.
  
  %package qt5-ui
  Summary: Qt5 UI built from Chromium
@@ -210,13 +201,7 @@ index fbb010a..cccea55 100644
  
  %description qt6-ui
  Qt6 UI for chromium.
- 
- %prep
-+python3 %{SOURCE6} --version %{version} --stable --ffmpegclean --ffmpegarm --cleansources
- %setup -q -n chromium-%{version}
- 
- ### Chromium Fedora Patches ###
-@@ -1213,6 +1275,78 @@ Qt6 UI for chromium.
+@@ -1213,6 +1272,78 @@ Qt6 UI for chromium.
  %endif
  %patch -P505 -p1 -b .crabbyavif
  
@@ -295,7 +280,7 @@ index fbb010a..cccea55 100644
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
-@@ -1279,7 +1413,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
+@@ -1279,7 +1410,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
  %endif
  
  # Hard code extra version
@@ -304,7 +289,7 @@ index fbb010a..cccea55 100644
  
  # Fix hardcoded path in remoting code
  sed -i 's|/opt/google/chrome-remote-desktop|%{crd_path}|g' remoting/host/setup/daemon_controller_delegate_linux.cc
-@@ -1375,11 +1509,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
+@@ -1375,11 +1506,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
  
  CHROMIUM_CORE_GN_DEFINES+=' chrome_pgo_phase=0'
  
@@ -320,7 +305,7 @@ index fbb010a..cccea55 100644
  
  %if %{useapikey}
  CHROMIUM_CORE_GN_DEFINES+=' google_api_key="%{api_key}"'
-@@ -1425,6 +1559,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
+@@ -1425,6 +1556,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
  %endif
  CHROMIUM_CORE_GN_DEFINES+=' enable_iterator_debugging=false'
  CHROMIUM_CORE_GN_DEFINES+=' enable_vr=false'
@@ -330,7 +315,7 @@ index fbb010a..cccea55 100644
  CHROMIUM_CORE_GN_DEFINES+=' build_dawn_tests=false enable_perfetto_unittests=false'
  CHROMIUM_CORE_GN_DEFINES+=' disable_fieldtrial_testing_config=true'
  CHROMIUM_CORE_GN_DEFINES+=' symbol_level=%{debug_level} blink_symbol_level=%{debug_level}'
-@@ -1464,8 +1601,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
+@@ -1464,8 +1598,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
  %endif
  
  CHROMIUM_BROWSER_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
@@ -341,7 +326,7 @@ index fbb010a..cccea55 100644
  
  %if %{use_vaapi}
  CHROMIUM_BROWSER_GN_DEFINES+=' use_vaapi=true'
-@@ -1667,15 +1804,15 @@ rm -rf %{buildroot}
+@@ -1667,15 +1801,15 @@ rm -rf %{buildroot}
  
  mkdir -p %{buildroot}%{_bindir} \
           %{buildroot}%{chromium_path}/locales \
@@ -360,7 +345,7 @@ index fbb010a..cccea55 100644
  %endif
  
  export BUILD_TARGET=`cat /etc/redhat-release`
-@@ -1836,7 +1973,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
+@@ -1836,7 +1970,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
  cp -a chrome/app/theme/chromium/product_logo_24.png %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/%{chromium_browser_channel}.png
  
  # Install the master_preferences file
@@ -369,7 +354,7 @@ index fbb010a..cccea55 100644
  
  mkdir -p %{buildroot}%{_datadir}/applications/
  desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE4}
-@@ -1888,11 +2025,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
+@@ -1888,11 +2022,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
  %doc AUTHORS README.fedora
  %doc chrome_policy_list.html *.json
  %license LICENSE
