@@ -1,0 +1,56 @@
+diff --git a/net/base/features.cc b/net/base/features.cc
+index 302f1a22d7d7e..4821492c651e1 100644
+--- a/net/base/features.cc
++++ b/net/base/features.cc
+@@ -19,9 +19,13 @@ BASE_FEATURE(kAvoidH2Reprioritization,
+              "AvoidH2Reprioritization",
+              base::FEATURE_DISABLED_BY_DEFAULT);
+ 
++BASE_FEATURE(kDisableCrossOriginReferrers,
++             "DisableCrossOriginReferrers",
++             base::FEATURE_DISABLED_BY_DEFAULT);
++
+ BASE_FEATURE(kCapReferrerToOriginOnCrossOrigin,
+              "CapReferrerToOriginOnCrossOrigin",
+-             base::FEATURE_DISABLED_BY_DEFAULT);
++             base::FEATURE_ENABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kAsyncDns,
+              "AsyncDns",
+diff --git a/net/base/features.h b/net/base/features.h
+index ffa3f6ced770b..d1f430814ca7e 100644
+--- a/net/base/features.h
++++ b/net/base/features.h
+@@ -26,6 +26,9 @@ NET_EXPORT BASE_DECLARE_FEATURE(kAlpsForHttp2);
+ // Disable H2 reprioritization, in order to measure its impact.
+ NET_EXPORT BASE_DECLARE_FEATURE(kAvoidH2Reprioritization);
+ 
++// Disables referrers when navigating across origins.
++NET_EXPORT BASE_DECLARE_FEATURE(kDisableCrossOriginReferrers);
++
+ // When kCapReferrerToOriginOnCrossOrigin is enabled, HTTP referrers on cross-
+ // origin requests are restricted to contain at most the source origin.
+ NET_EXPORT BASE_DECLARE_FEATURE(kCapReferrerToOriginOnCrossOrigin);
+diff --git a/services/network/network_service_network_delegate.cc b/services/network/network_service_network_delegate.cc
+index 24034fb3a78f7..1664359ca64fe 100644
+--- a/services/network/network_service_network_delegate.cc
++++ b/services/network/network_service_network_delegate.cc
+@@ -59,10 +59,14 @@ void NetworkServiceNetworkDelegate::MaybeTruncateReferrer(
+     request->set_referrer_policy(net::ReferrerPolicy::NO_REFERRER);
+     return;
+   }
+-
+-  if (base::FeatureList::IsEnabled(
+-          net::features::kCapReferrerToOriginOnCrossOrigin)) {
+-    if (!url::IsSameOriginWith(effective_url, GURL(request->referrer()))) {
++  
++  // If the target URL isn't the same origin as the current URL
++  if (!url::IsSameOriginWith(effective_url, GURL(request->referrer()))) {
++    if (base::FeatureList::IsEnabled(
++          net::features::kDisableCrossOriginReferrers)) {
++      request->SetReferrer(std::string());
++    } else if (base::FeatureList::IsEnabled(
++                net::features::kCapReferrerToOriginOnCrossOrigin)) {
+       auto capped_referrer = url::Origin::Create(GURL(request->referrer()));
+       request->SetReferrer(capped_referrer.GetURL().spec());
+     }
