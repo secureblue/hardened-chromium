@@ -12,6 +12,8 @@ patch -d ./chromium -p1 < hardening.patch
 
 cd chromium
 python3 chromium-latest.py --version 127.0.6533.88 --stable --ffmpegclean --ffmpegarm --cleansources
+rm chromium-127.0.6533.88.tar.xz
+rm -rf ./chromium-127.0.6533.88
 cd ..
 
 # Move all the source files into the parent directory for the COPR build system to find them
