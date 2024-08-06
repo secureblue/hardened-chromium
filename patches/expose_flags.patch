@@ -28,13 +28,13 @@ diff --git a/chrome/browser/flag_descriptions.cc b/chrome/browser/flag_descripti
 +    "Clear cross-origin referrers";
 +const char kDisableCrossOriginReferrersDescription[] =
 +    "Clears referrers when navigating across origins. Disabled by "
-+    "default. THIS IS A HARDENED CHROMIUM FEATURE!";
++    "default. This is a hardened chromium feature.";
 +
 +const char kCapReferrerToOriginOnCrossOriginName[] =
 +    "Cross-origin referrer trimming";
 +const char kCapReferrerToOriginOnCrossOriginDescription[] =
 +    "Trims the referrer to just the origin on cross origin navigation. "
-+    "Defaults to enabled. THIS IS A HARDENED CHROMIUM EXPOSED FEATURE!";
++    "Defaults to enabled. This is hardened chromium exposed feature.";
 +
  const char kAccelerated2dCanvasName[] = "Accelerated 2D canvas";
  const char kAccelerated2dCanvasDescription[] =
