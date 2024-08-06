@@ -99,7 +99,7 @@ index fbb010a..26d0ad9 100644
 +Patch2063: disable-search-suggest-by-default.patch
 +Patch2064: enable-audio-service-sandbox.patch
 +Patch2065: restrict-default-supported-http-auth-schemes.patch
-+Patch2066: set-critical-variations-only.patch
++Patch2066: disable-variations.patch
 +Patch2067: set-default-always-open-pdf-externally.patch
 +Patch2068: set-default-extension-content-verification-enforce-strict.patch
 +Patch2069: set-default-extension-install-verification-enforce-strict.patch
@@ -254,7 +254,7 @@ index fbb010a..26d0ad9 100644
 +%patch -P2063 -p1 -b .disable-search-suggest-by-default
 +%patch -P2064 -p1 -b .enable-audio-service-sandbox
 +%patch -P2065 -p1 -b .restrict-default-supported-http-auth-schemes
-+%patch -P2066 -p1 -b .set-critical-variations-only
++%patch -P2066 -p1 -b .disable-variations
 +%patch -P2067 -p1 -b .set-default-always-open-pdf-externally
 +%patch -P2068 -p1 -b .set-default-extension-content-verification-enforce-strict
 +%patch -P2069 -p1 -b .set-default-extension-install-verification-enforce-strict
