@@ -69,7 +69,6 @@ Install the built rpm...
 
 A good pull request should be ready for review before it is even created. For all pull requests, ensure:
 
-- Your changes are in a single commit
 - Your changes passes all the checks
 - Your commit is signed
 - You have no unnecessary changes, including whitespace changes
