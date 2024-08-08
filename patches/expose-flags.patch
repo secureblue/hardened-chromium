@@ -28,14 +28,14 @@ index 186e908582f2b..defa9699eba36 100644
 +const char kDisableCrossOriginReferrersName[] =
 +    "Clear cross-origin referrers";
 +const char kDisableCrossOriginReferrersDescription[] =
-+    "Clears referrers when navigating across origins. Disabled by "
-+    "default. This is hardened chromium feature.";
++    "Clears referrers when navigating across origins. Defaults to disabled. "
++    "This feature is provided by hardened-chromium.";
 +
 +const char kCapReferrerToOriginOnCrossOriginName[] =
 +    "Cross-origin referrer trimming";
 +const char kCapReferrerToOriginOnCrossOriginDescription[] =
 +    "Trims the referrer to just the origin on cross origin navigation. "
-+    "Defaults to enabled. This is hardened chromium exposed feature.";
++    "Defaults to enabled. This feature is exposed by hardened-chromium.";
 +
  const char kAccelerated2dCanvasName[] = "Accelerated 2D canvas";
  const char kAccelerated2dCanvasDescription[] =

@@ -54,3 +54,24 @@ index 24034fb3a78f7..1664359ca64fe 100644
        auto capped_referrer = url::Origin::Create(GURL(request->referrer()));
        request->SetReferrer(capped_referrer.GetURL().spec());
      }
+diff --git a/net/url_request/url_request_job.cc b/net/url_request/url_request_job.cc
+index a3d565a410685..1db44d3bb26fb 100644
+--- a/net/url_request/url_request_job.cc
++++ b/net/url_request/url_request_job.cc
+@@ -316,6 +316,16 @@ GURL URLRequestJob::ComputeReferrerForPolicy(
+   // (We use a boolean instead of computing the URL right away in order to avoid
+   // constructing a new GURL when it's not necessary.)
+   bool should_strip_to_origin = false;
++
++  if (base::FeatureList::IsEnabled(
++          features::kDisableCrossOriginReferrers) &&
++      !same_origin) {
++    // Return an empty URL if cross-origin and the feature is enabled.
++    //
++    // Returns here since the referrer policy doesn't matter if it is
++    // cross-origin (if it is same origin then this will never happen)
++    return GURL();
++  }
+ 
+   // 6. If the result of serializing referrerURL is a string whose length is
+   // greater than 4096, set referrerURL to referrerOrigin.
