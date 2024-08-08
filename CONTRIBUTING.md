@@ -48,27 +48,15 @@ We will then take care of the issue as soon as possible.
 
 ### Building locally
 #### Setup
-Clone this repository:
+Download and run copr_script.sh:
 
-`git clone --depth 1 --recurse-submodules https://github.com/secureblue/hardened-chromium.git && cd hardened-chromium`
-
-Download chromium-%{version}-clean.tar.xz from the Fedora's server:
-
-`rpkg --path ./chromium sources`
-
-#### Harden
-Copy the patches inside the source folder:
-
-`cp vanadium_patches/* ./chromium && cp patches/* ./chromium`
-
-Patch the spec file to build with the hardening patches:
-
-`patch -d ./chromium -p1 < hardening.patch`
+`wget https://raw.githubusercontent.com/secureblue/hardened-chromium/master/copr_script.sh`
+`./copr_script.sh`
 
 #### Build RPM
 Build the patched chromium source from the spec file:
 
-`rpmbuild -bs -v --define "_sourcedir $PWD/chromium" --define "_rpmdir $PWD/chromium" --define "_builddir $PWD/chromium" --define "_specdir $PWD/chromium" --define "_srcrpmdir $PWD" chromium/chromium.spec`
+`rpmbuild -bs -v --define "_sourcedir $PWD" --define "_rpmdir $PWD" --define "_builddir $PWD" --define "_specdir $PWD" --define "_srcrpmdir $PWD" chromium.spec`
 
 Rebuild the source for your system:
 
@@ -81,8 +69,7 @@ Install the built rpm...
 
 A good pull request should be ready for review before it is even created. For all pull requests, ensure:
 
-- Your changes are in a single commit
 - Your changes passes all the checks
-- You have no unnecessary changes, including and especially whitespace changes
-- You're code is covered.
+- Your commit is signed
+- You have no unnecessary changes, including whitespace changes
 - For substantive changes, you include evidence of proper functionality in the pull request in addition to the build results.
