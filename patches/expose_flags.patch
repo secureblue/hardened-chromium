@@ -9,7 +9,7 @@ index ff1ed1a98cbfe..55902a7d8017b 100644
 +    {"disable-cross-origin-referrers",
 +     flag_descriptions::kDisableCrossOriginReferrersName,
 +     flag_descriptions::kDisableCrossOriginReferrersDescription, kOsAll,
-+     FEATURE_VALUE_TYPE(net::switches::kDisableCrossOriginReferrers)},
++     FEATURE_VALUE_TYPE(net::features::kDisableCrossOriginReferrers)},
 +    {"cross-origin-trim-referrer",
 +     flag_descriptions::kCapReferrerToOriginOnCrossOriginName,
 +     flag_descriptions::kCapReferrerToOriginOnCrossOriginDescription, kOsAll,
@@ -29,7 +29,7 @@ index 186e908582f2b..defa9699eba36 100644
 +    "Clear cross-origin referrers";
 +const char kDisableCrossOriginReferrersDescription[] =
 +    "Clears referrers when navigating across origins. Disabled by "
-+    "default. This is a hardened chromium feature.";
++    "default. This is hardened chromium feature.";
 +
 +const char kCapReferrerToOriginOnCrossOriginName[] =
 +    "Cross-origin referrer trimming";
