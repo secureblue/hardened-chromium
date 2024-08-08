@@ -1,0 +1,45 @@
+diff --git a/chrome/browser/devtools/devtools_window.cc b/chrome/browser/devtools/devtools_window.cc
+index 02ff1e580d3a7..6787e1140be72 100644
+--- a/chrome/browser/devtools/devtools_window.cc
++++ b/chrome/browser/devtools/devtools_window.cc
+@@ -535,7 +535,7 @@ void DevToolsWindow::RegisterProfilePrefs(
+       prefs::kDevToolsSyncedPreferencesSyncDisabled);
+   registry->RegisterIntegerPref(
+       prefs::kDevToolsGenAiSettings,
+-      static_cast<int>(DevToolsGenAiEnterprisePolicyValue::kAllow));
++      static_cast<int>(DevToolsGenAiEnterprisePolicyValue::kDisable));
+ }
+ 
+ // static
+diff --git a/components/optimization_guide/core/model_execution/model_execution_prefs.cc b/components/optimization_guide/core/model_execution/model_execution_prefs.cc
+index 38e66a357073f..913346206cc89 100644
+--- a/components/optimization_guide/core/model_execution/model_execution_prefs.cc
++++ b/components/optimization_guide/core/model_execution/model_execution_prefs.cc
+@@ -26,15 +26,15 @@ const char kWallpaperSearchEnterprisePolicyAllowed[] =
+ void RegisterProfilePrefs(PrefRegistrySimple* registry) {
+   registry->RegisterIntegerPref(
+       kTabOrganizationEnterprisePolicyAllowed,
+-      static_cast<int>(ModelExecutionEnterprisePolicyValue::kAllow),
++      static_cast<int>(ModelExecutionEnterprisePolicyValue::kDisable),
+       PrefRegistry::LOSSY_PREF);
+   registry->RegisterIntegerPref(
+       kComposeEnterprisePolicyAllowed,
+-      static_cast<int>(ModelExecutionEnterprisePolicyValue::kAllow),
++      static_cast<int>(ModelExecutionEnterprisePolicyValue::kDisable),
+       PrefRegistry::LOSSY_PREF);
+   registry->RegisterIntegerPref(
+       kWallpaperSearchEnterprisePolicyAllowed,
+-      static_cast<int>(ModelExecutionEnterprisePolicyValue::kAllow),
++      static_cast<int>(ModelExecutionEnterprisePolicyValue::kDisable),
+       PrefRegistry::LOSSY_PREF);
+ }
+ 
+@@ -123,7 +123,7 @@ void RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
+   registry->RegisterInt64Pref(localstate::kModelQualityLogggingClientId, 0,
+                               PrefRegistry::LOSSY_PREF);
+   registry->RegisterIntegerPref(
+-      localstate::kGenAILocalFoundationalModelEnterprisePolicySettings, 0);
++      localstate::kGenAILocalFoundationalModelEnterprisePolicySettings, 1);
+ }
+ 
+ // LINT.IfChange(GetOnDeviceFeatureRecentlyUsedPref)

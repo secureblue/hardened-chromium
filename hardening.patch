@@ -1,5 +1,33 @@
+diff --git a/chromium.conf b/chromium.conf
+index 62cecce..b51f9d7 100644
+--- a/chromium.conf
++++ b/chromium.conf
+@@ -9,7 +9,14 @@ GRAPHIC_DRIVER=default
+ WEB_DARKMODE=off
+ 
+ # NATIVE_WAYLAND=[on|off]
+-NATIVE_WAYLAND=off
++case "$XDG_SESSION_TYPE" in
++   wayland)
++      NATIVE_WAYLAND=on
++      ;;
++   x11)
++      NATIVE_WAYLAND=off
++      ;;
++esac
+ 
+ CHROMIUM_FLAGS=""
+ if [ "$NATIVE_WAYLAND" == "off" ] ; then
+@@ -17,7 +24,6 @@ if [ "$NATIVE_WAYLAND" == "off" ] ; then
+    CHROMIUM_FLAGS+=" --enable-gpu-memory-buffer-video-frames"
+    CHROMIUM_FLAGS+=" --enable-zero-copy"
+    CHROMIUM_FLAGS+=" --ignore-gpu-blocklist --disable-gpu-driver-bug-workaround"
+-   CHROMIUM_FLAGS+=" --enable-chrome-browser-cloud-management"
+    CHROMIUM_FLAGS+=" --enable-gpu-rasterization"
+ fi
+ 
 diff --git a/chromium.spec b/chromium.spec
-index fbb010a..26d0ad9 100644
+index fbb010a..3fb2a83 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -36,10 +36,10 @@
@@ -24,19 +52,18 @@ index fbb010a..26d0ad9 100644
  
  # Leave this alone, please.
  %global chromebuilddir out/Release
-@@ -295,9 +295,9 @@
+@@ -295,8 +295,8 @@
  %global chromoting_client_id %nil
  %endif
  
 -Name:	chromium%{chromium_channel}
+-Version: 127.0.6533.88
 +Name:	hardened-chromium%{chromium_channel}
- Version: 127.0.6533.88
--Release: 1%{?dist}
-+Release: 2%{?dist}
++Version: 127.0.6533.99
+ Release: 1%{?dist}
  Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
  Url: http://www.chromium.org/Home
- License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND GPL-2.0-or-later AND ISC AND OpenSSL AND (MPL-1.1 OR GPL-2.0-only OR LGPL-2.0-only)
-@@ -479,6 +479,81 @@ Patch503: chromium-127-ninja-1.21.1-deps-part2.patch
+@@ -479,6 +479,82 @@ Patch503: chromium-127-ninja-1.21.1-deps-part2.patch
  Patch504: chromium-127-ninja-1.21.1-deps-part3.patch
  Patch505: chromium-127-crabbyavif.patch
  
@@ -114,11 +141,12 @@ index fbb010a..26d0ad9 100644
 +Patch2078: disable-printing-by-default.patch
 +Patch2079: enable-visited-link-database-partitioning.patch
 +Patch2080: disable-tpcd-bypasses.patch
++Patch2081: disable-gen-ai-features-and-logging-by-default.patch
 +
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-@@ -501,21 +576,6 @@ Source9: chromium-browser.xml
+@@ -501,21 +577,6 @@ Source9: chromium-browser.xml
  Source10: chrome-remote-desktop@.service
  Source11: master_preferences
  
@@ -140,7 +168,7 @@ index fbb010a..26d0ad9 100644
  # esbuild binary from fedora
  %if 0%{?fedora}
  BuildRequires: golang-github-evanw-esbuild
-@@ -847,7 +907,7 @@ Requires: libcanberra-gtk3%{_isa}
+@@ -847,7 +908,7 @@ Requires: libcanberra-gtk3%{_isa}
  Requires: u2f-hidraw-policy
  %endif
  
@@ -149,7 +177,7 @@ index fbb010a..26d0ad9 100644
  
  # rhel 8 or newer and fedora < 40: x86_64, aarch64
  # fedora 40 or newer: x86_64, aarch64, ppc64le
-@@ -1012,7 +1072,7 @@ Requires(preun): systemd
+@@ -1012,7 +1073,7 @@ Requires(preun): systemd
  Requires(postun): systemd
  Requires: xorg-x11-server-Xvfb
  Requires: python3-psutil
@@ -158,7 +186,7 @@ index fbb010a..26d0ad9 100644
  Summary: Remote desktop support for google-chrome & chromium
  
  %description -n chrome-remote-desktop
-@@ -1021,7 +1081,7 @@ Remote desktop support for google-chrome & chromium.
+@@ -1021,7 +1082,7 @@ Remote desktop support for google-chrome & chromium.
  
  %package -n chromedriver
  Summary: WebDriver for Google Chrome/Chromium
@@ -167,7 +195,7 @@ index fbb010a..26d0ad9 100644
  
  %description -n chromedriver
  WebDriver is an open source tool for automated testing of webapps across many
-@@ -1032,7 +1092,7 @@ members of the Chromium and WebDriver teams.
+@@ -1032,7 +1093,7 @@ members of the Chromium and WebDriver teams.
  
  %package headless
  Summary:	A minimal headless shell built from Chromium
@@ -176,7 +204,7 @@ index fbb010a..26d0ad9 100644
  
  %description headless
  A minimal headless client built from Chromium. headless_shell is built
-@@ -1041,14 +1101,14 @@ udev.
+@@ -1041,14 +1102,14 @@ udev.
  
  %package qt5-ui
  Summary: Qt5 UI built from Chromium
@@ -193,7 +221,7 @@ index fbb010a..26d0ad9 100644
  
  %description qt6-ui
  Qt6 UI for chromium.
-@@ -1213,6 +1273,78 @@ Qt6 UI for chromium.
+@@ -1213,6 +1274,79 @@ Qt6 UI for chromium.
  %endif
  %patch -P505 -p1 -b .crabbyavif
  
@@ -269,10 +297,11 @@ index fbb010a..26d0ad9 100644
 +%patch -P2078 -p1 -b .disable-printing-by-default
 +%patch -P2079 -p1 -b .enable-visited-link-database-partitioning
 +%patch -P2080 -p1 -b .disable-tpcd-bypasses
++%patch -P2081 -p1 -b .disable-gen-ai-features-and-logging-by-default
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
-@@ -1279,7 +1411,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
+@@ -1279,7 +1413,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
  %endif
  
  # Hard code extra version
@@ -281,7 +310,7 @@ index fbb010a..26d0ad9 100644
  
  # Fix hardcoded path in remoting code
  sed -i 's|/opt/google/chrome-remote-desktop|%{crd_path}|g' remoting/host/setup/daemon_controller_delegate_linux.cc
-@@ -1375,11 +1507,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
+@@ -1375,11 +1509,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
  
  CHROMIUM_CORE_GN_DEFINES+=' chrome_pgo_phase=0'
  
@@ -297,7 +326,7 @@ index fbb010a..26d0ad9 100644
  
  %if %{useapikey}
  CHROMIUM_CORE_GN_DEFINES+=' google_api_key="%{api_key}"'
-@@ -1425,6 +1557,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
+@@ -1425,6 +1559,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
  %endif
  CHROMIUM_CORE_GN_DEFINES+=' enable_iterator_debugging=false'
  CHROMIUM_CORE_GN_DEFINES+=' enable_vr=false'
@@ -307,7 +336,7 @@ index fbb010a..26d0ad9 100644
  CHROMIUM_CORE_GN_DEFINES+=' build_dawn_tests=false enable_perfetto_unittests=false'
  CHROMIUM_CORE_GN_DEFINES+=' disable_fieldtrial_testing_config=true'
  CHROMIUM_CORE_GN_DEFINES+=' symbol_level=%{debug_level} blink_symbol_level=%{debug_level}'
-@@ -1464,8 +1599,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
+@@ -1464,8 +1601,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
  %endif
  
  CHROMIUM_BROWSER_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
@@ -318,7 +347,7 @@ index fbb010a..26d0ad9 100644
  
  %if %{use_vaapi}
  CHROMIUM_BROWSER_GN_DEFINES+=' use_vaapi=true'
-@@ -1667,15 +1802,15 @@ rm -rf %{buildroot}
+@@ -1667,15 +1804,15 @@ rm -rf %{buildroot}
  
  mkdir -p %{buildroot}%{_bindir} \
           %{buildroot}%{chromium_path}/locales \
@@ -337,7 +366,7 @@ index fbb010a..26d0ad9 100644
  %endif
  
  export BUILD_TARGET=`cat /etc/redhat-release`
-@@ -1836,7 +1971,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
+@@ -1836,7 +1973,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
  cp -a chrome/app/theme/chromium/product_logo_24.png %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/%{chromium_browser_channel}.png
  
  # Install the master_preferences file
@@ -346,7 +375,7 @@ index fbb010a..26d0ad9 100644
  
  mkdir -p %{buildroot}%{_datadir}/applications/
  desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE4}
-@@ -1888,11 +2023,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
+@@ -1888,11 +2025,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
  %doc AUTHORS README.fedora
  %doc chrome_policy_list.html *.json
  %license LICENSE
@@ -363,6 +392,7 @@ index fbb010a..26d0ad9 100644
  %{_bindir}/%{chromium_browser_channel}
  %{chromium_path}/*.bin
 diff --git a/master_preferences b/master_preferences
+index 8d732dc..58b079c 100644
 --- a/master_preferences
 +++ b/master_preferences
 @@ -1,5 +1,5 @@
@@ -382,6 +412,7 @@ diff --git a/master_preferences b/master_preferences
  }
 diff --git a/sources b/sources
 deleted file mode 100644
+index 7e696d9..0000000
 --- a/sources
 +++ /dev/null
 @@ -1,7 +0,0 @@
@@ -392,30 +423,3 @@ deleted file mode 100644
 -SHA512 (bindgen-cli-aarch64.tar.xz) = 1a5ae4e8fdd31d80e8111c4d5f2115336684763ecd3a442ffecdbc2a37bab146f88bdee0bb1ea7a98e1049f81b12e64bd0ce5510529b30a74ce3306488ac129b
 -SHA512 (bindgen-cli-x86_64.tar.xz) = 7ccc9b43b32d3a064a75cfc150e060711356da8fe98e83d855bae017108ef8e9e172fbdd6e2579433c19cfb56ababa5b77a8db6fa57a5e657a3878778ca10a37
 -SHA512 (chromium-127.0.6533.88-clean.tar.xz) = 212160a15e14348d416d2c3df0dd24f7b05da3c0f6fff3bccac1314f697be753bf831ea06039adec7d02f4e34d3a84787d12233bf927fa76727397ac0fde300f
-diff --git a/chromium.conf b/chromium.conf
---- a/chromium.conf
-+++ b/chromium.conf
-@@ -9,7 +9,14 @@ GRAPHIC_DRIVER=default
- WEB_DARKMODE=off
- 
- # NATIVE_WAYLAND=[on|off]
--NATIVE_WAYLAND=off
-+case "$XDG_SESSION_TYPE" in
-+   wayland)
-+      NATIVE_WAYLAND=on
-+      ;;
-+   x11)
-+      NATIVE_WAYLAND=off
-+      ;;
-+esac
- 
- CHROMIUM_FLAGS=""
- if [ "$NATIVE_WAYLAND" == "off" ] ; then
-@@ -17,7 +24,6 @@ if [ "$NATIVE_WAYLAND" == "off" ] ; then
-    CHROMIUM_FLAGS+=" --enable-gpu-memory-buffer-video-frames"
-    CHROMIUM_FLAGS+=" --enable-zero-copy"
-    CHROMIUM_FLAGS+=" --ignore-gpu-blocklist --disable-gpu-driver-bug-workaround"
--   CHROMIUM_FLAGS+=" --enable-chrome-browser-cloud-management"
-    CHROMIUM_FLAGS+=" --enable-gpu-rasterization"
- fi
- 
