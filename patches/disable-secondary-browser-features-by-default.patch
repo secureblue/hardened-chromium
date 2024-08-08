@@ -45,7 +45,7 @@ index 8aa12348b506e..96ef8c391ca36 100644
  namespace internal {
  
 -BASE_FEATURE(kJourneys, "Journeys", enabled_by_default_desktop_only);
-+BASE_FEATURE(kJourneys, "Journeys", base::FEATURE_DISABLED_BY_DEFAULT;
++BASE_FEATURE(kJourneys, "Journeys", base::FEATURE_DISABLED_BY_DEFAULT);
  
  BASE_FEATURE(kJourneysImages,
               "JourneysImages",
