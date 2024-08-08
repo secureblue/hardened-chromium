@@ -1,29 +1,30 @@
 diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
-index ff1ed1a98cbfe..7c02d25eef176 100644
+index ff1ed1a98cbfe..55902a7d8017b 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
-@@ -4117,6 +4117,10 @@ const FeatureEntry kFeatureEntries[] = {
+@@ -4117,6 +4117,14 @@ const FeatureEntry kFeatureEntries[] = {
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
  #include "chrome/browser/unexpire_flags_gen.inc"
 +    {"disable-cross-origin-referrers",
 +     flag_descriptions::kDisableCrossOriginReferrersName,
 +     flag_descriptions::kDisableCrossOriginReferrersDescription, kOsAll,
-+     FEATURE_VALUE_TYPE(switches::kDisableCrossOriginReferrers)},
++     FEATURE_VALUE_TYPE(net::switches::kDisableCrossOriginReferrers)},
 +    {"cross-origin-trim-referrer",
 +     flag_descriptions::kCapReferrerToOriginOnCrossOriginName,
 +     flag_descriptions::kCapReferrerToOriginOnCrossOriginDescription, kOsAll,
-+     FEATURE_VALUE_TYPE(switches::kCapReferrerToOriginOnCrossOrigin)},
++     FEATURE_VALUE_TYPE(net::features::kCapReferrerToOriginOnCrossOrigin)},
      {variations::switches::kEnableBenchmarking,
       flag_descriptions::kEnableBenchmarkingName,
       flag_descriptions::kEnableBenchmarkingDescription, kOsAll,
 diff --git a/chrome/browser/flag_descriptions.cc b/chrome/browser/flag_descriptions.cc
+index 186e908582f2b..defa9699eba36 100644
 --- a/chrome/browser/flag_descriptions.cc
 +++ b/chrome/browser/flag_descriptions.cc
-@@ -14,6 +14,11 @@
+@@ -14,6 +14,18 @@
  
  namespace flag_descriptions {
-
+ 
 +const char kDisableCrossOriginReferrersName[] =
 +    "Clear cross-origin referrers";
 +const char kDisableCrossOriginReferrersDescription[] =
@@ -40,14 +41,14 @@ diff --git a/chrome/browser/flag_descriptions.cc b/chrome/browser/flag_descripti
  const char kAccelerated2dCanvasDescription[] =
      "Enables the use of the GPU to perform 2d canvas rendering instead of "
 diff --git a/chrome/browser/flag_descriptions.h b/chrome/browser/flag_descriptions.h
-index 705e6df281abb..9bd7b0ed1b50e 100644
+index 705e6df281abb..f903f878cde41 100644
 --- a/chrome/browser/flag_descriptions.h
 +++ b/chrome/browser/flag_descriptions.h
-@@ -43,6 +42,11 @@
+@@ -43,6 +43,14 @@
  
  namespace flag_descriptions {
  
-+// Hardened chromium exposed --------------------------------------------------
++// hardened chromium ----------------------------------------------------------
 +
 +extern const char kDisableCrossOriginReferrersName[];
 +extern const char kDisableCrossOriginReferrersDescription[];

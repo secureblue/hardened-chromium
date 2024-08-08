@@ -43,7 +43,7 @@ index 24034fb3a78f7..1664359ca64fe 100644
 -  if (base::FeatureList::IsEnabled(
 -          net::features::kCapReferrerToOriginOnCrossOrigin)) {
 -    if (!url::IsSameOriginWith(effective_url, GURL(request->referrer()))) {
-+  
++
 +  // If the target URL isn't the same origin as the current URL
 +  if (!url::IsSameOriginWith(effective_url, GURL(request->referrer()))) {
 +    if (base::FeatureList::IsEnabled(
