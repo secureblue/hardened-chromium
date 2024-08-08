@@ -1,0 +1,270 @@
+diff --git a/chrome/browser/resources/settings/people_page/people_page.ts b/chrome/browser/resources/settings/people_page/people_page.ts
+index 3ec954ed874f3..36e08094951bc 100644
+--- a/chrome/browser/resources/settings/people_page/people_page.ts
++++ b/chrome/browser/resources/settings/people_page/people_page.ts
+@@ -354,12 +354,7 @@ export class SettingsPeoplePageElement extends SettingsPeoplePageElementBase {
+ 
+   // <if expr="not chromeos_ash">
+   private computeShouldShowGoogleAccount_(): boolean {
+-    if (this.storedAccounts === undefined || this.syncStatus === undefined) {
+-      return false;
+-    }
+-
+-    return (this.storedAccounts!.length > 0 || this.isSyncing_()) &&
+-        !this.syncStatus!.hasError;
++    return false;
+   }
+   // </if>
+ 
+@@ -412,15 +407,7 @@ export class SettingsPeoplePageElement extends SettingsPeoplePageElementBase {
+   }
+ 
+   private shouldShowSyncAccountControl_(): boolean {
+-    // <if expr="chromeos_ash">
+     return false;
+-    // </if>
+-    // <if expr="not chromeos_ash">
+-    if (this.syncStatus === undefined) {
+-      return false;
+-    }
+-    return !!this.syncStatus!.syncSystemEnabled && this.signinAllowed_;
+-    // </if>
+   }
+ 
+   /**
+diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.ts b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
+index 00318322c8147..409f855a3a2b1 100644
+--- a/chrome/browser/resources/settings/privacy_page/privacy_page.ts
++++ b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
+@@ -417,9 +417,7 @@ export class SettingsPrivacyPageElement extends SettingsPrivacyPageElementBase {
+   override currentRouteChanged() {
+     this.showClearBrowsingDataDialog_ =
+         Router.getInstance().getCurrentRoute() === routes.CLEAR_BROWSER_DATA;
+-    this.showPrivacyGuideDialog_ =
+-        Router.getInstance().getCurrentRoute() === routes.PRIVACY_GUIDE &&
+-        this.isPrivacyGuideAvailable;
++    this.showPrivacyGuideDialog_ = false;
+ 
+     // Only record the metrics when the user navigates to the notification
+     // settings page that shows the entry point.
+@@ -608,8 +606,7 @@ export class SettingsPrivacyPageElement extends SettingsPrivacyPageElementBase {
+   }
+ 
+   private shouldShowAdPrivacy_(): boolean {
+-    return !this.isPrivacySandboxRestricted_ ||
+-        this.isPrivacySandboxRestrictedNoticeEnabled_;
++    return false;
+   }
+ 
+   // Only show Manage Topics page when PTB is enabled. If user is part of Mode B
+diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
+index 9a8fe2fe5df1a..e1b9698582af2 100644
+--- a/chrome/browser/resources/settings/privacy_page/security_page.html
++++ b/chrome/browser/resources/settings/privacy_page/security_page.html
+@@ -64,202 +64,12 @@
+         pointer-events: auto;
+       }
+     </style>
+-    <picture>
+-      <source
+-          srcset="chrome://settings/images/safe_browsing_banner_dark.svg"
+-          media="(prefers-color-scheme: dark)">
+-      <img id="banner" alt=""
+-          src="chrome://settings/images/safe_browsing_banner.svg">
+-    </picture>
+-    <div id="safeBrowsingSection">
+-      <h2>$i18n{safeBrowsingSectionLabel}</h2>
+-      <settings-radio-group id="safeBrowsingRadioGroup" no-set-pref
+-          pref="{{prefs.generated.safe_browsing}}"
+-          selectable-elements="cr-radio-button, settings-collapse-radio-button"
+-          on-change="onSafeBrowsingRadioChange_">
+-        <settings-collapse-radio-button id="safeBrowsingEnhanced"
+-            name="[[safeBrowsingSettingEnum_.ENHANCED]]"
+-            pref="[[prefs.generated.safe_browsing]]"
+-            label="$i18n{safeBrowsingEnhanced}"
+-            sub-label="[[getSafeBrowsingEnhancedSubLabel_(
+-                        enableFriendlierSafeBrowsingSettings_)]]"
+-            indicator-aria-label="$i18n{controlledSettingPolicy}"
+-            expand-aria-label="$i18n{safeBrowsingEnhancedExpandA11yLabel}"
+-            on-expand-clicked="onEnhancedProtectionExpandButtonClicked_"
+-            no-automatic-collapse>
+-          <template is="dom-if" if="[[!enableFriendlierSafeBrowsingSettings_]]">
+-            <div slot="collapse">
+-              <div class="bullet-line">
+-                <iron-icon icon="cr:security"></iron-icon>
+-                <div class="cr-secondary-text">
+-                  $i18n{safeBrowsingEnhancedBulOne}
+-                </div>
+-              </div>
+-              <div class="bullet-line">
+-                <iron-icon icon="settings20:googleg"></iron-icon>
+-                <div class="cr-secondary-text">
+-                  $i18n{safeBrowsingEnhancedBulTwo}
+-                </div>
+-              </div>
+-              <div class="bullet-line">
+-                <iron-icon icon="settings:public"></iron-icon>
+-                <div class="cr-secondary-text">
+-                  $i18n{safeBrowsingEnhancedBulThree}
+-                </div>
+-              </div>
+-              <div class="bullet-line">
+-                <iron-icon icon="settings20:vpn-key"></iron-icon>
+-                <div class="cr-secondary-text">
+-                  $i18n{safeBrowsingEnhancedBulFour}
+-                </div>
+-              </div>
+-              <div class="bullet-line last-collapse-item">
+-                <iron-icon icon="settings20:data"></iron-icon>
+-                <div class="cr-secondary-text cr-padded-text">
+-                  $i18n{safeBrowsingEnhancedBulFive}
+-                </div>
+-              </div>
+-            </div>
+-          </template>
+-          <template is="dom-if" if="[[enableFriendlierSafeBrowsingSettings_]]">
+-            <div id="enhancedProtectionDescContainer" slot="collapse"
+-                class="settings-columned-section">
+-              <div class="column">
+-                <h3 class="description-header">
+-                  $i18n{columnHeadingWhenOn}
+-                </h3>
+-                <ul class="icon-bulleted-list">
+-                  <li>
+-                    <iron-icon icon="settings20:data" aria-hidden="true">
+-                    </iron-icon>
+-                    <div class="secondary">
+-                      $i18n{safeBrowsingEnhancedWhenOnBulOne}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings20:download" aria-hidden="true">
+-                    </iron-icon>
+-                    <div class="secondary">
+-                      $i18n{safeBrowsingEnhancedWhenOnBulTwo}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings20:gshield" aria-hidden="true">
+-                    </iron-icon>
+-                    <div class="secondary">
+-                      $i18n{safeBrowsingEnhancedWhenOnBulThree}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings:language" aria-hidden="true">
+-                    </iron-icon>
+-                    <div class="secondary">
+-                      $i18n{safeBrowsingEnhancedWhenOnBulFour}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings20:vpn-key-new" aria-hidden="true">
+-                    </iron-icon>
+-                    <div class="secondary">
+-                      $i18n{safeBrowsingEnhancedWhenOnBulFive}
+-                    </div>
+-                  </li>
+-                </ul>
+-              </div>
+-              <div class="column">
+-                <h3 class="description-header">
+-                  $i18n{columnHeadingConsider}
+-                </h3>
+-                <ul class="icon-bulleted-list">
+-                  <li>
+-                    <iron-icon icon="settings20:link"></iron-icon>
+-                    <div class="cr-secondary-text">
+-                      $i18n{safeBrowsingEnhancedThingsToConsiderBulOne}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings20:account-circle"></iron-icon>
+-                    <div class="cr-secondary-text">
+-                      $i18n{safeBrowsingEnhancedThingsToConsiderBulTwo}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings:performance"></iron-icon>
+-                    <div class="cr-secondary-text">
+-                      $i18n{safeBrowsingEnhancedThingsToConsiderBulThree}
+-                    </div>
+-                  </li>
+-                </ul>
+-                <div id="learnMoreLabelContainer" class="cr-secondary-text">
+-                  $i18nRaw{safeBrowsingEnhancedLearnMoreLabel}
+-                </div>
+-              </div>
+-            </div>
+-          </template>
+-        </settings-collapse-radio-button>
+-        <settings-collapse-radio-button id="safeBrowsingStandard"
+-            name="[[safeBrowsingSettingEnum_.STANDARD]]"
+-            pref="[[prefs.generated.safe_browsing]]"
+-            label="$i18n{safeBrowsingStandard}"
+-            sub-label="[[getSafeBrowsingStandardSubLabel_(
+-                        enableFriendlierSafeBrowsingSettings_,
+-                        enableHashPrefixRealTimeLookups_)]]"
+-            indicator-aria-label="$i18n{controlledSettingPolicy}"
+-            expand-aria-label="$i18n{safeBrowsingStandardExpandA11yLabel}"
+-            info-opened="{{infoOpened_}}"
+-            on-expand-clicked="onStandardProtectionExpandButtonClicked_"
+-            no-automatic-collapse>
+-          <template is="dom-if" if="[[!enableFriendlierSafeBrowsingSettings_]]">
+-            <div slot="collapse">
+-              <div class="bullet-line">
+-                <iron-icon icon="cr:security"></iron-icon>
+-                <div class="cr-secondary-text">
+-                  $i18n{safeBrowsingStandardBulOne}
+-                </div>
+-              </div>
+-              <div class="bullet-line">
+-                <iron-icon icon="settings20:data"></iron-icon>
+-                <div id="safeBrowsingStandardBulTwo"
+-                    class="cr-secondary-text cr-padded-text">
+-                  [[getSafeBrowsingStandardBulTwo_(
+-                    enableHashPrefixRealTimeLookups_)]]
+-                </div>
+-              </div>
+-            </div>
+-          </template>
+-          <div slot="noSelectionCollapse">
+-            <settings-toggle-button id="safeBrowsingReportingToggle"
+-                pref="{{prefs.safebrowsing.scout_reporting_enabled}}"
+-                label="$i18n{safeBrowsingStandardReportingLabel}"
+-                sub-label="$i18n{safeBrowsingEnableExtendedReportingDesc}"
+-                on-change="onSafeBrowsingExtendedReportingChange_"
+-                disabled="[[getDisabledExtendedSafeBrowsing_(
+-                              prefs.generated.safe_browsing.*)]]">
+-            </settings-toggle-button>
+-            <settings-toggle-button id="passwordsLeakToggle"
+-                label="[[getPasswordsLeakToggleLabel_(
+-                        enableFriendlierSafeBrowsingSettings_)]]"
+-                pref="{{prefs.generated.password_leak_detection}}"
+-                sub-label="[[getPasswordsLeakToggleSubLabel_(
+-                              enableFriendlierSafeBrowsingSettings_,
+-                              prefs.profile.password_manager_leak_detection.*,
+-                              prefs.generated.password_leak_detection.*)]]">
+-            </settings-toggle-button>
+-          </div>
+-        </settings-collapse-radio-button>
+-        <settings-collapse-radio-button id="safeBrowsingDisabled" no-collapse
+-            name="[[safeBrowsingSettingEnum_.DISABLED]]"
+-            pref="[[prefs.generated.safe_browsing]]"
+-            label="$i18n{safeBrowsingNone}"
+-            sub-label="[[getSafeBrowsingDisabledSubLabel_(
+-                        enableFriendlierSafeBrowsingSettings_)]]"
+-            indicator-aria-label="$i18n{controlledSettingPolicy}">
+-        </settings-collapse-radio-button>
+-      </settings-radio-group>
+-    </div>
++
++    <!-- removed safe browsing settings
++
+     <div class="cr-row first">
+       <h2>$i18n{advancedPageTitle}</h2>
+-    </div>
++    </div> -->
+     <template is="dom-if" if="[[!enableHttpsFirstModeNewSettings_]]">
+       <settings-toggle-button id="httpsOnlyModeToggle"
+           pref="{{prefs.generated.https_first_mode_enabled}}"
