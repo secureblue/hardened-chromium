@@ -1,24 +1,22 @@
-diff --git a/chrome/common/chrome_features.cc b/chrome/common/chrome_features.cc
-index 998fcf6ac5b69..cab0ee97a3bf8 100644
---- a/chrome/common/chrome_features.cc
-+++ b/chrome/common/chrome_features.cc
-@@ -1105,11 +1105,7 @@ BASE_FEATURE(kSafetyHubExtensionsOffStoreTrigger,
- // Enables Safety Hub feature.
- BASE_FEATURE(kSafetyHub,
-              "SafetyHub",
--#if BUILDFLAG(IS_ANDROID)
-              base::FEATURE_DISABLED_BY_DEFAULT
--#else
--             base::FEATURE_ENABLED_BY_DEFAULT
--#endif  // BUILDFLAG(IS_ANDROID)
- );
+diff --git a/chrome/browser/resources/settings/basic_page/basic_page.ts b/chrome/browser/resources/settings/basic_page/basic_page.ts
+index 86b5cf293e4c9..4e2583f991396 100644
+--- a/chrome/browser/resources/settings/basic_page/basic_page.ts
++++ b/chrome/browser/resources/settings/basic_page/basic_page.ts
+@@ -338,8 +338,7 @@ export class SettingsBasicPageElement extends SettingsBasicPageElementBase {
+   }
  
- // Enables or disables the Trust Safety Sentiment Survey for Safety Hub.
+   private showSafetyCheckPage_(visibility?: boolean): boolean {
+-    return !loadTimeData.getBoolean('enableSafetyHub') &&
+-        this.showPage_(visibility);
++    return false;
+   }
+ 
+   private showSafetyHubEntryPointPage_(visibility?: boolean): boolean {
 diff --git a/chrome/browser/resources/settings/people_page/people_page.html b/chrome/browser/resources/settings/people_page/people_page.html
-index 7bf7f60601b77..ca3e70301fa84 100644
+index 7bf7f60601b77..5d3c4d4879e0f 100644
 --- a/chrome/browser/resources/settings/people_page/people_page.html
 +++ b/chrome/browser/resources/settings/people_page/people_page.html
-@@ -107,12 +107,7 @@ shown on non-ChromeOS platforms -->
+@@ -107,12 +107,6 @@ shown on non-ChromeOS platforms -->
            </div>
          </template> <!-- if="[[!shouldShowSyncAccountControl_()]]" -->
  
@@ -28,74 +26,28 @@ index 7bf7f60601b77..ca3e70301fa84 100644
 -            on-click="onSyncClick_"
 -            role-description="$i18n{subpageArrowRoleDescription}">
 -        </cr-link-row>
-+        <!-- Removed sync and accounts page -->
  
  <if expr="not chromeos_ash">
          <template is="dom-if" if="[[signinAllowed_]]">
-diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.html b/chrome/browser/resources/settings/privacy_page/privacy_page.html
-index 8d955b618bba4..7cadc72361633 100644
---- a/chrome/browser/resources/settings/privacy_page/privacy_page.html
-+++ b/chrome/browser/resources/settings/privacy_page/privacy_page.html
-@@ -28,11 +28,6 @@
-           on-close="onCbdDialogClosed_">
-       </settings-clear-browsing-data-dialog>
-     </template>
--    <template is="dom-if" if="[[showPrivacyGuideDialog_]]" restamp>
--      <settings-privacy-guide-dialog id="privacyGuideDialog" prefs="{{prefs}}"
--          on-close="onPrivacyGuideDialogClosed_">
--      </settings-privacy-guide-dialog>
--    </template>
-     <settings-animated-pages id="pages" section="privacy"
-         focus-config="[[focusConfig_]]">
-       <div route-path="default">
-@@ -41,15 +36,6 @@
-             label="$i18n{clearBrowsingData}"
-             sub-label="$i18n{clearBrowsingDataDescription}"
-             on-click="onClearBrowsingDataClick_"></cr-link-row>
--        <template is="dom-if" if="[[isPrivacyGuideAvailable]]">
--          <cr-link-row id="privacyGuideLinkRow" class="hr"
--              start-icon="settings20:wind-rose"
--              label="$i18n{privacyGuideLabel}"
--              sub-label="$i18n{privacyGuideSublabel}"
--              on-click="onPrivacyGuideClick_"
--              role-description="$i18n{subpageArrowRoleDescription}">
--          </cr-link-row>
--        </template>
-         <template is="dom-if" if="[[is3pcdRedesignEnabled_]]">
-           <cr-link-row id="trackingProtectionLinkRow"
-               start-icon="settings:visibility-off"
+diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.ts b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
+index 00318322c8147..b89acab52a96a 100644
+--- a/chrome/browser/resources/settings/privacy_page/privacy_page.ts
++++ b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
+@@ -608,8 +608,7 @@ export class SettingsPrivacyPageElement extends SettingsPrivacyPageElementBase {
+   }
+ 
+   private shouldShowAdPrivacy_(): boolean {
+-    return !this.isPrivacySandboxRestricted_ ||
+-        this.isPrivacySandboxRestrictedNoticeEnabled_;
++    return false;
+   }
+ 
+   // Only show Manage Topics page when PTB is enabled. If user is part of Mode B
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
-index 9a8fe2fe5df1a..c56cb255ae070 100644
+index 9a8fe2fe5df1a..2b5c4f2923b79 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.html
-@@ -3,10 +3,6 @@
-         width: 100%;
-       }
- 
--      #safeBrowsingSection {
--        padding: 0 var(--cr-section-padding);
--      }
--
-       #httpsOnlyModeToggle {
-         padding: 0 var(--cr-section-padding);
-       }
-@@ -42,15 +38,6 @@
-         pointer-events: all;
-       }
- 
--      #safeBrowsingEnhanced .bullet-line:last-of-type {
--        padding-bottom: 12px;
--      }
--
--      #safeBrowsingEnhanced {
--        --cr-radio-button-unchecked-ripple-color:
--            var(--cr-radio-button-checked-ripple-color);
--      }
--
-       #httpsFirstModeSettingHeader .cr-padded-text {
-         padding-block-end: 0;
-       }
-@@ -64,199 +51,9 @@
+@@ -64,199 +64,6 @@
          pointer-events: auto;
        }
      </style>
@@ -292,13 +244,10 @@ index 9a8fe2fe5df1a..c56cb255ae070 100644
 -        </settings-collapse-radio-button>
 -      </settings-radio-group>
 -    </div>
-+
-+    <!-- removed safe browsing settings -->
-+
      <div class="cr-row first">
        <h2>$i18n{advancedPageTitle}</h2>
      </div>
-@@ -399,18 +196,3 @@
+@@ -399,18 +206,3 @@
            on-click="onChromeCertificatesClick_">
        </cr-link-row>
  </if>
@@ -317,17 +266,18 @@ index 9a8fe2fe5df1a..c56cb255ae070 100644
 -          on-close="onDisableSafebrowsingDialogClose_">
 -      </settings-simple-confirmation-dialog>
 -    </template>
-diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.ts b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
-index 00318322c8147..b89acab52a96a 100644
---- a/chrome/browser/resources/settings/privacy_page/privacy_page.ts
-+++ b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
-@@ -608,8 +608,7 @@ export class SettingsPrivacyPageElement extends SettingsPrivacyPageElementBase {
-   }
+diff --git a/chrome/browser/resources/settings/privacy_page/security_page.ts b/chrome/browser/resources/settings/privacy_page/security_page.ts
+index 8f4bcdea0693e..71053b052ab02 100644
+--- a/chrome/browser/resources/settings/privacy_page/security_page.ts
++++ b/chrome/browser/resources/settings/privacy_page/security_page.ts
+@@ -312,10 +312,6 @@ export class SettingsSecurityPageElement extends
+       }
+     });
  
-   private shouldShowAdPrivacy_(): boolean {
--    return !this.isPrivacySandboxRestricted_ ||
--        this.isPrivacySandboxRestrictedNoticeEnabled_;
-+    return false;
+-    this.registerHelpBubble(
+-        'kEnhancedProtectionSettingElementId',
+-        this.$.safeBrowsingEnhanced.getBubbleAnchor(), {anchorPaddingTop: 10});
+-
+     // Initialize the last focus time on page load.
+     this.lastFocusTime_ = HatsBrowserProxyImpl.getInstance().now();
    }
- 
-   // Only show Manage Topics page when PTB is enabled. If user is part of Mode B
