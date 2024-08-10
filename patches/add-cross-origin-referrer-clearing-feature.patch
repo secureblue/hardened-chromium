@@ -31,19 +31,38 @@ index ffa3f6ced770b..d1f430814ca7e 100644
  // When kCapReferrerToOriginOnCrossOrigin is enabled, HTTP referrers on cross-
  // origin requests are restricted to contain at most the source origin.
  NET_EXPORT BASE_DECLARE_FEATURE(kCapReferrerToOriginOnCrossOrigin);
+diff --git a/net/url_request/url_request_job.cc b/net/url_request/url_request_job.cc
+index a3d565a410685..8c7b19dd8515d 100644
+--- a/net/url_request/url_request_job.cc
++++ b/net/url_request/url_request_job.cc
+@@ -327,6 +327,16 @@ GURL URLRequestJob::ComputeReferrerForPolicy(
+   if (same_origin_out_for_metrics)
+     *same_origin_out_for_metrics = same_origin;
+ 
++  if (base::FeatureList::IsEnabled(
++          features::kDisableCrossOriginReferrers) &&
++      !same_origin) {
++    // Return an empty URL if cross-origin and the feature is enabled.
++    //
++    // Returns here since the referrer policy doesn't matter if it is
++    // cross-origin (if it is same origin then this will never happen)
++    return GURL();
++  }
++
+   // 7. The user agent MAY alter referrerURL or referrerOrigin at this point to
+   // enforce arbitrary policy considerations in the interests of minimizing data
+   // leakage. For example, the user agent could strip the URL down to an origin,
 diff --git a/services/network/network_service_network_delegate.cc b/services/network/network_service_network_delegate.cc
-index 24034fb3a78f7..1664359ca64fe 100644
+index 24034fb3a78f7..c67fb7bde22eb 100644
 --- a/services/network/network_service_network_delegate.cc
 +++ b/services/network/network_service_network_delegate.cc
-@@ -59,10 +59,14 @@ void NetworkServiceNetworkDelegate::MaybeTruncateReferrer(
-     request->set_referrer_policy(net::ReferrerPolicy::NO_REFERRER);
+@@ -60,9 +60,13 @@ void NetworkServiceNetworkDelegate::MaybeTruncateReferrer(
      return;
    }
--
+ 
 -  if (base::FeatureList::IsEnabled(
 -          net::features::kCapReferrerToOriginOnCrossOrigin)) {
 -    if (!url::IsSameOriginWith(effective_url, GURL(request->referrer()))) {
-+
 +  // If the target URL isn't the same origin as the current URL
 +  if (!url::IsSameOriginWith(effective_url, GURL(request->referrer()))) {
 +    if (base::FeatureList::IsEnabled(
@@ -54,24 +73,3 @@ index 24034fb3a78f7..1664359ca64fe 100644
        auto capped_referrer = url::Origin::Create(GURL(request->referrer()));
        request->SetReferrer(capped_referrer.GetURL().spec());
      }
-diff --git a/net/url_request/url_request_job.cc b/net/url_request/url_request_job.cc
-index a3d565a410685..1db44d3bb26fb 100644
---- a/net/url_request/url_request_job.cc
-+++ b/net/url_request/url_request_job.cc
-@@ -316,6 +316,16 @@ GURL URLRequestJob::ComputeReferrerForPolicy(
-   // (We use a boolean instead of computing the URL right away in order to avoid
-   // constructing a new GURL when it's not necessary.)
-   bool should_strip_to_origin = false;
-+
-+  if (base::FeatureList::IsEnabled(
-+          features::kDisableCrossOriginReferrers) &&
-+      !same_origin) {
-+    // Return an empty URL if cross-origin and the feature is enabled.
-+    //
-+    // Returns here since the referrer policy doesn't matter if it is
-+    // cross-origin (if it is same origin then this will never happen)
-+    return GURL();
-+  }
- 
-   // 6. If the result of serializing referrerURL is a string whose length is
-   // greater than 4096, set referrerURL to referrerOrigin.
