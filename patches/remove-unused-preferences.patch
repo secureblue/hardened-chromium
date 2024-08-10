@@ -1,5 +1,5 @@
 diff --git a/chrome/browser/resources/settings/basic_page/basic_page.ts b/chrome/browser/resources/settings/basic_page/basic_page.ts
-index 86b5cf293e4c9..4e2583f991396 100644
+index 86b5cf293e4c9..cb7d9c091d14f 100644
 --- a/chrome/browser/resources/settings/basic_page/basic_page.ts
 +++ b/chrome/browser/resources/settings/basic_page/basic_page.ts
 @@ -338,8 +338,7 @@ export class SettingsBasicPageElement extends SettingsBasicPageElementBase {
@@ -8,7 +8,7 @@ index 86b5cf293e4c9..4e2583f991396 100644
    private showSafetyCheckPage_(visibility?: boolean): boolean {
 -    return !loadTimeData.getBoolean('enableSafetyHub') &&
 -        this.showPage_(visibility);
-+    return false;
++    return false && this.showPage_(visibility); // Kept to prevent errors
    }
  
    private showSafetyHubEntryPointPage_(visibility?: boolean): boolean {
