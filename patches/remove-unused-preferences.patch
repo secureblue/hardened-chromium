@@ -281,3 +281,19 @@ index 8f4bcdea0693e..71053b052ab02 100644
      // Initialize the last focus time on page load.
      this.lastFocusTime_ = HatsBrowserProxyImpl.getInstance().now();
    }
+diff --git a/chrome/common/chrome_features.cc b/chrome/common/chrome_features.cc
+index 998fcf6ac5b69..cab0ee97a3bf8 100644
+--- a/chrome/common/chrome_features.cc
++++ b/chrome/common/chrome_features.cc
+@@ -1105,11 +1105,7 @@ BASE_FEATURE(kSafetyHubExtensionsOffStoreTrigger,
+ // Enables Safety Hub feature.
+ BASE_FEATURE(kSafetyHub,
+              "SafetyHub",
+-#if BUILDFLAG(IS_ANDROID)
+              base::FEATURE_DISABLED_BY_DEFAULT
+-#else
+-             base::FEATURE_ENABLED_BY_DEFAULT
+-#endif  // BUILDFLAG(IS_ANDROID)
+ );
+ 
+ // Enables or disables the Trust Safety Sentiment Survey for Safety Hub.
