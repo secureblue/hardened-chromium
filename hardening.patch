@@ -26,6 +26,8 @@ index 62cecce..b51f9d7 100644
     CHROMIUM_FLAGS+=" --enable-gpu-rasterization"
  fi
  
+diff --git a/chromium.spec b/chromium.spec
+index fbb010a..8662d8c 100644
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -36,10 +36,10 @@
@@ -50,17 +52,19 @@ index 62cecce..b51f9d7 100644
  
  # Leave this alone, please.
  %global chromebuilddir out/Release
-@@ -295,8 +295,8 @@
+@@ -295,9 +295,9 @@
  %global chromoting_client_id %nil
  %endif
  
 -Name:	chromium%{chromium_channel}
 -Version: 127.0.6533.88
+-Release: 1%{?dist}
 +Name:	hardened-chromium%{chromium_channel}
 +Version: 127.0.6533.99
- Release: 1%{?dist}
++Release: 2%{?dist}
  Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
  Url: http://www.chromium.org/Home
+ License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND GPL-2.0-or-later AND ISC AND OpenSSL AND (MPL-1.1 OR GPL-2.0-only OR LGPL-2.0-only)
 @@ -479,6 +479,85 @@ Patch503: chromium-127-ninja-1.21.1-deps-part2.patch
  Patch504: chromium-127-ninja-1.21.1-deps-part3.patch
  Patch505: chromium-127-crabbyavif.patch
@@ -395,6 +399,8 @@ index 62cecce..b51f9d7 100644
  %endif
  %{_bindir}/%{chromium_browser_channel}
  %{chromium_path}/*.bin
+diff --git a/master_preferences b/master_preferences
+index 8d732dc..58b079c 100644
 --- a/master_preferences
 +++ b/master_preferences
 @@ -1,5 +1,5 @@
@@ -412,6 +418,9 @@ index 62cecce..b51f9d7 100644
 +     "about:blank"
    ]
  }
+diff --git a/sources b/sources
+deleted file mode 100644
+index 7e696d9..0000000
 --- a/sources
 +++ /dev/null
 @@ -1,7 +0,0 @@
