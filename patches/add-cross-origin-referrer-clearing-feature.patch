@@ -1,0 +1,75 @@
+diff --git a/net/base/features.cc b/net/base/features.cc
+index 302f1a22d7d7e..4821492c651e1 100644
+--- a/net/base/features.cc
++++ b/net/base/features.cc
+@@ -19,9 +19,13 @@ BASE_FEATURE(kAvoidH2Reprioritization,
+              "AvoidH2Reprioritization",
+              base::FEATURE_DISABLED_BY_DEFAULT);
+ 
++BASE_FEATURE(kDisableCrossOriginReferrers,
++             "DisableCrossOriginReferrers",
++             base::FEATURE_DISABLED_BY_DEFAULT);
++
+ BASE_FEATURE(kCapReferrerToOriginOnCrossOrigin,
+              "CapReferrerToOriginOnCrossOrigin",
+-             base::FEATURE_DISABLED_BY_DEFAULT);
++             base::FEATURE_ENABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kAsyncDns,
+              "AsyncDns",
+diff --git a/net/base/features.h b/net/base/features.h
+index ffa3f6ced770b..d1f430814ca7e 100644
+--- a/net/base/features.h
++++ b/net/base/features.h
+@@ -26,6 +26,9 @@ NET_EXPORT BASE_DECLARE_FEATURE(kAlpsForHttp2);
+ // Disable H2 reprioritization, in order to measure its impact.
+ NET_EXPORT BASE_DECLARE_FEATURE(kAvoidH2Reprioritization);
+ 
++// Disables referrers when navigating across origins.
++NET_EXPORT BASE_DECLARE_FEATURE(kDisableCrossOriginReferrers);
++
+ // When kCapReferrerToOriginOnCrossOrigin is enabled, HTTP referrers on cross-
+ // origin requests are restricted to contain at most the source origin.
+ NET_EXPORT BASE_DECLARE_FEATURE(kCapReferrerToOriginOnCrossOrigin);
+diff --git a/net/url_request/url_request_job.cc b/net/url_request/url_request_job.cc
+index a3d565a410685..8c7b19dd8515d 100644
+--- a/net/url_request/url_request_job.cc
++++ b/net/url_request/url_request_job.cc
+@@ -327,6 +327,16 @@ GURL URLRequestJob::ComputeReferrerForPolicy(
+   if (same_origin_out_for_metrics)
+     *same_origin_out_for_metrics = same_origin;
+ 
++  if (base::FeatureList::IsEnabled(
++          features::kDisableCrossOriginReferrers) &&
++      !same_origin) {
++    // Return an empty URL if cross-origin and the feature is enabled.
++    //
++    // Returns here since the referrer policy doesn't matter if it is
++    // cross-origin (if it is same origin then this will never happen)
++    return GURL();
++  }
++
+   // 7. The user agent MAY alter referrerURL or referrerOrigin at this point to
+   // enforce arbitrary policy considerations in the interests of minimizing data
+   // leakage. For example, the user agent could strip the URL down to an origin,
+diff --git a/services/network/network_service_network_delegate.cc b/services/network/network_service_network_delegate.cc
+index 24034fb3a78f7..c67fb7bde22eb 100644
+--- a/services/network/network_service_network_delegate.cc
++++ b/services/network/network_service_network_delegate.cc
+@@ -60,9 +60,13 @@ void NetworkServiceNetworkDelegate::MaybeTruncateReferrer(
+     return;
+   }
+ 
+-  if (base::FeatureList::IsEnabled(
+-          net::features::kCapReferrerToOriginOnCrossOrigin)) {
+-    if (!url::IsSameOriginWith(effective_url, GURL(request->referrer()))) {
++  // If the target URL isn't the same origin as the current URL
++  if (!url::IsSameOriginWith(effective_url, GURL(request->referrer()))) {
++    if (base::FeatureList::IsEnabled(
++          net::features::kDisableCrossOriginReferrers)) {
++      request->SetReferrer(std::string());
++    } else if (base::FeatureList::IsEnabled(
++                net::features::kCapReferrerToOriginOnCrossOrigin)) {
+       auto capped_referrer = url::Origin::Create(GURL(request->referrer()));
+       request->SetReferrer(capped_referrer.GetURL().spec());
+     }
