@@ -26,7 +26,6 @@ index 62cecce..b51f9d7 100644
     CHROMIUM_FLAGS+=" --enable-gpu-rasterization"
  fi
  
-diff --git a/chromium.spec b/chromium.spec
 --- a/chromium.spec
 +++ b/chromium.spec
 @@ -36,10 +36,10 @@
@@ -62,7 +61,7 @@ diff --git a/chromium.spec b/chromium.spec
  Release: 1%{?dist}
  Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
  Url: http://www.chromium.org/Home
-@@ -479,6 +479,83 @@ Patch503: chromium-127-ninja-1.21.1-deps-part2.patch
+@@ -479,6 +479,84 @@ Patch503: chromium-127-ninja-1.21.1-deps-part2.patch
  Patch504: chromium-127-ninja-1.21.1-deps-part3.patch
  Patch505: chromium-127-crabbyavif.patch
  
@@ -142,11 +141,12 @@ diff --git a/chromium.spec b/chromium.spec
 +Patch2080: disable-tpcd-bypasses.patch
 +Patch2081: disable-gen-ai-features-and-logging-by-default.patch
 +Patch2082: disable-secondary-browser-features-by-default.patch
++Patch2083: remove-unused-preferences.patch
 +
  # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
  # http://build.chromium.org/buildbot/official/
  # For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-@@ -501,21 +578,6 @@ Source9: chromium-browser.xml
+@@ -501,21 +579,6 @@ Source9: chromium-browser.xml
  Source10: chrome-remote-desktop@.service
  Source11: master_preferences
  
@@ -168,7 +168,7 @@ diff --git a/chromium.spec b/chromium.spec
  # esbuild binary from fedora
  %if 0%{?fedora}
  BuildRequires: golang-github-evanw-esbuild
-@@ -847,7 +909,7 @@ Requires: libcanberra-gtk3%{_isa}
+@@ -847,7 +910,7 @@ Requires: libcanberra-gtk3%{_isa}
  Requires: u2f-hidraw-policy
  %endif
  
@@ -177,7 +177,7 @@ diff --git a/chromium.spec b/chromium.spec
  
  # rhel 8 or newer and fedora < 40: x86_64, aarch64
  # fedora 40 or newer: x86_64, aarch64, ppc64le
-@@ -1012,7 +1074,7 @@ Requires(preun): systemd
+@@ -1012,7 +1075,7 @@ Requires(preun): systemd
  Requires(postun): systemd
  Requires: xorg-x11-server-Xvfb
  Requires: python3-psutil
@@ -186,7 +186,7 @@ diff --git a/chromium.spec b/chromium.spec
  Summary: Remote desktop support for google-chrome & chromium
  
  %description -n chrome-remote-desktop
-@@ -1021,7 +1083,7 @@ Remote desktop support for google-chrome & chromium.
+@@ -1021,7 +1084,7 @@ Remote desktop support for google-chrome & chromium.
  
  %package -n chromedriver
  Summary: WebDriver for Google Chrome/Chromium
@@ -195,7 +195,7 @@ diff --git a/chromium.spec b/chromium.spec
  
  %description -n chromedriver
  WebDriver is an open source tool for automated testing of webapps across many
-@@ -1032,7 +1094,7 @@ members of the Chromium and WebDriver teams.
+@@ -1032,7 +1095,7 @@ members of the Chromium and WebDriver teams.
  
  %package headless
  Summary:	A minimal headless shell built from Chromium
@@ -204,7 +204,7 @@ diff --git a/chromium.spec b/chromium.spec
  
  %description headless
  A minimal headless client built from Chromium. headless_shell is built
-@@ -1041,14 +1103,14 @@ udev.
+@@ -1041,14 +1104,14 @@ udev.
  
  %package qt5-ui
  Summary: Qt5 UI built from Chromium
@@ -221,7 +221,7 @@ diff --git a/chromium.spec b/chromium.spec
  
  %description qt6-ui
  Qt6 UI for chromium.
-@@ -1213,6 +1275,80 @@ Qt6 UI for chromium.
+@@ -1213,6 +1276,81 @@ Qt6 UI for chromium.
  %endif
  %patch -P505 -p1 -b .crabbyavif
  
@@ -299,10 +299,11 @@ diff --git a/chromium.spec b/chromium.spec
 +%patch -P2080 -p1 -b .disable-tpcd-bypasses
 +%patch -P2081 -p1 -b .disable-gen-ai-features-and-logging-by-default
 +%patch -P2082 -p1 -b .disable-secondary-browser-features-by-default
++%patch -P2083 -p1 -b .remove-unused-preferences
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
-@@ -1279,7 +1415,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
+@@ -1279,7 +1417,7 @@ cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
  %endif
  
  # Hard code extra version
@@ -311,7 +312,7 @@ diff --git a/chromium.spec b/chromium.spec
  
  # Fix hardcoded path in remoting code
  sed -i 's|/opt/google/chrome-remote-desktop|%{crd_path}|g' remoting/host/setup/daemon_controller_delegate_linux.cc
-@@ -1375,11 +1511,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
+@@ -1375,11 +1513,11 @@ sed -i 's|OFFICIAL_BUILD|GOOGLE_CHROME_BUILD|g' tools/generate_shim_headers/gene
  
  CHROMIUM_CORE_GN_DEFINES+=' chrome_pgo_phase=0'
  
@@ -327,7 +328,7 @@ diff --git a/chromium.spec b/chromium.spec
  
  %if %{useapikey}
  CHROMIUM_CORE_GN_DEFINES+=' google_api_key="%{api_key}"'
-@@ -1425,6 +1561,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
+@@ -1425,6 +1563,9 @@ CHROMIUM_CORE_GN_DEFINES+=' use_custom_libcxx=false'
  %endif
  CHROMIUM_CORE_GN_DEFINES+=' enable_iterator_debugging=false'
  CHROMIUM_CORE_GN_DEFINES+=' enable_vr=false'
@@ -337,7 +338,7 @@ diff --git a/chromium.spec b/chromium.spec
  CHROMIUM_CORE_GN_DEFINES+=' build_dawn_tests=false enable_perfetto_unittests=false'
  CHROMIUM_CORE_GN_DEFINES+=' disable_fieldtrial_testing_config=true'
  CHROMIUM_CORE_GN_DEFINES+=' symbol_level=%{debug_level} blink_symbol_level=%{debug_level}'
-@@ -1464,8 +1603,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
+@@ -1464,8 +1605,8 @@ CHROMIUM_BROWSER_GN_DEFINES+=' use_qt6=false'
  %endif
  
  CHROMIUM_BROWSER_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
@@ -348,7 +349,7 @@ diff --git a/chromium.spec b/chromium.spec
  
  %if %{use_vaapi}
  CHROMIUM_BROWSER_GN_DEFINES+=' use_vaapi=true'
-@@ -1667,15 +1806,15 @@ rm -rf %{buildroot}
+@@ -1667,15 +1808,15 @@ rm -rf %{buildroot}
  
  mkdir -p %{buildroot}%{_bindir} \
           %{buildroot}%{chromium_path}/locales \
@@ -367,7 +368,7 @@ diff --git a/chromium.spec b/chromium.spec
  %endif
  
  export BUILD_TARGET=`cat /etc/redhat-release`
-@@ -1836,7 +1975,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
+@@ -1836,7 +1977,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
  cp -a chrome/app/theme/chromium/product_logo_24.png %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/%{chromium_browser_channel}.png
  
  # Install the master_preferences file
@@ -376,7 +377,7 @@ diff --git a/chromium.spec b/chromium.spec
  
  mkdir -p %{buildroot}%{_datadir}/applications/
  desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE4}
-@@ -1888,11 +2027,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
+@@ -1888,11 +2029,11 @@ getent group chrome-remote-desktop >/dev/null || groupadd -r chrome-remote-deskt
  %doc AUTHORS README.fedora
  %doc chrome_policy_list.html *.json
  %license LICENSE
@@ -392,7 +393,6 @@ diff --git a/chromium.spec b/chromium.spec
  %endif
  %{_bindir}/%{chromium_browser_channel}
  %{chromium_path}/*.bin
-diff --git a/master_preferences b/master_preferences
 --- a/master_preferences
 +++ b/master_preferences
 @@ -1,5 +1,5 @@
@@ -411,7 +411,6 @@ diff --git a/master_preferences b/master_preferences
    ]
  }
 diff --git a/sources b/sources
-deleted file mode 100644
 --- a/sources
 +++ /dev/null
 @@ -1,7 +0,0 @@

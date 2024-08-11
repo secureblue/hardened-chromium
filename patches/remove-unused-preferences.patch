@@ -1,0 +1,299 @@
+diff --git a/chrome/browser/resources/settings/basic_page/basic_page.ts b/chrome/browser/resources/settings/basic_page/basic_page.ts
+index 86b5cf293e4c9..cb7d9c091d14f 100644
+--- a/chrome/browser/resources/settings/basic_page/basic_page.ts
++++ b/chrome/browser/resources/settings/basic_page/basic_page.ts
+@@ -338,8 +338,7 @@ export class SettingsBasicPageElement extends SettingsBasicPageElementBase {
+   }
+ 
+   private showSafetyCheckPage_(visibility?: boolean): boolean {
+-    return !loadTimeData.getBoolean('enableSafetyHub') &&
+-        this.showPage_(visibility);
++    return false && this.showPage_(visibility); // Kept to prevent errors
+   }
+ 
+   private showSafetyHubEntryPointPage_(visibility?: boolean): boolean {
+diff --git a/chrome/browser/resources/settings/people_page/people_page.html b/chrome/browser/resources/settings/people_page/people_page.html
+index 7bf7f60601b77..5d3c4d4879e0f 100644
+--- a/chrome/browser/resources/settings/people_page/people_page.html
++++ b/chrome/browser/resources/settings/people_page/people_page.html
+@@ -107,12 +107,6 @@ shown on non-ChromeOS platforms -->
+           </div>
+         </template> <!-- if="[[!shouldShowSyncAccountControl_()]]" -->
+ 
+-        <cr-link-row id="sync-setup"
+-            label="$i18n{syncAndNonPersonalizedServices}"
+-            sub-label="[[getSyncAndGoogleServicesSubtext_(syncStatus)]]"
+-            on-click="onSyncClick_"
+-            role-description="$i18n{subpageArrowRoleDescription}">
+-        </cr-link-row>
+ 
+ <if expr="not chromeos_ash">
+         <template is="dom-if" if="[[signinAllowed_]]">
+diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.ts b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
+index 00318322c8147..b89acab52a96a 100644
+--- a/chrome/browser/resources/settings/privacy_page/privacy_page.ts
++++ b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
+@@ -608,8 +608,7 @@ export class SettingsPrivacyPageElement extends SettingsPrivacyPageElementBase {
+   }
+ 
+   private shouldShowAdPrivacy_(): boolean {
+-    return !this.isPrivacySandboxRestricted_ ||
+-        this.isPrivacySandboxRestrictedNoticeEnabled_;
++    return false;
+   }
+ 
+   // Only show Manage Topics page when PTB is enabled. If user is part of Mode B
+diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
+index 9a8fe2fe5df1a..2b5c4f2923b79 100644
+--- a/chrome/browser/resources/settings/privacy_page/security_page.html
++++ b/chrome/browser/resources/settings/privacy_page/security_page.html
+@@ -64,199 +64,6 @@
+         pointer-events: auto;
+       }
+     </style>
+-    <picture>
+-      <source
+-          srcset="chrome://settings/images/safe_browsing_banner_dark.svg"
+-          media="(prefers-color-scheme: dark)">
+-      <img id="banner" alt=""
+-          src="chrome://settings/images/safe_browsing_banner.svg">
+-    </picture>
+-    <div id="safeBrowsingSection">
+-      <h2>$i18n{safeBrowsingSectionLabel}</h2>
+-      <settings-radio-group id="safeBrowsingRadioGroup" no-set-pref
+-          pref="{{prefs.generated.safe_browsing}}"
+-          selectable-elements="cr-radio-button, settings-collapse-radio-button"
+-          on-change="onSafeBrowsingRadioChange_">
+-        <settings-collapse-radio-button id="safeBrowsingEnhanced"
+-            name="[[safeBrowsingSettingEnum_.ENHANCED]]"
+-            pref="[[prefs.generated.safe_browsing]]"
+-            label="$i18n{safeBrowsingEnhanced}"
+-            sub-label="[[getSafeBrowsingEnhancedSubLabel_(
+-                        enableFriendlierSafeBrowsingSettings_)]]"
+-            indicator-aria-label="$i18n{controlledSettingPolicy}"
+-            expand-aria-label="$i18n{safeBrowsingEnhancedExpandA11yLabel}"
+-            on-expand-clicked="onEnhancedProtectionExpandButtonClicked_"
+-            no-automatic-collapse>
+-          <template is="dom-if" if="[[!enableFriendlierSafeBrowsingSettings_]]">
+-            <div slot="collapse">
+-              <div class="bullet-line">
+-                <iron-icon icon="cr:security"></iron-icon>
+-                <div class="cr-secondary-text">
+-                  $i18n{safeBrowsingEnhancedBulOne}
+-                </div>
+-              </div>
+-              <div class="bullet-line">
+-                <iron-icon icon="settings20:googleg"></iron-icon>
+-                <div class="cr-secondary-text">
+-                  $i18n{safeBrowsingEnhancedBulTwo}
+-                </div>
+-              </div>
+-              <div class="bullet-line">
+-                <iron-icon icon="settings:public"></iron-icon>
+-                <div class="cr-secondary-text">
+-                  $i18n{safeBrowsingEnhancedBulThree}
+-                </div>
+-              </div>
+-              <div class="bullet-line">
+-                <iron-icon icon="settings20:vpn-key"></iron-icon>
+-                <div class="cr-secondary-text">
+-                  $i18n{safeBrowsingEnhancedBulFour}
+-                </div>
+-              </div>
+-              <div class="bullet-line last-collapse-item">
+-                <iron-icon icon="settings20:data"></iron-icon>
+-                <div class="cr-secondary-text cr-padded-text">
+-                  $i18n{safeBrowsingEnhancedBulFive}
+-                </div>
+-              </div>
+-            </div>
+-          </template>
+-          <template is="dom-if" if="[[enableFriendlierSafeBrowsingSettings_]]">
+-            <div id="enhancedProtectionDescContainer" slot="collapse"
+-                class="settings-columned-section">
+-              <div class="column">
+-                <h3 class="description-header">
+-                  $i18n{columnHeadingWhenOn}
+-                </h3>
+-                <ul class="icon-bulleted-list">
+-                  <li>
+-                    <iron-icon icon="settings20:data" aria-hidden="true">
+-                    </iron-icon>
+-                    <div class="secondary">
+-                      $i18n{safeBrowsingEnhancedWhenOnBulOne}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings20:download" aria-hidden="true">
+-                    </iron-icon>
+-                    <div class="secondary">
+-                      $i18n{safeBrowsingEnhancedWhenOnBulTwo}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings20:gshield" aria-hidden="true">
+-                    </iron-icon>
+-                    <div class="secondary">
+-                      $i18n{safeBrowsingEnhancedWhenOnBulThree}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings:language" aria-hidden="true">
+-                    </iron-icon>
+-                    <div class="secondary">
+-                      $i18n{safeBrowsingEnhancedWhenOnBulFour}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings20:vpn-key-new" aria-hidden="true">
+-                    </iron-icon>
+-                    <div class="secondary">
+-                      $i18n{safeBrowsingEnhancedWhenOnBulFive}
+-                    </div>
+-                  </li>
+-                </ul>
+-              </div>
+-              <div class="column">
+-                <h3 class="description-header">
+-                  $i18n{columnHeadingConsider}
+-                </h3>
+-                <ul class="icon-bulleted-list">
+-                  <li>
+-                    <iron-icon icon="settings20:link"></iron-icon>
+-                    <div class="cr-secondary-text">
+-                      $i18n{safeBrowsingEnhancedThingsToConsiderBulOne}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings20:account-circle"></iron-icon>
+-                    <div class="cr-secondary-text">
+-                      $i18n{safeBrowsingEnhancedThingsToConsiderBulTwo}
+-                    </div>
+-                  </li>
+-                  <li>
+-                    <iron-icon icon="settings:performance"></iron-icon>
+-                    <div class="cr-secondary-text">
+-                      $i18n{safeBrowsingEnhancedThingsToConsiderBulThree}
+-                    </div>
+-                  </li>
+-                </ul>
+-                <div id="learnMoreLabelContainer" class="cr-secondary-text">
+-                  $i18nRaw{safeBrowsingEnhancedLearnMoreLabel}
+-                </div>
+-              </div>
+-            </div>
+-          </template>
+-        </settings-collapse-radio-button>
+-        <settings-collapse-radio-button id="safeBrowsingStandard"
+-            name="[[safeBrowsingSettingEnum_.STANDARD]]"
+-            pref="[[prefs.generated.safe_browsing]]"
+-            label="$i18n{safeBrowsingStandard}"
+-            sub-label="[[getSafeBrowsingStandardSubLabel_(
+-                        enableFriendlierSafeBrowsingSettings_,
+-                        enableHashPrefixRealTimeLookups_)]]"
+-            indicator-aria-label="$i18n{controlledSettingPolicy}"
+-            expand-aria-label="$i18n{safeBrowsingStandardExpandA11yLabel}"
+-            info-opened="{{infoOpened_}}"
+-            on-expand-clicked="onStandardProtectionExpandButtonClicked_"
+-            no-automatic-collapse>
+-          <template is="dom-if" if="[[!enableFriendlierSafeBrowsingSettings_]]">
+-            <div slot="collapse">
+-              <div class="bullet-line">
+-                <iron-icon icon="cr:security"></iron-icon>
+-                <div class="cr-secondary-text">
+-                  $i18n{safeBrowsingStandardBulOne}
+-                </div>
+-              </div>
+-              <div class="bullet-line">
+-                <iron-icon icon="settings20:data"></iron-icon>
+-                <div id="safeBrowsingStandardBulTwo"
+-                    class="cr-secondary-text cr-padded-text">
+-                  [[getSafeBrowsingStandardBulTwo_(
+-                    enableHashPrefixRealTimeLookups_)]]
+-                </div>
+-              </div>
+-            </div>
+-          </template>
+-          <div slot="noSelectionCollapse">
+-            <settings-toggle-button id="safeBrowsingReportingToggle"
+-                pref="{{prefs.safebrowsing.scout_reporting_enabled}}"
+-                label="$i18n{safeBrowsingStandardReportingLabel}"
+-                sub-label="$i18n{safeBrowsingEnableExtendedReportingDesc}"
+-                on-change="onSafeBrowsingExtendedReportingChange_"
+-                disabled="[[getDisabledExtendedSafeBrowsing_(
+-                              prefs.generated.safe_browsing.*)]]">
+-            </settings-toggle-button>
+-            <settings-toggle-button id="passwordsLeakToggle"
+-                label="[[getPasswordsLeakToggleLabel_(
+-                        enableFriendlierSafeBrowsingSettings_)]]"
+-                pref="{{prefs.generated.password_leak_detection}}"
+-                sub-label="[[getPasswordsLeakToggleSubLabel_(
+-                              enableFriendlierSafeBrowsingSettings_,
+-                              prefs.profile.password_manager_leak_detection.*,
+-                              prefs.generated.password_leak_detection.*)]]">
+-            </settings-toggle-button>
+-          </div>
+-        </settings-collapse-radio-button>
+-        <settings-collapse-radio-button id="safeBrowsingDisabled" no-collapse
+-            name="[[safeBrowsingSettingEnum_.DISABLED]]"
+-            pref="[[prefs.generated.safe_browsing]]"
+-            label="$i18n{safeBrowsingNone}"
+-            sub-label="[[getSafeBrowsingDisabledSubLabel_(
+-                        enableFriendlierSafeBrowsingSettings_)]]"
+-            indicator-aria-label="$i18n{controlledSettingPolicy}">
+-        </settings-collapse-radio-button>
+-      </settings-radio-group>
+-    </div>
+     <div class="cr-row first">
+       <h2>$i18n{advancedPageTitle}</h2>
+     </div>
+@@ -399,18 +206,3 @@
+           on-click="onChromeCertificatesClick_">
+       </cr-link-row>
+ </if>
+-
+-    <cr-link-row id="advanced-protection-program-link" class="hr"
+-        label="$i18n{advancedProtectionProgramTitle}"
+-        sub-label="$i18n{advancedProtectionProgramDesc}"
+-        on-click="onAdvancedProtectionProgramLinkClick_"
+-        external>
+-    </cr-link-row>
+-    <template is="dom-if" if="[[showDisableSafebrowsingDialog_]]" restamp>
+-      <settings-simple-confirmation-dialog
+-          title-text="$i18n{safeBrowsingDisableDialog}"
+-          body-text="$i18n{safeBrowsingDisableDialogDesc}"
+-          confirm-text="$i18n{safeBrowsingDisableDialogConfirm}"
+-          on-close="onDisableSafebrowsingDialogClose_">
+-      </settings-simple-confirmation-dialog>
+-    </template>
+diff --git a/chrome/browser/resources/settings/privacy_page/security_page.ts b/chrome/browser/resources/settings/privacy_page/security_page.ts
+index 8f4bcdea0693e..71053b052ab02 100644
+--- a/chrome/browser/resources/settings/privacy_page/security_page.ts
++++ b/chrome/browser/resources/settings/privacy_page/security_page.ts
+@@ -312,10 +312,6 @@ export class SettingsSecurityPageElement extends
+       }
+     });
+ 
+-    this.registerHelpBubble(
+-        'kEnhancedProtectionSettingElementId',
+-        this.$.safeBrowsingEnhanced.getBubbleAnchor(), {anchorPaddingTop: 10});
+-
+     // Initialize the last focus time on page load.
+     this.lastFocusTime_ = HatsBrowserProxyImpl.getInstance().now();
+   }
+diff --git a/chrome/common/chrome_features.cc b/chrome/common/chrome_features.cc
+index 998fcf6ac5b69..cab0ee97a3bf8 100644
+--- a/chrome/common/chrome_features.cc
++++ b/chrome/common/chrome_features.cc
+@@ -1105,11 +1105,7 @@ BASE_FEATURE(kSafetyHubExtensionsOffStoreTrigger,
+ // Enables Safety Hub feature.
+ BASE_FEATURE(kSafetyHub,
+              "SafetyHub",
+-#if BUILDFLAG(IS_ANDROID)
+              base::FEATURE_DISABLED_BY_DEFAULT
+-#else
+-             base::FEATURE_ENABLED_BY_DEFAULT
+-#endif  // BUILDFLAG(IS_ANDROID)
+ );
+ 
+ // Enables or disables the Trust Safety Sentiment Survey for Safety Hub.
