@@ -1,0 +1,31 @@
+diff --git a/components/content_settings/core/browser/content_settings_registry.cc b/components/content_settings/core/browser/content_settings_registry.cc
+index 229ac346cfc83..93416d6ab0332 100644
+--- a/components/content_settings/core/browser/content_settings_registry.cc
++++ b/components/content_settings/core/browser/content_settings_registry.cc
+@@ -395,7 +395,7 @@ void ContentSettingsRegistry::Init() {
+            ContentSettingsInfo::EXCEPTIONS_ON_SECURE_ORIGINS_ONLY);
+ 
+   Register(ContentSettingsType::PAYMENT_HANDLER, "payment-handler",
+-           CONTENT_SETTING_ALLOW, WebsiteSettingsInfo::UNSYNCABLE,
++           CONTENT_SETTING_BLOCK, WebsiteSettingsInfo::UNSYNCABLE,
+            /*allowlisted_primary_schemes=*/{},
+            /*valid_settings=*/{CONTENT_SETTING_ALLOW, CONTENT_SETTING_BLOCK},
+            WebsiteSettingsInfo::TOP_ORIGIN_ONLY_SCOPE,
+@@ -588,7 +588,7 @@ void ContentSettingsRegistry::Init() {
+            ContentSettingsInfo::EXCEPTIONS_ON_SECURE_ORIGINS_ONLY);
+ 
+   Register(ContentSettingsType::JAVASCRIPT_JIT, "javascript-jit",
+-           CONTENT_SETTING_ALLOW, WebsiteSettingsInfo::UNSYNCABLE,
++           CONTENT_SETTING_BLOCK, WebsiteSettingsInfo::UNSYNCABLE,
+            /*allowlisted_primary_schemes=*/{},
+            /*valid_settings=*/{CONTENT_SETTING_ALLOW, CONTENT_SETTING_BLOCK},
+            WebsiteSettingsInfo::TOP_ORIGIN_ONLY_SCOPE,
+@@ -657,7 +657,7 @@ void ContentSettingsRegistry::Init() {
+            ContentSettingsInfo::INHERIT_IN_INCOGNITO,
+            ContentSettingsInfo::EXCEPTIONS_ON_SECURE_ORIGINS_ONLY);
+ 
+-  Register(ContentSettingsType::ANTI_ABUSE, "anti-abuse", CONTENT_SETTING_ALLOW,
++  Register(ContentSettingsType::ANTI_ABUSE, "anti-abuse", CONTENT_SETTING_BLOCK,
+            WebsiteSettingsInfo::SYNCABLE,
+            /*allowlisted_primary_schemes=*/{},
+            /*valid_settings=*/{CONTENT_SETTING_ALLOW, CONTENT_SETTING_BLOCK},
