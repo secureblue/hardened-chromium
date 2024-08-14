@@ -1,0 +1,43 @@
+diff --git a/chrome/browser/ui/ui_features.cc b/chrome/browser/ui/ui_features.cc
+index 097362cfceb53..f650be26cc96d 100644
+--- a/chrome/browser/ui/ui_features.cc
++++ b/chrome/browser/ui/ui_features.cc
+@@ -13,6 +13,10 @@
+ 
+ namespace features {
+ 
++// Hides the toolbar profile icon in regular profiles
++BASE_FEATURE(kHideProfileIcon, "HideProfileIcon",
++             base::FEATURE_ENABLED_BY_DEFAULT);
++
+ // Enables the tab dragging fallback when full window dragging is not supported
+ // by the platform (e.g. Wayland). See https://crbug.com/896640
+ BASE_FEATURE(kAllowWindowDragUsingSystemDragDrop,
+diff --git a/chrome/browser/ui/ui_features.h b/chrome/browser/ui/ui_features.h
+index c971ba1b46016..b388a087e96d5 100644
+--- a/chrome/browser/ui/ui_features.h
++++ b/chrome/browser/ui/ui_features.h
+@@ -21,6 +21,8 @@ namespace features {
+ // All features in alphabetical order. The features should be documented
+ // alongside the definition of their values in the .cc file.
+ 
++BASE_DECLARE_FEATURE(kHideProfileIcon);
++
+ // TODO(crbug.com/40598679): Remove this when the tab dragging
+ // interactive_ui_tests pass on Wayland.
+ BASE_DECLARE_FEATURE(kAllowWindowDragUsingSystemDragDrop);
+diff --git a/chrome/browser/ui/views/toolbar/toolbar_view.cc b/chrome/browser/ui/views/toolbar/toolbar_view.cc
+index 05ae08a41e203..206b92bfff2e6 100644
+--- a/chrome/browser/ui/views/toolbar/toolbar_view.cc
++++ b/chrome/browser/ui/views/toolbar/toolbar_view.cc
+@@ -455,7 +455,9 @@ void ToolbarView::Init() {
+ 
+   avatar_ = container_view_->AddChildView(
+       std::make_unique<AvatarToolbarButton>(browser_view_));
+-  bool show_avatar_toolbar_button = true;
++  bool show_avatar_toolbar_button =
++      !(browser_->profile()->IsRegularProfile() &&
++      base::FeatureList::IsEnabled(features::kHideProfileIcon));
+ #if BUILDFLAG(IS_CHROMEOS_ASH)
+   // ChromeOS only badges Incognito, Guest, and captive portal signin icons in
+   // the browser window.
