@@ -2,10 +2,14 @@ diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
 index f705f4aa8b568..145eb17541758 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
-@@ -4133,6 +4133,22 @@ const FeatureEntry kFeatureEntries[] = {
+@@ -4133,6 +4133,26 @@ const FeatureEntry kFeatureEntries[] = {
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
  #include "chrome/browser/unexpire_flags_gen.inc"
++    {"incognito-launch",
++     "Incognito Launch",
++     "Incognito mode on launch. This flag is exposed by hardened-chromium.",
++     kOsAll, SINGLE_VALUE_TYPE("incognito")},
 +    {"disable-cross-origin-referrers",
 +     flag_descriptions::kDisableCrossOriginReferrersName,
 +     flag_descriptions::kDisableCrossOriginReferrersDescription, kOsAll,
@@ -59,6 +63,7 @@ index 695e4f8ba74d0..b82fdbd37d370 100644
  const char kAccelerated2dCanvasDescription[] =
      "Enables the use of the GPU to perform 2d canvas rendering instead of "
 diff --git a/chrome/browser/flag_descriptions.h b/chrome/browser/flag_descriptions.h
+index 83c2d22343339..ef1975e1ea895 100644
 --- a/chrome/browser/flag_descriptions.h
 +++ b/chrome/browser/flag_descriptions.h
 @@ -43,6 +43,20 @@
