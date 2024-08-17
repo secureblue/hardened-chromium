@@ -1,0 +1,53 @@
+diff --git a/components/url_formatter/url_formatter.cc b/components/url_formatter/url_formatter.cc
+index 63b6e1583a837..a0b8b8c588161 100644
+--- a/components/url_formatter/url_formatter.cc
++++ b/components/url_formatter/url_formatter.cc
+@@ -26,6 +26,7 @@
+ #include "url/third_party/mozilla/url_parse.h"
+ #include "url/url_constants.h"
+ #include "url/url_util.h"
++#include "url/url_features.h"
+ 
+ namespace url_formatter {
+ 
+@@ -318,6 +319,10 @@ IDNConversionResult IDNToUnicodeWithAdjustmentsImpl(
+   GetTopLevelDomain(host, &top_level_domain, &top_level_domain_unicode);
+ 
+   IDNConversionResult result;
++  if (base::FeatureList::IsEnabled(url::kShowPunycodeDomains)) {
++    result.result = host16;
++    return result;
++  }
+   // Do each component of the host separately, since we enforce script matching
+   // on a per-component basis.
+   std::u16string out16;
+diff --git a/url/url_features.cc b/url/url_features.cc
+index 584e93ac72bd1..b89fea48914d6 100644
+--- a/url/url_features.cc
++++ b/url/url_features.cc
+@@ -7,6 +7,10 @@
+ 
+ namespace url {
+ 
++BASE_FEATURE(kShowPunycodeDomains,
++             "ShowPunycodeDomains",
++             base::FEATURE_DISABLED_BY_DEFAULT);
++
+ BASE_FEATURE(kUseIDNA2008NonTransitional,
+              "UseIDNA2008NonTransitional",
+              base::FEATURE_ENABLED_BY_DEFAULT);
+diff --git a/url/url_features.h b/url/url_features.h
+index fa4493a12e9c1..70c5d811122fe 100644
+--- a/url/url_features.h
++++ b/url/url_features.h
+@@ -10,6 +10,10 @@
+ 
+ namespace url {
+ 
++// Forces IDN domains to be shown as punycode, this helps mitigate IDN homograph
++// attacks which can be used for phishing
++BASE_DECLARE_FEATURE(kShowPunycodeDomains);
++
+ // If you add or remove a feature related to URLs, you may need to
+ // correspondingly update the EarlyAccess allow list in app shims
+ // (chrome/app_shim/app_shim_controller.mm). See https://crbug.com/1520386 for
