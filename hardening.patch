@@ -232,8 +232,8 @@ index 62cecce..b51f9d7 100644
  %endif
  %patch -P505 -p1 -b .crabbyavif
  
-+%autopatch -m 2000 -M 2033
-+%autopatch -m 3000 -M 3054
++%autopatch -p1 -m 2000 -M 2033
++%autopatch -p1 -m 3000 -M 3054
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
@@ -353,4 +353,4 @@ index 62cecce..b51f9d7 100644
 -SHA512 (linux-x64-0.19.2.tgz) = a31cc74c4bfa54f9b75d735a1cfc944d3b5efb7c06bfba9542da9a642ae0b2d235ea00ae84d3ad0572c406405110fe7b61377af0fd15803806ef78d20fc6f05d
 -SHA512 (bindgen-cli-aarch64.tar.xz) = 1a5ae4e8fdd31d80e8111c4d5f2115336684763ecd3a442ffecdbc2a37bab146f88bdee0bb1ea7a98e1049f81b12e64bd0ce5510529b30a74ce3306488ac129b
 -SHA512 (bindgen-cli-x86_64.tar.xz) = 7ccc9b43b32d3a064a75cfc150e060711356da8fe98e83d855bae017108ef8e9e172fbdd6e2579433c19cfb56ababa5b77a8db6fa57a5e657a3878778ca10a37
--SHA512 (chromium-127.0.6533.99-clean.tar.xz) = 353658ea97df8f1428e6b8b7b4eb2a18d9f2b21196af0e5bfe37928859ba494a43c2e1a93fdc3fd35a884d92cf75864b6acfa0d7c90c62c6d5fe25c1daeffa10
+-SHA512 (chromium-127.0.6533.88-clean.tar.xz) = 212160a15e14348d416d2c3df0dd24f7b05da3c0f6fff3bccac1314f697be753bf831ea06039adec7d02f4e34d3a84787d12233bf927fa76727397ac0fde300f
