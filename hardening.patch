@@ -55,16 +55,15 @@ index 62cecce..b51f9d7 100644
  %endif
  
 -Name:	chromium%{chromium_channel}
--Version: 127.0.6533.99
+-Version: 127.0.6533.88
 +Name:	hardened-chromium%{chromium_channel}
 +Version: 128.0.6613.84
  Release: 1%{?dist}
  Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
  Url: http://www.chromium.org/Home
-@@ -479,7 +479,92 @@ Patch503: chromium-127-ninja-1.21.1-deps-part2.patch
+@@ -479,6 +479,91 @@ Patch503: chromium-127-ninja-1.21.1-deps-part2.patch
  Patch504: chromium-127-ninja-1.21.1-deps-part3.patch
  Patch505: chromium-127-crabbyavif.patch
- Patch506: chromium-127-allow-enabling-vulkan-on-ozone-wayland.patch
  
 +# hardening patches
 +
@@ -229,10 +228,9 @@ index 62cecce..b51f9d7 100644
  
  %description qt6-ui
  Qt6 UI for chromium.
-@@ -1213,7 +1283,9 @@ Qt6 UI for chromium.
+@@ -1213,6 +1283,8 @@ Qt6 UI for chromium.
  %endif
  %patch -P505 -p1 -b .crabbyavif
- %patch -P506 -p1 -b .allow-enabling-vulkan-on-ozone-wayland
  
 +%autopatch -m 2000 -M 2033
 +%autopatch -m 3000 -M 3054
