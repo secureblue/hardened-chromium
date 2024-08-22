@@ -10,7 +10,7 @@ cp patches/* ./chromium
 # Patch the spec file to build with the hardening patches
 patch -d ./chromium -p1 < hardening.patch
 
-version="127.0.6533.119"
+version="128.0.6613.84"
 
 cd chromium
 python3 chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
