@@ -1,13 +1,13 @@
 diff --git a/chrome/browser/ui/startup/startup_browser_creator.cc b/chrome/browser/ui/startup/startup_browser_creator.cc
-index 22a2efe170757..b09d7680953e0 100644
+index 8740af9bc6cd6..e7eaae8ea2edb 100644
 --- a/chrome/browser/ui/startup/startup_browser_creator.cc
 +++ b/chrome/browser/ui/startup/startup_browser_creator.cc
-@@ -911,7 +911,7 @@ void StartupBrowserCreator::ClearLaunchedProfilesForTesting() {
+@@ -912,7 +912,7 @@ void StartupBrowserCreator::ClearLaunchedProfilesForTesting() {
  // static
  void StartupBrowserCreator::RegisterLocalStatePrefs(
      PrefRegistrySimple* registry) {
--  registry->RegisterBooleanPref(prefs::kPromotionalTabsEnabled, true);
-+  registry->RegisterBooleanPref(prefs::kPromotionalTabsEnabled, false);
+-  registry->RegisterBooleanPref(prefs::kPromotionsEnabled, true);
++  registry->RegisterBooleanPref(prefs::kPromotionsEnabled, false);
  #if !BUILDFLAG(IS_CHROMEOS_ASH)
    registry->RegisterBooleanPref(prefs::kCommandLineFlagSecurityWarningsEnabled,
                                  true);

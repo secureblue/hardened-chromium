@@ -1,8 +1,8 @@
 diff --git a/chrome/browser/devtools/devtools_window.cc b/chrome/browser/devtools/devtools_window.cc
-index 02ff1e580d3a7..6787e1140be72 100644
+index a7c33cf116281..25bafa2243b90 100644
 --- a/chrome/browser/devtools/devtools_window.cc
 +++ b/chrome/browser/devtools/devtools_window.cc
-@@ -535,7 +535,7 @@ void DevToolsWindow::RegisterProfilePrefs(
+@@ -529,7 +529,7 @@ void DevToolsWindow::RegisterProfilePrefs(
        prefs::kDevToolsSyncedPreferencesSyncDisabled);
    registry->RegisterIntegerPref(
        prefs::kDevToolsGenAiSettings,
@@ -12,10 +12,10 @@ index 02ff1e580d3a7..6787e1140be72 100644
  
  // static
 diff --git a/components/optimization_guide/core/model_execution/model_execution_prefs.cc b/components/optimization_guide/core/model_execution/model_execution_prefs.cc
-index 38e66a357073f..913346206cc89 100644
+index d33df93b9ad75..b61239d2cd221 100644
 --- a/components/optimization_guide/core/model_execution/model_execution_prefs.cc
 +++ b/components/optimization_guide/core/model_execution/model_execution_prefs.cc
-@@ -26,15 +26,15 @@ const char kWallpaperSearchEnterprisePolicyAllowed[] =
+@@ -30,19 +30,19 @@ const char kHistorySearchEnterprisePolicyAllowed[] =
  void RegisterProfilePrefs(PrefRegistrySimple* registry) {
    registry->RegisterIntegerPref(
        kTabOrganizationEnterprisePolicyAllowed,
@@ -32,9 +32,14 @@ index 38e66a357073f..913346206cc89 100644
 -      static_cast<int>(ModelExecutionEnterprisePolicyValue::kAllow),
 +      static_cast<int>(ModelExecutionEnterprisePolicyValue::kDisable),
        PrefRegistry::LOSSY_PREF);
+   registry->RegisterIntegerPref(
+       kHistorySearchEnterprisePolicyAllowed,
+-      static_cast<int>(ModelExecutionEnterprisePolicyValue::kAllow),
++      static_cast<int>(ModelExecutionEnterprisePolicyValue::kDisable),
+       PrefRegistry::LOSSY_PREF);
  }
  
-@@ -123,7 +123,7 @@ void RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
+@@ -138,7 +138,7 @@ void RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
    registry->RegisterInt64Pref(localstate::kModelQualityLogggingClientId, 0,
                                PrefRegistry::LOSSY_PREF);
    registry->RegisterIntegerPref(
