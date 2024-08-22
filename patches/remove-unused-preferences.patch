@@ -283,6 +283,22 @@ index 8fc6a6ae3a42a..df9ee0d5ccc19 100644
      // Initialize the last focus time on page load.
      this.lastFocusTime_ = HatsBrowserProxyImpl.getInstance().now();
    }
+diff --git a/chrome/browser/ui/webui/settings/settings_ui.cc b/chrome/browser/ui/webui/settings/settings_ui.cc
+index 576fb73c196ec..67e6dbc4c54c5 100644
+--- a/chrome/browser/ui/webui/settings/settings_ui.cc
++++ b/chrome/browser/ui/webui/settings/settings_ui.cc
+@@ -358,10 +358,7 @@ SettingsUI::SettingsUI(content::WebUI* web_ui)
+   html_source->AddBoolean("userCannotManuallyEnterPassword", false);
+ #endif  // !BUILDFLAG(IS_CHROMEOS_LACROS)
+ 
+-  bool show_privacy_guide =
+-      base::FeatureList::IsEnabled(features::kPrivacyGuideForceAvailable) ||
+-      (!chrome::ShouldDisplayManagedUi(profile) && !profile->IsChild());
+-  html_source->AddBoolean("showPrivacyGuide", show_privacy_guide);
++  html_source->AddBoolean("showPrivacyGuide", false);
+ 
+   html_source->AddBoolean(
+       "enableCbdTimeframeRequired",
 diff --git a/chrome/common/chrome_features.cc b/chrome/common/chrome_features.cc
 index f3224987d31d6..6fbe875940d04 100644
 --- a/chrome/common/chrome_features.cc
