@@ -235,7 +235,7 @@ index 62cecce..b51f9d7 100644
  %patch -P506 -p1 -b .allow-enabling-vulkan-on-ozone-wayland
  
 +%autopatch -m 2000 -M 2033
-+%autopatch -m 3000 -M 2054
++%autopatch -m 3000 -M 3054
  # Change shebang in all relevant files in this directory and all subdirectories
  # See `man find` for how the `-exec command {} +` syntax works
  find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
