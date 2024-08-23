@@ -7,9 +7,6 @@ cd hardened-chromium
 cp vanadium_patches/* ./chromium
 cp patches/* ./chromium
 
-# Patch the spec file to build with the hardening patches
-patch -d ./chromium -p1 < hardening.patch
-
 version="128.0.6613.84"
 
 cd chromium
