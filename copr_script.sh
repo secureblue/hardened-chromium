@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-# Download this repo with its submodule https://src.fedoraproject.org/rpms/chromium.git inside the COPR build system
+# Download this repo with its submodule https://github.com/secureblue/hardened-chromium.git inside the COPR build system
 git clone --depth 1 --recurse-submodules https://github.com/secureblue/hardened-chromium.git
 cd hardened-chromium
 
