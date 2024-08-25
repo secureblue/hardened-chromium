@@ -14,7 +14,7 @@ A hardened chromium for desktop Linux inspired by [Vanadium](https://github.com/
 
 ### Out of scope
 
-* Any changes that sacrifice security for "privacy" (for example, enabling MV2)<sup>[why?](https://developer.chrome.com/docs/extensions/develop/migrate/improve-security)</sup>
+* Any changes that sacrifice security for "privacy" (for example, enabling MV2) <sup>[why?](https://developer.chrome.com/docs/extensions/develop/migrate/improve-security)</sup>
 * Any novel functionality that is unrelated to security
 
 ## Installation
