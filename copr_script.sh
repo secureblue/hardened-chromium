@@ -4,8 +4,18 @@
 git clone --depth 1 --recurse-submodules https://github.com/secureblue/hardened-chromium.git
 cd hardened-chromium
 
-cp vanadium_patches/* ./chromium
-cp patches/* ./chromium
+cd patches/
+patches=(*.patch)
+for ((i=0; i<${#patches[@]}; i++)); do
+	cp ${patches[i]} ../chromium/hardened-chromium-$((i+2000)).patch
+done
+cd ..
+cd vanadium_patches/
+patches=(*.patch)
+for ((i=0; i<${#patches[@]}; i++)); do
+	cp ${patches[i]} ../chromium/vanadium-$((i+3000)).patch
+done
+cd ..
 
 version="128.0.6613.84"
 
