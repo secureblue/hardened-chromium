@@ -7,7 +7,7 @@ cd hardened-chromium
 cp vanadium_patches/* ./chromium
 cp patches/* ./chromium
 
-version="128.0.6613.84"
+version="128.0.6613.113"
 
 cd chromium
 python3 chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
