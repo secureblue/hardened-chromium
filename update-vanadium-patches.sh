@@ -1,29 +1,27 @@
 #!/bin/bash
 
-gpwd=$(pwd)
-readonly path="./vanadium_patches/"
-readonly url=https://raw.githubusercontent.com/GrapheneOS/Vanadium/main/patches
-patches=() # current patch names
-smallpatches=() # truncated version of the patches for comparison
-vpatches=() # vanadium patches
-svpatches=() # truncated version for comparisons
+repo_directory=$(pwd)
+readonly patches_path="./vanadium_patches/"
+readonly vanadium_url="https://github.com/GrapheneOS/Vanadium.git"
+current_patches=()
+truncated_patches=()
+remote_patches=()
+truncated_remote_patches=()
 
-# gets the current patches
-get_patches() {
-	cd $path
-	patches=(*.patch)
-	for ((i=0; i<${#patches[@]}; i++)); do
-		smallpatches[$i]="${patches[$i]:4}"
+get_current_patches() {
+	cd $patches_path
+	current_patches=(*.patch)
+	for ((i=0; i<${#current_patches[@]}; i++)); do
+		truncated_patches[$i]="${current_patches[$i]:4}"
 	done
-	cd $gpwd
+	cd $repo_directory
 }
 
-# gets Vanadium patches by cloning the repository temporarily
-get_vpatches() {
-	cd uvp-tmp/
+get_remote_patches() {
+	cd vanadium-patches-tmp/
 	retry=0
 	while [ true ]; do
-		git clone https://github.com/GrapheneOS/Vanadium.git
+		git clone $vanadium_url
 		if [ ! -d Vanadium/patches/ ]; then
 			rm -rf Vanadium/
 			echo "ERROR! git operation failed!"
@@ -32,8 +30,8 @@ get_vpatches() {
 			fi
 			if [[ $retry == 2 ]]; then
 				echo "Aborting!"
-				cd $gpwd
-				rm -rf uvp-tmp/
+				cd $repo_directory
+				rm -rf vanadium-patches-tmp/
 				exit 1
 			fi
 			echo "Retrying..."
@@ -43,52 +41,61 @@ get_vpatches() {
 		fi
 	done
 	cd Vanadium/patches/
-	vpatches=(*.patch)
-	for ((i=0; i<${#vpatches[@]}; i++)); do
-		svpatches[$i]="${vpatches[$i]:4}"
+	remote_patches=(*.patch)
+	for ((i=0; i<${#remote_patches[@]}; i++)); do
+		if [[ ${remote_patches[$i]} =~ ^[0-9]{4}[\-] ]]; then
+			truncated_remote_patches[$i]="${remote_patches[$i]:4}"
+		else
+			echo "ERROR! Remote patch ${remote_patches[$i]} does match expected naming scheme!"
+			echo "Aborting!"
+			cd $repo_directory
+			rm -rf vanadium-patches-tmp/
+			exit 1
+		fi
 	done
-	cd $gpwd
+	cd $repo_directory
 }
 
 update_patches() {
-	get_patches
-	get_vpatches
-	cd $path
-	counterU=0 # updated counter
-	counterR=0 # removed counter
-	counterNF=0 # not found counter, used to determine if it should be removed
-	for ((i=0; i<${#smallpatches[@]}; i++)); do
-		for ((j=0; j<${#svpatches[@]}; j++)); do
-			if [[ "${svpatches[$j]}" == "${smallpatches[$i]}" ]]; then
-				if [[ "${vpatches[$j]}" == "${patches[$i]}" ]]; then
-					echo "Updating patch ${patches[$i]}"
+	get_current_patches
+	get_remote_patches
+	cd $patches_path
+	updated_counter=0
+	removed_counter=0
+	patch_not_found_counter=0
+	for ((i=0; i<${#truncated_patches[@]}; i++)); do
+		for ((j=0; j<${#truncated_remote_patches[@]}; j++)); do
+			if [[ "${truncated_remote_patches[$j]}" == "${truncated_patches[$i]}" ]]; then
+				if [[ "${remote_patches[$j]}" == "${current_patches[$i]}" ]]; then
+					echo "Updating patch ${current_patches[$i]}"
 					echo "	No name change"
 				else
-					echo "Updating patch ${patches[$i]}"
-					echo "	Patch (would have been) renamed to: ${vpatches[$j]}"
+					echo "Updating patch ${current_patches[$i]}"
+					echo "	Patch renamed to: ${remote_patches[$j]}"
 				fi
-				cp $gpwd/uvp-tmp/Vanadium/patches/${vpatches[$j]} ${patches[$i]}
-				counterU=$((counterU+1))
+				rm ${current_patches[$i]}
+				cp $repo_directory/vanadium-patches-tmp/Vanadium/patches/${remote_patches[$j]} ./
+				updated_counter=$((updated_counter+1))
 			else
-				counterNF=$((counterNF+1))
+				patch_not_found_counter=$((patch_not_found_counter+1))
 			fi
 		done
 		# Assume, since the patch has not been found, the patch has been removed
-		if [[ $counterNF == ${#svpatches[@]} ]]; then
+		if [[ $patch_not_found_counter == ${#truncated_remote_patches[@]} ]]; then
 			echo "Removing ${patches[i]}"
 			echo "	Patch has been removed in Vanadium"
 			rm ${patches[$i]}
-			counterR=$((counterR+1))
+			removed_counter=$((removed_counter+1))
 		fi
-		counterNF=0
+		patch_not_found_counter=0
 	done
 	echo ""
-	echo "Updated $counterU patches."
-	echo "Removed $counterR patches."
-	cd $gpwd
+	echo "Updated $updated_counter patches."
+	echo "Removed $removed_counter patches."
+	cd $repo_directory
 }
 
-mkdir uvp-tmp/ # create a temporary directory for cloning the Vanadium patches
+mkdir vanadium-patches-tmp/ # create a temporary directory for cloning the Vanadium patches
 update_patches
-rm -rf uvp-tmp/ # cleanup
+rm -rf vanadium-patches-tmp/ # cleanup
 exit 0
