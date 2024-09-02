@@ -1,17 +1,19 @@
 diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
-index 5898b8c54bef2..417e6278f4655 100644
+index 5898b8c54bef2..d924cec372c1a 100644
 --- a/build/config/compiler/BUILD.gn
 +++ b/build/config/compiler/BUILD.gn
-@@ -371,6 +371,8 @@ config("compiler") {
+@@ -371,6 +371,10 @@ config("compiler") {
        }
      }
  
-+    cflags += [ "-fstack-clash-protection" ]
++    if (is_linux) {
++      cflags += [ "-fstack-clash-protection" ]
++    }
 +
      if (use_lld) {
        ldflags += [ "-fuse-ld=lld" ]
        if (lld_path != "") {
-@@ -2059,7 +2061,7 @@ config("chromium_code") {
+@@ -2059,7 +2063,7 @@ config("chromium_code") {
        # Non-chromium code is not guaranteed to compile cleanly with
        # _FORTIFY_SOURCE. Also, fortified build may fail when optimizations are
        # disabled, so only do that for Release build.
