@@ -1,3 +1,25 @@
+diff --git a/chrome/app/settings_strings.grdp b/chrome/app/settings_strings.grdp
+index f318a33f56053..b5cca497db8b7 100644
+--- a/chrome/app/settings_strings.grdp
++++ b/chrome/app/settings_strings.grdp
+@@ -2307,7 +2307,7 @@
+     Security
+   </message>
+   <message name="IDS_SETTINGS_SECURITY_DESCRIPTION" desc="Description of the controls available on the security settings page">
+-    Safe Browsing (protection from dangerous sites) and other security settings
++    DNS, certificate management, and other security settings
+   </message>
+   <message name="IDS_SETTINGS_ADVANCED_PROTECTION_PROGRAM" desc="Name of the link which takes users
+     to the Google Advanced Protection Program external webpage">
+@@ -3902,7 +3902,7 @@
+
+   <!-- Sync / People Page -->
+   <message name="IDS_SETTINGS_PEOPLE" desc="Name of the settings page which manages the user's relationship to Google.">
+-    You and Google
++    Your Profile
+   </message>
+   <message name="IDS_SETTINGS_CHANGE_PICTURE_PROFILE_PHOTO" desc="The text on the Google profile photo of the user.">
+     Google Profile photo
 diff --git a/chrome/browser/resources/settings/basic_page/basic_page.ts b/chrome/browser/resources/settings/basic_page/basic_page.ts
 index 1024f4f8206f6..a3f1a384030c2 100644
 --- a/chrome/browser/resources/settings/basic_page/basic_page.ts
