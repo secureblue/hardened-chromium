@@ -17,7 +17,7 @@ for ((i=0; i<${#patches[@]}; i++)); do
 done
 cd ..
 
-version="128.0.6613.113"
+version="128.0.6613.119"
 
 cd chromium
 python3 chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
