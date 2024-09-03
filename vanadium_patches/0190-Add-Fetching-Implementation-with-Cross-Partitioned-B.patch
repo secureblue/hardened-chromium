@@ -340,3 +340,40 @@ index 0000000000000..901ba07756b16
 +}  // namespace features
 +
 +#endif  // STORAGE_BROWSER_BLOB_FEATURES_H_
+diff --git a/third_party/blink/web_tests/VirtualTestSuites b/third_party/blink/web_tests/VirtualTestSuites
+index 81d9507f2a31d..511e13024a0fc 100644
+--- a/third_party/blink/web_tests/VirtualTestSuites
++++ b/third_party/blink/web_tests/VirtualTestSuites
+@@ -1160,6 +1160,16 @@
+     "owners": ["arichiv@chromium.org", "bingler@chromium.org"]
+   },
+ 
++  {
++    "prefix": "block-cross-partition-blob-url-fetching",
++    "platforms": ["Linux"],
++    "bases": [
++      "external/wpt/FileAPI/BlobURL/cross-partition.tentative.https.html"],
++    "args": ["--enable-features=BlockCrossPartitionBlobUrlFetching"],
++    "expires": "Feb 4, 2025",
++    "owners": ["janiceliu@chromium.org"]
++  },
++
+   "isInputPending requires threaded compositing and layerized iframes",
+   {
+     "prefix": "threaded-composited-iframes",
+diff --git a/third_party/blink/web_tests/virtual/block-cross-partition-blob-url-fetching/README.md b/third_party/blink/web_tests/virtual/block-cross-partition-blob-url-fetching/README.md
+new file mode 100644
+index 0000000000000..7866d21f26af9
+--- /dev/null
++++ b/third_party/blink/web_tests/virtual/block-cross-partition-blob-url-fetching/README.md
+@@ -0,0 +1 @@
++This directory is for tests that need the Block Cross Partition Blob URL Fetching feature enabled.
+\ No newline at end of file
+diff --git a/third_party/blink/web_tests/virtual/block-cross-partition-blob-url-fetching/external/wpt/FileAPI/BlobURL/cross-partition.tentative.https-expected.txt b/third_party/blink/web_tests/virtual/block-cross-partition-blob-url-fetching/external/wpt/FileAPI/BlobURL/cross-partition.tentative.https-expected.txt
+new file mode 100644
+index 0000000000000..d2490dbd54c3e
+--- /dev/null
++++ b/third_party/blink/web_tests/virtual/block-cross-partition-blob-url-fetching/external/wpt/FileAPI/BlobURL/cross-partition.tentative.https-expected.txt
+@@ -0,0 +1,2 @@
++This is a testharness.js-based test.
++Harness: the test ran to completion.
