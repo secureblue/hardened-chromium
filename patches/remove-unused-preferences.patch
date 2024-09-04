@@ -1,25 +1,16 @@
-diff --git a/chrome/app/settings_strings.grdp b/chrome/app/settings_strings.grdp
-index f318a33f56053..b5cca497db8b7 100644
---- a/chrome/app/settings_strings.grdp
-+++ b/chrome/app/settings_strings.grdp
-@@ -2307,7 +2307,7 @@
-     Security
-   </message>
-   <message name="IDS_SETTINGS_SECURITY_DESCRIPTION" desc="Description of the controls available on the security settings page">
--    Safe Browsing (protection from dangerous sites) and other security settings
-+    DNS, certificate management, and other security settings
-   </message>
-   <message name="IDS_SETTINGS_ADVANCED_PROTECTION_PROGRAM" desc="Name of the link which takes users
-     to the Google Advanced Protection Program external webpage">
-@@ -3902,7 +3902,7 @@
-
-   <!-- Sync / People Page -->
-   <message name="IDS_SETTINGS_PEOPLE" desc="Name of the settings page which manages the user's relationship to Google.">
--    You and Google
-+    Your Profile
-   </message>
-   <message name="IDS_SETTINGS_CHANGE_PICTURE_PROFILE_PHOTO" desc="The text on the Google profile photo of the user.">
-     Google Profile photo
+diff --git a/chrome/browser/resources/settings/basic_page/basic_page.html b/chrome/browser/resources/settings/basic_page/basic_page.html
+index f44cde44ed34f..fd29b80af8ba4 100644
+--- a/chrome/browser/resources/settings/basic_page/basic_page.html
++++ b/chrome/browser/resources/settings/basic_page/basic_page.html
+@@ -17,7 +17,7 @@
+           </settings-reset-profile-banner>
+         </template>
+         <template is="dom-if" if="[[showPage_(pageVisibility.people)]]" restamp>
+-          <settings-section page-title="$i18n{peoplePageTitle}"
++          <settings-section page-title="Your Profile"
+               section="people">
+             <settings-people-page prefs="{{prefs}}"
+                 page-visibility="[[pageVisibility]]">
 diff --git a/chrome/browser/resources/settings/basic_page/basic_page.ts b/chrome/browser/resources/settings/basic_page/basic_page.ts
 index 1024f4f8206f6..a3f1a384030c2 100644
 --- a/chrome/browser/resources/settings/basic_page/basic_page.ts
@@ -51,6 +42,19 @@ index 6297480d4f357..16514e7c58c5e 100644
  
  <if expr="not chromeos_ash">
          <template is="dom-if" if="[[signinAllowed_]]">
+diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.html b/chrome/browser/resources/settings/privacy_page/privacy_page.html
+index af9ea12b78f9f..a1374bf969eae 100644
+--- a/chrome/browser/resources/settings/privacy_page/privacy_page.html
++++ b/chrome/browser/resources/settings/privacy_page/privacy_page.html
+@@ -86,7 +86,7 @@
+         </template>
+         <cr-link-row id="securityLinkRow" start-icon="settings:lock-outline"
+             class="hr" label="$i18n{securityPageTitle}"
+-            sub-label="$i18n{securityPageDescription}"
++            sub-label="DNS, certificate management, and other security settings"
+             on-click="onSecurityPageClick_"
+             role-description="$i18n{subpageArrowRoleDescription}"></cr-link-row>
+         <cr-link-row id="permissionsLinkRow" start-icon="settings:permissions"
 diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.ts b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
 index 00318322c8147..b89acab52a96a 100644
 --- a/chrome/browser/resources/settings/privacy_page/privacy_page.ts
