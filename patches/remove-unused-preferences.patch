@@ -70,10 +70,10 @@ index 00318322c8147..b89acab52a96a 100644
  
    // Only show Manage Topics page when PTB is enabled. If user is part of Mode B
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
-index 8fd4f50e2d484..39db730a58b76 100644
+index 8fd4f50e2d484..b67f49bfc39b1 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.html
-@@ -64,201 +64,6 @@
+@@ -64,203 +64,8 @@
          pointer-events: auto;
        }
      </style>
@@ -273,8 +273,11 @@ index 8fd4f50e2d484..39db730a58b76 100644
 -      </settings-radio-group>
 -    </div>
      <div class="cr-row first">
-       <h2>$i18n{advancedPageTitle}</h2>
+-      <h2>$i18n{advancedPageTitle}</h2>
++      <h2>Security</h2>
      </div>
+     <template is="dom-if" if="[[!enableHttpsFirstModeNewSettings_]]">
+       <settings-toggle-button id="httpsOnlyModeToggle"
 @@ -400,18 +205,3 @@
            on-click="onChromeCertificatesClick_">
        </cr-link-row>
@@ -309,6 +312,19 @@ index 8fc6a6ae3a42a..df9ee0d5ccc19 100644
      // Initialize the last focus time on page load.
      this.lastFocusTime_ = HatsBrowserProxyImpl.getInstance().now();
    }
+diff --git a/chrome/browser/resources/settings/settings_menu/settings_menu.html b/chrome/browser/resources/settings/settings_menu/settings_menu.html
+index 658110a4a8775..6863ef1a0ab60 100644
+--- a/chrome/browser/resources/settings/settings_menu/settings_menu.html
++++ b/chrome/browser/resources/settings/settings_menu/settings_menu.html
+@@ -54,7 +54,7 @@
+ <if expr="_google_chrome">
+           <iron-icon icon="settings-internal:google-g"></iron-icon>
+ </if>
+-          $i18n{peoplePageTitle}
++          Your Profile
+           <cr-ripple></cr-ripple>
+         </a>
+         <a role="menuitem" id="autofill" href="/autofill"
 diff --git a/chrome/browser/ui/webui/settings/settings_ui.cc b/chrome/browser/ui/webui/settings/settings_ui.cc
 index 576fb73c196ec..67e6dbc4c54c5 100644
 --- a/chrome/browser/ui/webui/settings/settings_ui.cc
