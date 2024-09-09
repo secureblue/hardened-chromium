@@ -1,8 +1,8 @@
 diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
-index f705f4aa8b568..145eb17541758 100644
+index 96370d4ac35a9..bc80527377261 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
-@@ -4133,6 +4133,26 @@ const FeatureEntry kFeatureEntries[] = {
+@@ -4190,6 +4190,35 @@ const FeatureEntry kFeatureEntries[] = {
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
  #include "chrome/browser/unexpire_flags_gen.inc"
@@ -10,80 +10,31 @@ index f705f4aa8b568..145eb17541758 100644
 +     "Incognito Launch",
 +     "Incognito mode on launch. This flag is exposed by hardened-chromium.",
 +     kOsAll, SINGLE_VALUE_TYPE("incognito")},
++    {"disable-extensions",
++     "Disable Extensions",
++     "Disables extensions support. This flag is exposed by hardened-chromium.",
++     kOsAll, SINGLE_VALUE_TYPE("disable-extensions")},
 +    {"disable-cross-origin-referrers",
-+     flag_descriptions::kDisableCrossOriginReferrersName,
-+     flag_descriptions::kDisableCrossOriginReferrersDescription, kOsAll,
++     "Clear cross-origin referrers",
++     "Clears referrers when navigating across origins. Defaults to disabled. "
++     "This feature is provided by hardened-chromium.", kOsAll,
 +     FEATURE_VALUE_TYPE(net::features::kDisableCrossOriginReferrers)},
 +    {"cross-origin-trim-referrer",
-+     flag_descriptions::kCapReferrerToOriginOnCrossOriginName,
-+     flag_descriptions::kCapReferrerToOriginOnCrossOriginDescription, kOsAll,
++     "Cross-origin referrer trimming",
++     "Trims the referrer to just the origin on cross origin navigation. "
++     "Defaults to enabled. This feature is exposed by hardened-chromium.",
++     kOsAll,
 +     FEATURE_VALUE_TYPE(net::features::kCapReferrerToOriginOnCrossOrigin)},
 +    {"hide-profile-icon",
-+     flag_descriptions::kHideProfileIconName,
-+     flag_descriptions::kHideProfileIconDescription, kOsAll,
++     "Hide profile icon in toolbar",
++     "Hides the profile icon in the toolbar in regular profiles. Defaults "
++     "to enabled. This feature is provided by hardened-chromium." , kOsAll,
 +     FEATURE_VALUE_TYPE(features::kHideProfileIcon)},
 +    {"show-punycode-domains",
-+     flag_descriptions::kShowPunycodeDomainsName,
-+     flag_descriptions::kShowPunycodeDomainsDescription, kOsAll,
-+     FEATURE_VALUE_TYPE(url::kShowPunycodeDomains)},
++     "Show punycode for IDN domains",
++     "Shows punycode for IDN domains to mitigate IDN homograph attacks. "
++     "Defaults to disabled. This feature is provided by hardened-chromium.",
++     kOsAll, FEATURE_VALUE_TYPE(url::kShowPunycodeDomains)},
      {variations::switches::kEnableBenchmarking,
       flag_descriptions::kEnableBenchmarkingName,
       flag_descriptions::kEnableBenchmarkingDescription, kOsAll,
-diff --git a/chrome/browser/flag_descriptions.cc b/chrome/browser/flag_descriptions.cc
-index 695e4f8ba74d0..b82fdbd37d370 100644
---- a/chrome/browser/flag_descriptions.cc
-+++ b/chrome/browser/flag_descriptions.cc
-@@ -14,6 +14,28 @@
- 
- namespace flag_descriptions {
- 
-+const char kDisableCrossOriginReferrersName[] =
-+    "Clear cross-origin referrers";
-+const char kDisableCrossOriginReferrersDescription[] =
-+    "Clears referrers when navigating across origins. Defaults to disabled. "
-+    "This feature is provided by hardened-chromium.";
-+
-+const char kCapReferrerToOriginOnCrossOriginName[] =
-+    "Cross-origin referrer trimming";
-+const char kCapReferrerToOriginOnCrossOriginDescription[] =
-+    "Trims the referrer to just the origin on cross origin navigation. "
-+    "Defaults to enabled. This feature is exposed by hardened-chromium.";
-+
-+const char kHideProfileIconName[] = "Hide profile icon in toolbar";
-+const char kHideProfileIconDescription[] =
-+    "Hides the profile icon in the toolbar in regular profiles. Defaults "
-+    "to enabled. This feature is provided by hardened-chromium.";
-+
-+const char kShowPunycodeDomainsName[] = "Show punycode for IDN domains";
-+const char kShowPunycodeDomainsDescription[] =
-+    "Shows punycode for IDN domains to mitigate IDN homograph attacks. "
-+    "Defaults to disabled. This feature is provided by hardened-chromium.";
-+
- const char kAccelerated2dCanvasName[] = "Accelerated 2D canvas";
- const char kAccelerated2dCanvasDescription[] =
-     "Enables the use of the GPU to perform 2d canvas rendering instead of "
-diff --git a/chrome/browser/flag_descriptions.h b/chrome/browser/flag_descriptions.h
-index 83c2d22343339..ef1975e1ea895 100644
---- a/chrome/browser/flag_descriptions.h
-+++ b/chrome/browser/flag_descriptions.h
-@@ -43,6 +43,20 @@
- 
- namespace flag_descriptions {
- 
-+// hardened chromium ----------------------------------------------------------
-+
-+extern const char kDisableCrossOriginReferrersName[];
-+extern const char kDisableCrossOriginReferrersDescription[];
-+
-+extern const char kCapReferrerToOriginOnCrossOriginName[];
-+extern const char kCapReferrerToOriginOnCrossOriginDescription[];
-+
-+extern const char kHideProfileIconName[];
-+extern const char kHideProfileIconDescription[];
-+
-+extern const char kShowPunycodeDomainsName[];
-+extern const char kShowPunycodeDomainsDescription[];
-+
- // Cross-platform -------------------------------------------------------------
- 
- extern const char kAccelerated2dCanvasName[];
