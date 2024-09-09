@@ -1,5 +1,5 @@
 diff --git a/chrome/browser/resources/settings/basic_page/basic_page.html b/chrome/browser/resources/settings/basic_page/basic_page.html
-index f44cde44ed34f..fd29b80af8ba4 100644
+index f44cde44ed34f..361492b4390c7 100644
 --- a/chrome/browser/resources/settings/basic_page/basic_page.html
 +++ b/chrome/browser/resources/settings/basic_page/basic_page.html
 @@ -17,7 +17,7 @@
@@ -7,7 +7,7 @@ index f44cde44ed34f..fd29b80af8ba4 100644
          </template>
          <template is="dom-if" if="[[showPage_(pageVisibility.people)]]" restamp>
 -          <settings-section page-title="$i18n{peoplePageTitle}"
-+          <settings-section page-title="Your Profile"
++          <settings-section page-title="$i18n{profileInformationTitle}"
                section="people">
              <settings-people-page prefs="{{prefs}}"
                  page-visibility="[[pageVisibility]]">
@@ -43,7 +43,7 @@ index 6297480d4f357..16514e7c58c5e 100644
  <if expr="not chromeos_ash">
          <template is="dom-if" if="[[signinAllowed_]]">
 diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.html b/chrome/browser/resources/settings/privacy_page/privacy_page.html
-index af9ea12b78f9f..a1374bf969eae 100644
+index af9ea12b78f9f..c197d054668d7 100644
 --- a/chrome/browser/resources/settings/privacy_page/privacy_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/privacy_page.html
 @@ -86,7 +86,7 @@
@@ -51,7 +51,7 @@ index af9ea12b78f9f..a1374bf969eae 100644
          <cr-link-row id="securityLinkRow" start-icon="settings:lock-outline"
              class="hr" label="$i18n{securityPageTitle}"
 -            sub-label="$i18n{securityPageDescription}"
-+            sub-label="DNS, certificate management, and other security settings"
++            sub-label="$i18n{privacyGuidePromoBody}"
              on-click="onSecurityPageClick_"
              role-description="$i18n{subpageArrowRoleDescription}"></cr-link-row>
          <cr-link-row id="permissionsLinkRow" start-icon="settings:permissions"
@@ -70,10 +70,10 @@ index 00318322c8147..b89acab52a96a 100644
  
    // Only show Manage Topics page when PTB is enabled. If user is part of Mode B
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
-index 8fd4f50e2d484..b67f49bfc39b1 100644
+index 8fd4f50e2d484..21efc5e3a7942 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.html
-@@ -64,203 +64,8 @@
+@@ -64,204 +64,6 @@
          pointer-events: auto;
        }
      </style>
@@ -272,13 +272,13 @@ index 8fd4f50e2d484..b67f49bfc39b1 100644
 -        </settings-collapse-radio-button>
 -      </settings-radio-group>
 -    </div>
-     <div class="cr-row first">
+-    <div class="cr-row first">
 -      <h2>$i18n{advancedPageTitle}</h2>
-+      <h2>Security</h2>
-     </div>
+-    </div>
      <template is="dom-if" if="[[!enableHttpsFirstModeNewSettings_]]">
        <settings-toggle-button id="httpsOnlyModeToggle"
-@@ -400,18 +205,3 @@
+           pref="{{prefs.generated.https_first_mode_enabled}}"
+@@ -400,18 +202,3 @@
            on-click="onChromeCertificatesClick_">
        </cr-link-row>
  </if>
@@ -313,7 +313,7 @@ index 8fc6a6ae3a42a..df9ee0d5ccc19 100644
      this.lastFocusTime_ = HatsBrowserProxyImpl.getInstance().now();
    }
 diff --git a/chrome/browser/resources/settings/settings_menu/settings_menu.html b/chrome/browser/resources/settings/settings_menu/settings_menu.html
-index 658110a4a8775..6863ef1a0ab60 100644
+index 658110a4a8775..0025ddee63361 100644
 --- a/chrome/browser/resources/settings/settings_menu/settings_menu.html
 +++ b/chrome/browser/resources/settings/settings_menu/settings_menu.html
 @@ -54,7 +54,7 @@
@@ -321,7 +321,7 @@ index 658110a4a8775..6863ef1a0ab60 100644
            <iron-icon icon="settings-internal:google-g"></iron-icon>
  </if>
 -          $i18n{peoplePageTitle}
-+          Your Profile
++          $i18n{profileInformationTitle}
            <cr-ripple></cr-ripple>
          </a>
          <a role="menuitem" id="autofill" href="/autofill"
