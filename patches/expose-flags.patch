@@ -2,18 +2,19 @@ diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
 index 96370d4ac35a9..bc80527377261 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
-@@ -4190,6 +4190,35 @@ const FeatureEntry kFeatureEntries[] = {
+@@ -4190,6 +4190,36 @@ const FeatureEntry kFeatureEntries[] = {
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
  #include "chrome/browser/unexpire_flags_gen.inc"
 +    {"incognito-launch",
 +     "Incognito Launch",
-+     "Incognito mode on launch. This flag is exposed by hardened-chromium.",
-+     kOsAll, SINGLE_VALUE_TYPE("incognito")},
-+    {"disable-extensions",
-+     "Disable Extensions",
-+     "Disables extensions support. This flag is exposed by hardened-chromium.",
-+     kOsAll, SINGLE_VALUE_TYPE("disable-extensions")},
++     "Launch external links and open new sessions in Incognito. Disabled by "
++     "default. This flag is provided by hardened-chromium.",
++     kOsAll, FEATURE_VALUE_TYPE(features::kIncognitoLaunch)},
++    {"extensions-support",
++     "Extensions Support",
++     "Toggle extensions support. This flag is exposed by hardened-chromium.",
++     kOsAll, SINGLE_DISABLE_VALUE_TYPE("disable-extensions")},
 +    {"disable-cross-origin-referrers",
 +     "Clear cross-origin referrers",
 +     "Clears referrers when navigating across origins. Defaults to disabled. "

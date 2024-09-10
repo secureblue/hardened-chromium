@@ -1,0 +1,83 @@
+diff --git a/chrome/browser/prefs/incognito_mode_prefs.cc b/chrome/browser/prefs/incognito_mode_prefs.cc
+index 252de88cbf948..37116fc4fba56 100644
+--- a/chrome/browser/prefs/incognito_mode_prefs.cc
++++ b/chrome/browser/prefs/incognito_mode_prefs.cc
+@@ -17,6 +17,7 @@
+ #include "components/policy/core/common/policy_pref_names.h"
+ #include "components/pref_registry/pref_registry_syncable.h"
+ #include "components/prefs/pref_service.h"
++#include "chrome/common/chrome_features.cc"
+ 
+ #if BUILDFLAG(IS_WIN)
+ #include "chrome/browser/win/parental_controls.h"
+@@ -154,7 +155,8 @@ bool IncognitoModePrefs::ShouldLaunchIncognitoInternal(
+   // to launch in incognito mode or if it was forced via prefs. This way,
+   // the parental controls check (which can be quite slow) can be avoided
+   // most of the time.
+-  bool forced_by_switch = command_line.HasSwitch(switches::kIncognito);
++  bool forced_by_switch = command_line.HasSwitch(switches::kIncognito) ||
++		base::FeatureList::IsEnabled(features::kIncognitoLaunch);
+   if (for_subsequent_browsers) {
+     forced_by_switch =
+         forced_by_switch &&
+diff --git a/chrome/browser/ui/startup/startup_browser_creator.cc b/chrome/browser/ui/startup/startup_browser_creator.cc
+index 8740af9bc6cd6..0019f14966239 100644
+--- a/chrome/browser/ui/startup/startup_browser_creator.cc
++++ b/chrome/browser/ui/startup/startup_browser_creator.cc
+@@ -344,6 +344,7 @@ StartupProfileModeReason ShouldShowProfilePickerAtProcessLaunch(
+                                      g_browser_process->local_state(),
+                                      /*show_warning=*/false) ||
+       command_line.HasSwitch(switches::kIncognito) ||
++      base::FeatureList::IsEnabled(features::kIncognitoLaunch) ||
+       has_command_line_specified_profile_directory) {
+     // TODO(crbug.com/40257919): The profile directory and guest mode
+     // were already tested in the calling function `GetStartupProfilePath()`.
+@@ -421,7 +422,9 @@ Profile* GetPrivateProfileIfRequested(const base::CommandLine& command_line,
+                                                 profile->GetPrefs())) {
+     return profile->GetPrimaryOTRProfile(/*create_if_needed=*/true);
+   } else {
+-    bool expect_incognito = command_line.HasSwitch(switches::kIncognito);
++    bool expect_incognito = command_line.HasSwitch(switches::kIncognito) ||
++	                    base::FeatureList::IsEnabled(
++						features::kIncognitoLaunch);
+     LOG_IF(WARNING, expect_incognito)
+         << "Incognito mode disabled by policy, launching a normal "
+         << "browser session.";
+@@ -999,7 +1002,9 @@ bool StartupBrowserCreator::ProcessCmdLineImpl(
+       CanOpenProfileOnStartup(profile_info) && !should_launch_incognito;
+ 
+   RecordIncognitoForcedStart(should_launch_incognito,
+-                             command_line.HasSwitch(switches::kIncognito));
++                             command_line.HasSwitch(switches::kIncognito) ||
++			     base::FeatureList::IsEnabled(
++						features::kIncognitoLaunch));
+ 
+   // `profile` is never off-the-record. If Incognito or Guest enforcement switch
+   // or policy are provided, use the appropriate private browsing profile
+diff --git a/chrome/common/chrome_features.cc b/chrome/common/chrome_features.cc
+index f3224987d31d6..67a1a5ecf15e1 100644
+--- a/chrome/common/chrome_features.cc
++++ b/chrome/common/chrome_features.cc
+@@ -17,6 +17,9 @@ namespace features {
+ 
+ // All features in alphabetical order.
+ 
++BASE_FEATURE(kIncognitoLaunch, "IncognitoLaunch",
++	base::FEATURE_DISABLED_BY_DEFAULT);
++
+ #if BUILDFLAG(IS_CHROMEOS_ASH)
+ // If enabled device status collector will add the type of session (Affiliated
+ // User, Kiosks, Managed Guest Sessions) to the device status report.
+diff --git a/chrome/common/chrome_features.h b/chrome/common/chrome_features.h
+index fc691fad58cbd..6c506b3fc555a 100644
+--- a/chrome/common/chrome_features.h
++++ b/chrome/common/chrome_features.h
+@@ -25,6 +25,8 @@
+ 
+ namespace features {
+ 
++BASE_DECLARE_FEATURE(kIncognitoLaunch);
++
+ // All features in alphabetical order. The features should be documented
+ // alongside the definition of their values in the .cc file.
+ 
