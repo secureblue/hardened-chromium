@@ -7,7 +7,7 @@ index f44cde44ed34f..361492b4390c7 100644
          </template>
          <template is="dom-if" if="[[showPage_(pageVisibility.people)]]" restamp>
 -          <settings-section page-title="$i18n{peoplePageTitle}"
-+          <settings-section page-title="$i18n{profileInformationTitle}"
++          <settings-section page-title="$i18n{editPerson}"
                section="people">
              <settings-people-page prefs="{{prefs}}"
                  page-visibility="[[pageVisibility]]">
@@ -43,18 +43,29 @@ index 6297480d4f357..16514e7c58c5e 100644
  <if expr="not chromeos_ash">
          <template is="dom-if" if="[[signinAllowed_]]">
 diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.html b/chrome/browser/resources/settings/privacy_page/privacy_page.html
-index af9ea12b78f9f..c197d054668d7 100644
+index af9ea12b78f9f..139c5ce048135 100644
 --- a/chrome/browser/resources/settings/privacy_page/privacy_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/privacy_page.html
-@@ -86,7 +86,7 @@
+@@ -85,8 +85,8 @@
+           </cr-link-row>
          </template>
          <cr-link-row id="securityLinkRow" start-icon="settings:lock-outline"
-             class="hr" label="$i18n{securityPageTitle}"
+-            class="hr" label="$i18n{securityPageTitle}"
 -            sub-label="$i18n{securityPageDescription}"
++            class="hr" label="$i18n{privacyPageTitle}"
 +            sub-label="$i18n{privacyGuidePromoBody}"
              on-click="onSecurityPageClick_"
              role-description="$i18n{subpageArrowRoleDescription}"></cr-link-row>
          <cr-link-row id="permissionsLinkRow" start-icon="settings:permissions"
+@@ -185,7 +185,7 @@
+       </template>
+ 
+       <template is="dom-if" route-path="/security">
+-        <settings-subpage id="security" page-title="$i18n{securityPageTitle}"
++        <settings-subpage id="security" page-title="$i18n{privacyPageTitle}"
+             associated-control="[[$$('#securityLinkRow')]]"
+             learn-more-url="$i18n{safeBrowsingHelpCenterURL}">
+           <settings-security-page prefs="{{prefs}}"
 diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.ts b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
 index 00318322c8147..b89acab52a96a 100644
 --- a/chrome/browser/resources/settings/privacy_page/privacy_page.ts
@@ -70,10 +81,10 @@ index 00318322c8147..b89acab52a96a 100644
  
    // Only show Manage Topics page when PTB is enabled. If user is part of Mode B
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
-index 8fd4f50e2d484..21efc5e3a7942 100644
+index 8fd4f50e2d484..e47000e03a290 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.html
-@@ -64,204 +64,6 @@
+@@ -64,203 +64,8 @@
          pointer-events: auto;
        }
      </style>
@@ -272,13 +283,13 @@ index 8fd4f50e2d484..21efc5e3a7942 100644
 -        </settings-collapse-radio-button>
 -      </settings-radio-group>
 -    </div>
--    <div class="cr-row first">
+     <div class="cr-row first">
 -      <h2>$i18n{advancedPageTitle}</h2>
--    </div>
++      <h2>$i18n{securityPageTitle}</h2>
+     </div>
      <template is="dom-if" if="[[!enableHttpsFirstModeNewSettings_]]">
        <settings-toggle-button id="httpsOnlyModeToggle"
-           pref="{{prefs.generated.https_first_mode_enabled}}"
-@@ -400,18 +202,3 @@
+@@ -400,18 +205,3 @@
            on-click="onChromeCertificatesClick_">
        </cr-link-row>
  </if>
@@ -321,7 +332,7 @@ index 658110a4a8775..0025ddee63361 100644
            <iron-icon icon="settings-internal:google-g"></iron-icon>
  </if>
 -          $i18n{peoplePageTitle}
-+          $i18n{profileInformationTitle}
++          $i18n{editPerson}
            <cr-ripple></cr-ripple>
          </a>
          <a role="menuitem" id="autofill" href="/autofill"
