@@ -1,38 +1,38 @@
 diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
-index 96370d4ac35a9..bc80527377261 100644
+index 96370d4ac35a9..6429e45f5013e 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
 @@ -4190,6 +4190,36 @@ const FeatureEntry kFeatureEntries[] = {
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
  #include "chrome/browser/unexpire_flags_gen.inc"
-+    {"incognito-launch",
-+     "Incognito Launch",
++    {"incognito-launch", "Incognito Launch",
 +     "Launch external links and open new sessions in Incognito. Disabled by "
 +     "default. This flag is provided by hardened-chromium.",
 +     kOsAll, FEATURE_VALUE_TYPE(features::kIncognitoLaunch)},
-+    {"extensions-support",
-+     "Extensions Support",
-+     "Toggle extensions support. This flag is exposed by hardened-chromium.",
-+     kOsAll, SINGLE_DISABLE_VALUE_TYPE("disable-extensions")},
-+    {"disable-cross-origin-referrers",
-+     "Clear cross-origin referrers",
++    {"extensions-support", "Extensions Support",
++     "Toggle extensions support. This switch is exposed by hardened-chromium.",
++     kOsAll, SINGLE_DISABLE_VALUE_TYPE(switches::kDisableExtensions)},
++    {"v8-jit-support", "Webassembly and JavaScript JIT",
++     "Toggle V8 JIT for JavaScript and Webassembly on all pages. The "
++     "V8 optimizations toggle in preferences only affects webpages. This "
++     "switch is exposed by hardened-chromium", kOsAll,
++     SINGLE_DISABLE_VALUE_TYPE_AND_VALUE(blink::switches::kJavaScriptFlags,
++                                         "--jitless")},
++    {"disable-cross-origin-referrers", "Clear cross-origin referrers",
 +     "Clears referrers when navigating across origins. Defaults to disabled. "
 +     "This feature is provided by hardened-chromium.", kOsAll,
 +     FEATURE_VALUE_TYPE(net::features::kDisableCrossOriginReferrers)},
-+    {"cross-origin-trim-referrer",
-+     "Cross-origin referrer trimming",
++    {"cross-origin-trim-referrer", "Cross-origin referrer trimming",
 +     "Trims the referrer to just the origin on cross origin navigation. "
 +     "Defaults to enabled. This feature is exposed by hardened-chromium.",
 +     kOsAll,
 +     FEATURE_VALUE_TYPE(net::features::kCapReferrerToOriginOnCrossOrigin)},
-+    {"hide-profile-icon",
-+     "Hide profile icon in toolbar",
++    {"hide-profile-icon", "Hide profile icon in toolbar",
 +     "Hides the profile icon in the toolbar in regular profiles. Defaults "
 +     "to enabled. This feature is provided by hardened-chromium." , kOsAll,
 +     FEATURE_VALUE_TYPE(features::kHideProfileIcon)},
-+    {"show-punycode-domains",
-+     "Show punycode for IDN domains",
++    {"show-punycode-domains", "Show punycode for IDN domains",
 +     "Shows punycode for IDN domains to mitigate IDN homograph attacks. "
 +     "Defaults to disabled. This feature is provided by hardened-chromium.",
 +     kOsAll, FEATURE_VALUE_TYPE(url::kShowPunycodeDomains)},
