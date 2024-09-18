@@ -1,5 +1,5 @@
 diff --git a/chrome/browser/resources/settings/basic_page/basic_page.html b/chrome/browser/resources/settings/basic_page/basic_page.html
-index f44cde44ed34f..361492b4390c7 100644
+index f44cde44ed34f..5789ec59b6879 100644
 --- a/chrome/browser/resources/settings/basic_page/basic_page.html
 +++ b/chrome/browser/resources/settings/basic_page/basic_page.html
 @@ -17,7 +17,7 @@
@@ -43,20 +43,20 @@ index 6297480d4f357..16514e7c58c5e 100644
  <if expr="not chromeos_ash">
          <template is="dom-if" if="[[signinAllowed_]]">
 diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.html b/chrome/browser/resources/settings/privacy_page/privacy_page.html
-index af9ea12b78f9f..139c5ce048135 100644
+index 8216af356f4f9..c261e27ba322e 100644
 --- a/chrome/browser/resources/settings/privacy_page/privacy_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/privacy_page.html
 @@ -85,8 +85,8 @@
            </cr-link-row>
          </template>
-         <cr-link-row id="securityLinkRow" start-icon="settings:lock-outline"
+         <cr-link-row id="securityLinkRow" start-icon="privacy:lock"
 -            class="hr" label="$i18n{securityPageTitle}"
 -            sub-label="$i18n{securityPageDescription}"
 +            class="hr" label="$i18n{privacyPageTitle}"
 +            sub-label="$i18n{privacyGuidePromoBody}"
              on-click="onSecurityPageClick_"
              role-description="$i18n{subpageArrowRoleDescription}"></cr-link-row>
-         <cr-link-row id="permissionsLinkRow" start-icon="settings:permissions"
+         <cr-link-row id="permissionsLinkRow" start-icon="privacy:page-info"
 @@ -185,7 +185,7 @@
        </template>
  
@@ -67,10 +67,10 @@ index af9ea12b78f9f..139c5ce048135 100644
              learn-more-url="$i18n{safeBrowsingHelpCenterURL}">
            <settings-security-page prefs="{{prefs}}"
 diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.ts b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
-index 00318322c8147..b89acab52a96a 100644
+index 08f0d0f564d64..4bc022f1f5149 100644
 --- a/chrome/browser/resources/settings/privacy_page/privacy_page.ts
 +++ b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
-@@ -608,8 +608,7 @@ export class SettingsPrivacyPageElement extends SettingsPrivacyPageElementBase {
+@@ -609,8 +609,7 @@ export class SettingsPrivacyPageElement extends SettingsPrivacyPageElementBase {
    }
  
    private shouldShowAdPrivacy_(): boolean {
@@ -79,12 +79,12 @@ index 00318322c8147..b89acab52a96a 100644
 +    return false;
    }
  
-   // Only show Manage Topics page when PTB is enabled. If user is part of Mode B
+   private shouldShowManageTopics_(): boolean {
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
-index 8fd4f50e2d484..e47000e03a290 100644
+index 354af4a6a000a..81f690010a70c 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.html
-@@ -64,203 +64,8 @@
+@@ -79,142 +79,6 @@
          pointer-events: auto;
        }
      </style>
@@ -105,47 +105,11 @@ index 8fd4f50e2d484..e47000e03a290 100644
 -            name="[[safeBrowsingSettingEnum_.ENHANCED]]"
 -            pref="[[prefs.generated.safe_browsing]]"
 -            label="$i18n{safeBrowsingEnhanced}"
--            sub-label="[[getSafeBrowsingEnhancedSubLabel_(
--                        enableFriendlierSafeBrowsingSettings_)]]"
+-            sub-label="$i18n{safeBrowsingEnhancedDesc}"
 -            indicator-aria-label="$i18n{controlledSettingPolicy}"
 -            expand-aria-label="$i18n{safeBrowsingEnhancedExpandA11yLabel}"
 -            on-expand-clicked="onEnhancedProtectionExpandButtonClicked_"
 -            no-automatic-collapse>
--          <template is="dom-if" if="[[!enableFriendlierSafeBrowsingSettings_]]">
--            <div slot="collapse">
--              <div class="bullet-line">
--                <iron-icon icon="cr:security"></iron-icon>
--                <div class="cr-secondary-text">
--                  $i18n{safeBrowsingEnhancedBulOne}
--                </div>
--              </div>
--              <div class="bullet-line">
--                <iron-icon icon="settings20:googleg"></iron-icon>
--                <div class="cr-secondary-text">
--                  $i18n{safeBrowsingEnhancedBulTwo}
--                </div>
--              </div>
--              <div class="bullet-line">
--                <iron-icon icon="settings:public"></iron-icon>
--                <div class="cr-secondary-text">
--                  $i18n{safeBrowsingEnhancedBulThree}
--                </div>
--              </div>
--              <div class="bullet-line">
--                <iron-icon icon="settings20:vpn-key"></iron-icon>
--                <div class="cr-secondary-text">
--                  $i18n{safeBrowsingEnhancedBulFour}
--                </div>
--              </div>
--              <div class="bullet-line last-collapse-item">
--                <iron-icon icon="settings20:data"></iron-icon>
--                <div class="cr-secondary-text cr-padded-text">
--                  $i18n{safeBrowsingEnhancedBulFive}
--                </div>
--              </div>
--            </div>
--          </template>
--          <template is="dom-if" if="[[enableFriendlierSafeBrowsingSettings_]]">
 -            <div id="enhancedProtectionDescContainer" slot="collapse"
 -                class="settings-columned-section">
 -              <div class="column">
@@ -219,38 +183,18 @@ index 8fd4f50e2d484..e47000e03a290 100644
 -                </div>
 -              </div>
 -            </div>
--          </template>
 -        </settings-collapse-radio-button>
 -        <settings-collapse-radio-button id="safeBrowsingStandard"
 -            name="[[safeBrowsingSettingEnum_.STANDARD]]"
 -            pref="[[prefs.generated.safe_browsing]]"
 -            label="$i18n{safeBrowsingStandard}"
 -            sub-label="[[getSafeBrowsingStandardSubLabel_(
--                        enableFriendlierSafeBrowsingSettings_,
 -                        enableHashPrefixRealTimeLookups_)]]"
 -            indicator-aria-label="$i18n{controlledSettingPolicy}"
 -            expand-aria-label="$i18n{safeBrowsingStandardExpandA11yLabel}"
 -            info-opened="{{infoOpened_}}"
 -            on-expand-clicked="onStandardProtectionExpandButtonClicked_"
 -            no-automatic-collapse>
--          <template is="dom-if" if="[[!enableFriendlierSafeBrowsingSettings_]]">
--            <div slot="collapse">
--              <div class="bullet-line">
--                <iron-icon icon="cr:security"></iron-icon>
--                <div class="cr-secondary-text">
--                  $i18n{safeBrowsingStandardBulOne}
--                </div>
--              </div>
--              <div class="bullet-line">
--                <iron-icon icon="settings20:data"></iron-icon>
--                <div id="safeBrowsingStandardBulTwo"
--                    class="cr-secondary-text cr-padded-text">
--                  [[getSafeBrowsingStandardBulTwo_(
--                    enableHashPrefixRealTimeLookups_)]]
--                </div>
--              </div>
--            </div>
--          </template>
 -          <div slot="noSelectionCollapse">
 -            <template is="dom-if" if="[[!hideExtendedReportingRadioButton_]]">
 -              <settings-toggle-button id="safeBrowsingReportingToggle"
@@ -263,11 +207,9 @@ index 8fd4f50e2d484..e47000e03a290 100644
 -              </settings-toggle-button>
 -            </template>
 -            <settings-toggle-button id="passwordsLeakToggle"
--                label="[[getPasswordsLeakToggleLabel_(
--                        enableFriendlierSafeBrowsingSettings_)]]"
+-                label="$i18n{passwordsLeakDetectionLabel}"
 -                pref="{{prefs.generated.password_leak_detection}}"
 -                sub-label="[[getPasswordsLeakToggleSubLabel_(
--                              enableFriendlierSafeBrowsingSettings_,
 -                              prefs.profile.password_manager_leak_detection.*,
 -                              prefs.generated.password_leak_detection.*)]]">
 -            </settings-toggle-button>
@@ -277,19 +219,24 @@ index 8fd4f50e2d484..e47000e03a290 100644
 -            name="[[safeBrowsingSettingEnum_.DISABLED]]"
 -            pref="[[prefs.generated.safe_browsing]]"
 -            label="$i18n{safeBrowsingNone}"
--            sub-label="[[getSafeBrowsingDisabledSubLabel_(
--                        enableFriendlierSafeBrowsingSettings_)]]"
+-            sub-label="$i18n{safeBrowsingNoneDesc}"
 -            indicator-aria-label="$i18n{controlledSettingPolicy}">
 -        </settings-collapse-radio-button>
 -      </settings-radio-group>
 -    </div>
+     <template is="dom-if" if="[[enableHttpsFirstModeNewSettings_]]" restamp>
+       <div id="secureConnectionsSection">
+         <h2>$i18n{secureConnectionsSectionTitle}</h2>
+@@ -261,7 +125,7 @@
+       </cr-collapse>
+     </template>
      <div class="cr-row first">
 -      <h2>$i18n{advancedPageTitle}</h2>
 +      <h2>$i18n{securityPageTitle}</h2>
      </div>
-     <template is="dom-if" if="[[!enableHttpsFirstModeNewSettings_]]">
+     <template is="dom-if" if="[[!enableHttpsFirstModeNewSettings_]]" restamp>
        <settings-toggle-button id="httpsOnlyModeToggle"
-@@ -400,18 +205,3 @@
+@@ -371,18 +235,3 @@
            on-click="onChromeCertificatesClick_">
        </cr-link-row>
  </if>
@@ -309,10 +256,10 @@ index 8fd4f50e2d484..e47000e03a290 100644
 -      </settings-simple-confirmation-dialog>
 -    </template>
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.ts b/chrome/browser/resources/settings/privacy_page/security_page.ts
-index 8fc6a6ae3a42a..df9ee0d5ccc19 100644
+index b422f7b637bd7..a09257fa8e9f2 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.ts
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.ts
-@@ -319,10 +319,6 @@ export class SettingsSecurityPageElement extends
+@@ -323,10 +323,6 @@ export class SettingsSecurityPageElement extends
        }
      });
  
@@ -324,7 +271,7 @@ index 8fc6a6ae3a42a..df9ee0d5ccc19 100644
      this.lastFocusTime_ = HatsBrowserProxyImpl.getInstance().now();
    }
 diff --git a/chrome/browser/resources/settings/settings_menu/settings_menu.html b/chrome/browser/resources/settings/settings_menu/settings_menu.html
-index 658110a4a8775..0025ddee63361 100644
+index b5252e36f6240..9808ad5b8bb7c 100644
 --- a/chrome/browser/resources/settings/settings_menu/settings_menu.html
 +++ b/chrome/browser/resources/settings/settings_menu/settings_menu.html
 @@ -54,7 +54,7 @@
@@ -337,10 +284,10 @@ index 658110a4a8775..0025ddee63361 100644
          </a>
          <a role="menuitem" id="autofill" href="/autofill"
 diff --git a/chrome/browser/ui/webui/settings/settings_ui.cc b/chrome/browser/ui/webui/settings/settings_ui.cc
-index 576fb73c196ec..67e6dbc4c54c5 100644
+index bf6cfc8c3ef48..bbec5979dc4f2 100644
 --- a/chrome/browser/ui/webui/settings/settings_ui.cc
 +++ b/chrome/browser/ui/webui/settings/settings_ui.cc
-@@ -358,10 +358,7 @@ SettingsUI::SettingsUI(content::WebUI* web_ui)
+@@ -364,10 +364,7 @@ SettingsUI::SettingsUI(content::WebUI* web_ui)
    html_source->AddBoolean("userCannotManuallyEnterPassword", false);
  #endif  // !BUILDFLAG(IS_CHROMEOS_LACROS)
  
@@ -353,10 +300,10 @@ index 576fb73c196ec..67e6dbc4c54c5 100644
    html_source->AddBoolean(
        "enableCbdTimeframeRequired",
 diff --git a/chrome/common/chrome_features.cc b/chrome/common/chrome_features.cc
-index f3224987d31d6..6fbe875940d04 100644
+index 5a0d96490be18..d1639d9c7251d 100644
 --- a/chrome/common/chrome_features.cc
 +++ b/chrome/common/chrome_features.cc
-@@ -1126,11 +1126,7 @@ BASE_FEATURE(kSafetyHubExtensionsOffStoreTrigger,
+@@ -1110,11 +1110,7 @@ BASE_FEATURE(kSafetyHubExtensionsOffStoreTrigger,
  // Enables Safety Hub feature.
  BASE_FEATURE(kSafetyHub,
               "SafetyHub",

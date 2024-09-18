@@ -1,8 +1,8 @@
 diff --git a/chrome/browser/devtools/devtools_window.cc b/chrome/browser/devtools/devtools_window.cc
-index a7c33cf116281..25bafa2243b90 100644
+index 9b388234f3dfe..5122dcfc5ea77 100644
 --- a/chrome/browser/devtools/devtools_window.cc
 +++ b/chrome/browser/devtools/devtools_window.cc
-@@ -529,7 +529,7 @@ void DevToolsWindow::RegisterProfilePrefs(
+@@ -533,7 +533,7 @@ void DevToolsWindow::RegisterProfilePrefs(
        prefs::kDevToolsSyncedPreferencesSyncDisabled);
    registry->RegisterIntegerPref(
        prefs::kDevToolsGenAiSettings,
@@ -11,35 +11,24 @@ index a7c33cf116281..25bafa2243b90 100644
  }
  
  // static
+diff --git a/components/optimization_guide/core/feature_registry/enterprise_policy_registry.cc b/components/optimization_guide/core/feature_registry/enterprise_policy_registry.cc
+index e5d92f8730357..31c60742976d5 100644
+--- a/components/optimization_guide/core/feature_registry/enterprise_policy_registry.cc
++++ b/components/optimization_guide/core/feature_registry/enterprise_policy_registry.cc
+@@ -52,7 +52,7 @@ void EnterprisePolicyRegistry::RegisterProfilePrefs(
+     registry->RegisterIntegerPref(
+         policy.name(),
+         static_cast<int>(model_execution::prefs::
+-                             ModelExecutionEnterprisePolicyValue::kAllow),
++                             ModelExecutionEnterprisePolicyValue::kDisable),
+         PrefRegistry::LOSSY_PREF);
+   }
+   // From that point on, it's too late to modify the registry as the prefs
 diff --git a/components/optimization_guide/core/model_execution/model_execution_prefs.cc b/components/optimization_guide/core/model_execution/model_execution_prefs.cc
-index d33df93b9ad75..b61239d2cd221 100644
+index ec40581ed584f..12c5d6b7905c0 100644
 --- a/components/optimization_guide/core/model_execution/model_execution_prefs.cc
 +++ b/components/optimization_guide/core/model_execution/model_execution_prefs.cc
-@@ -30,19 +30,19 @@ const char kHistorySearchEnterprisePolicyAllowed[] =
- void RegisterProfilePrefs(PrefRegistrySimple* registry) {
-   registry->RegisterIntegerPref(
-       kTabOrganizationEnterprisePolicyAllowed,
--      static_cast<int>(ModelExecutionEnterprisePolicyValue::kAllow),
-+      static_cast<int>(ModelExecutionEnterprisePolicyValue::kDisable),
-       PrefRegistry::LOSSY_PREF);
-   registry->RegisterIntegerPref(
-       kComposeEnterprisePolicyAllowed,
--      static_cast<int>(ModelExecutionEnterprisePolicyValue::kAllow),
-+      static_cast<int>(ModelExecutionEnterprisePolicyValue::kDisable),
-       PrefRegistry::LOSSY_PREF);
-   registry->RegisterIntegerPref(
-       kWallpaperSearchEnterprisePolicyAllowed,
--      static_cast<int>(ModelExecutionEnterprisePolicyValue::kAllow),
-+      static_cast<int>(ModelExecutionEnterprisePolicyValue::kDisable),
-       PrefRegistry::LOSSY_PREF);
-   registry->RegisterIntegerPref(
-       kHistorySearchEnterprisePolicyAllowed,
--      static_cast<int>(ModelExecutionEnterprisePolicyValue::kAllow),
-+      static_cast<int>(ModelExecutionEnterprisePolicyValue::kDisable),
-       PrefRegistry::LOSSY_PREF);
- }
- 
-@@ -138,7 +138,7 @@ void RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
+@@ -97,7 +97,7 @@ void RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
    registry->RegisterInt64Pref(localstate::kModelQualityLogggingClientId, 0,
                                PrefRegistry::LOSSY_PREF);
    registry->RegisterIntegerPref(
