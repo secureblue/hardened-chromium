@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-version="129.0.6668.58"
+version="129.0.6668.70"
 
 # Download and enter this repo https://github.com/secureblue/hardened-chromium.git inside the COPR build system
 git clone --depth 1 https://github.com/secureblue/hardened-chromium.git
