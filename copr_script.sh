@@ -30,7 +30,7 @@ cp fedora_patches/*.patch ./chromium/
 
 # download and clean chromium source
 cd chromium
-python3 chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
+python3 ../chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
 rm chromium-${version}.tar.xz
 rm -rf ./chromium-${version}
 cd ..
