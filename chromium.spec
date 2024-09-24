@@ -70,40 +70,40 @@ Patch358: chromium-127-rust-clanglib.patch
 
 # hardening patches
 %{lua:
-        rpm.execute("pwd")
-        os.execute("echo 'Current home: $HOME'")
+    rpm.execute("pwd")
+    os.execute("echo 'Current home: $HOME'")
 	if posix.getenv("HOME") == "/builddir" then
 		hpatches = rpm.glob('/builddir/build/SOURCES/hardened-chromium-*.patch')
 		vpatches = rpm.glob('/builddir/build/SOURCES/vanadium-*.patch')
-        else
-	        hpatches = rpm.glob(macros['_sourcedir']..'/hardened-chromium-*.patch')
+	else
+	    hpatches = rpm.glob(macros['_sourcedir']..'/hardened-chromium-*.patch')
 		vpatches = rpm.glob(macros['_sourcedir']..'/vanadium-*.patch')
 	end
 	
 	local count = 2000
-        local printPatch = ""
+    local printPatch = ""
 	for p in ipairs(hpatches) do
-                os.execute("echo 'Patching in "..hpatches[p].."'")
+        os.execute("echo 'Patching in "..hpatches[p].."'")
 		printPatch = "Patch"..count..": hardened-chromium-"..count..".patch"
-                rpm.execute("echo", printPatch)
+        rpm.execute("echo", printPatch)
 		print(printPatch.."\n")
 		count = count + 1
 	end
 	rpm.define("_hardeningPatchCount "..count-1)
 	
 	count = 3000
-        printPatch = ""
+    printPatch = ""
 	for p in ipairs(vpatches) do
-                os.execute("echo 'Patching in "..vpatches[p].."'")
+        os.execute("echo 'Patching in "..vpatches[p].."'")
 		printPatch = "Patch"..count..": vanadium-"..count..".patch"
-                rpm.execute("echo", printPatch)
+        rpm.execute("echo", printPatch)
 		print(printPatch.."\n")
 		count = count + 1
 	end
-        rpm.define("_vanadiumPatchCount "..count-1)
+    rpm.define("_vanadiumPatchCount "..count-1)
 
 	os.execute("echo 'Autopatch H: "..macros['_hardeningPatchCount'].."'")
-        os.execute("echo 'Autopatch V: "..macros['_vanadiumPatchCount'].."'")
+    os.execute("echo 'Autopatch V: "..macros['_vanadiumPatchCount'].."'")
 }
 
 # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:

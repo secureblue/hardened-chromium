@@ -1,3 +1,0 @@
-[submodule "chromium"]
-	path = chromium
-	url = https://github.com/secureblue/hardened-chromium-submodule.git
