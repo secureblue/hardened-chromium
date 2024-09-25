@@ -2,44 +2,34 @@
 
 version="129.0.6668.70"
 
-# Download and enter this repo https://github.com/secureblue/hardened-chromium.git inside the COPR build system
 git clone --depth 1 https://github.com/secureblue/hardened-chromium.git
 cd hardened-chromium
 
-# create prep dir
-mkdir chromium
-
-# copy hardened-chromium patches to chromium
+# copy hardened-chromium patches to build
 cd patches/
 patches=(*.patch)
 for ((i=0; i<${#patches[@]}; i++)); do
-	cp ${patches[i]} ../chromium/hardened-chromium-$((i+2000)).patch
+	cp ${patches[i]} ../build/hardened-chromium-$((i+2000)).patch
 done
 cd ..
 
-# copy vanadium patches to chromium
+# copy vanadium patches to build
 cd vanadium_patches/
 patches=(*.patch)
 for ((i=0; i<${#patches[@]}; i++)); do
-	cp ${patches[i]} ../chromium/vanadium-$((i+3000)).patch
+	cp ${patches[i]} ../build/vanadium-$((i+3000)).patch
 done
 cd ..
 
-# copy fedora patches to the source dir
-cp fedora_patches/*.patch ./chromium/
-
-# copy ffmpeg cleaning utilities to the source dir
-cp chromium-latest.py ./chromium/
-cp clean_ffmpeg.sh ./chromium/
-cp ffmpeg-clean.patch ./chromium/
-cp get_free_ffmpeg_source_files.py ./chromium/
+# copy fedora patches to the build dir
+cp fedora_patches/*.patch ./build/
 
 # download and clean chromium source
-cd chromium
+cd build
 python3 ./chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
 rm chromium-${version}.tar.xz
 rm -rf ./chromium-${version}
 cd ..
 
 # Move all the source files into the parent directory for the COPR build system to find them
-mv ./chromium/* ../
+mv ./build/* ../
