@@ -113,7 +113,6 @@ Patch358: chromium-127-rust-clanglib.patch
 # If you want to include the ffmpeg arm sources append the --ffmpegarm switch
 # https://commondatastorage.googleapis.com/chromium-browser-official/chromium-%%{version}.tar.xz
 Source0: chromium-%{version}-clean.tar.xz
-Source1: README.fedora
 Source2: chromium.conf
 Source3: chromium-browser.sh
 Source4: %{chromium_browser_channel}.desktop
@@ -565,9 +564,6 @@ appstream-util validate-relax --nonet ${RPM_BUILD_ROOT}%{_datadir}/metainfo/%{ch
 mkdir -p %{buildroot}%{_datadir}/gnome-control-center/default-apps/
 cp -a %{SOURCE9} %{buildroot}%{_datadir}/gnome-control-center/default-apps/
 
-# README.fedora
-cp %{SOURCE1} .
-
 %post
 # Set SELinux labels - semanage itself will adjust the lib directory naming
 # But only do it when selinux is enabled, otherwise, it gets noisy.
@@ -579,7 +575,7 @@ if selinuxenabled; then
 fi
 
 %files
-%doc AUTHORS README.fedora
+%doc AUTHORS
 %doc chrome_policy_list.html *.json
 %license LICENSE
 %config(noreplace) %{_sysconfdir}/chromium/chromium.conf
