@@ -25,12 +25,18 @@ for ((i=0; i<${#patches[@]}; i++)); do
 done
 cd ..
 
-# copy fedora patches to chromium
+# copy fedora patches to the source dir
 cp fedora_patches/*.patch ./chromium/
+
+# copy ffmpeg cleaning utilities to the source dir
+cp chromium-latest.py ./chromium/
+cp clean_ffmpeg.sh ./chromium/
+cp ffmpeg-clean.patch ./chromium/
+cp get_free_ffmpeg_source_files.py ./chromium/
 
 # download and clean chromium source
 cd chromium
-python3 ../chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
+python3 ./chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
 rm chromium-${version}.tar.xz
 rm -rf ./chromium-${version}
 cd ..

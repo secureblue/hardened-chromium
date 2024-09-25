@@ -1,0 +1,17 @@
+diff -up third_party/ffmpeg/ffmpeg_generated.gni.me third_party/ffmpeg/ffmpeg_generated.gni
+--- third_party/ffmpeg/ffmpeg_generated.gni.me	2024-07-19 23:49:33.776963768 +0200
++++ third_party/ffmpeg/ffmpeg_generated.gni	2024-07-19 23:50:14.377819007 +0200
+@@ -14,10 +14,10 @@ ffmpeg_asm_sources = []
+ 
+ use_linux_config = is_linux || is_chromeos || is_fuchsia
+ 
+-if (current_cpu == "arm64" || current_cpu == "x64" ||
++if ((current_cpu == "arm64") || (current_cpu == "x64") ||
+     (is_android && current_cpu == "arm" && arm_use_neon) ||
+-    (is_android && current_cpu == "x86") || is_apple || is_win ||
+-    use_linux_config) {
++    (is_android && current_cpu == "x86") || (is_apple) || (is_win) ||
++    (use_linux_config)) {
+   ffmpeg_c_sources += [
+     "libavcodec/ac3_channel_layout_tab.c",
+     "libavcodec/ac3_parser.c",
