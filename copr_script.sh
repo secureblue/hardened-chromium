@@ -13,19 +13,19 @@ for ((i=0; i<${#patches[@]}; i++)); do
 done
 cd ..
 
-# copy hardened-chromium patches to the build dir
-cd patches/
-patches=(*.patch)
-for ((i=0; i<${#patches[@]}; i++)); do
-	cp ${patches[i]} ../build/hardened-chromium-$((i+2000)).patch
-done
-cd ..
-
 # copy Vanadium patches to the build dir
 cd vanadium_patches/
 patches=(*.patch)
 for ((i=0; i<${#patches[@]}; i++)); do
-	cp ${patches[i]} ../build/vanadium-$((i+3000)).patch
+	cp ${patches[i]} ../build/vanadium-$((i+2000)).patch
+done
+cd ..
+
+# copy hardened-chromium patches to the build dir
+cd patches/
+patches=(*.patch)
+for ((i=0; i<${#patches[@]}; i++)); do
+	cp ${patches[i]} ../build/hardened-chromium-$((i+3000)).patch
 done
 cd ..
 

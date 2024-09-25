@@ -37,12 +37,12 @@ License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND G
     os.execute("echo 'Current home: $HOME'")
     if posix.getenv("HOME") == "/builddir" then
         fpatches = rpm.glob('/builddir/build/SOURCES/fedora-*.patch')
-        hpatches = rpm.glob('/builddir/build/SOURCES/hardened-chromium-*.patch')
         vpatches = rpm.glob('/builddir/build/SOURCES/vanadium-*.patch')
+        hpatches = rpm.glob('/builddir/build/SOURCES/hardened-chromium-*.patch')
     else
         fpatches = rpm.glob(macros['_sourcedir']..'/fedora-*.patch')
-        hpatches = rpm.glob(macros['_sourcedir']..'/hardened-chromium-*.patch')
         vpatches = rpm.glob(macros['_sourcedir']..'/vanadium-*.patch')
+        hpatches = rpm.glob(macros['_sourcedir']..'/hardened-chromium-*.patch')
     end
 
     local count = 1000
@@ -58,17 +58,6 @@ License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND G
 
     count = 2000
     printPatch = ""
-    for p in ipairs(hpatches) do
-        os.execute("echo 'Patching in "..hpatches[p].."'")
-        printPatch = "Patch"..count..": hardened-chromium-"..count..".patch"
-        rpm.execute("echo", printPatch)
-        print(printPatch.."\n")
-        count = count + 1
-    end
-    rpm.define("_hardeningPatchCount "..count-1)
-
-    count = 3000
-    printPatch = ""
     for p in ipairs(vpatches) do
         os.execute("echo 'Patching in "..vpatches[p].."'")
         printPatch = "Patch"..count..": vanadium-"..count..".patch"
@@ -78,9 +67,20 @@ License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND G
     end
     rpm.define("_vanadiumPatchCount "..count-1)
 
+    count = 3000
+    printPatch = ""
+    for p in ipairs(hpatches) do
+        os.execute("echo 'Patching in "..hpatches[p].."'")
+        printPatch = "Patch"..count..": hardened-chromium-"..count..".patch"
+        rpm.execute("echo", printPatch)
+        print(printPatch.."\n")
+        count = count + 1
+    end
+    rpm.define("_hardeningPatchCount "..count-1)
+
     os.execute("echo 'Autopatch F: "..macros['_fedoraPatchCount'].."'")
-    os.execute("echo 'Autopatch H: "..macros['_hardeningPatchCount'].."'")
     os.execute("echo 'Autopatch V: "..macros['_vanadiumPatchCount'].."'")
+    os.execute("echo 'Autopatch H: "..macros['_hardeningPatchCount'].."'")
 }
 
 # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
@@ -284,8 +284,8 @@ Qt6 UI for chromium.
 
 ### Patches ###
 %autopatch -p1 -m 1000 -M %{_fedoraPatchCount}
-%autopatch -p1 -m 2000 -M %{_hardeningPatchCount}
-%autopatch -p1 -m 3000 -M %{_vanadiumPatchCount}
+%autopatch -p1 -m 2000 -M %{_vanadiumPatchCount}
+%autopatch -p1 -m 3000 -M %{_hardeningPatchCount}
 
 # Change shebang in all relevant files in this directory and all subdirectories
 # See `man find` for how the `-exec command {} +` syntax works
