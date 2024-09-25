@@ -5,7 +5,15 @@ version="129.0.6668.70"
 git clone --depth 1 https://github.com/secureblue/hardened-chromium.git
 cd hardened-chromium
 
-# copy hardened-chromium patches to build
+# copy Fedora patches to the build dir
+cd fedora_patches/
+patches=(*.patch)
+for ((i=0; i<${#patches[@]}; i++)); do
+	cp ${patches[i]} ../build/fedora-$((i+1000)).patch
+done
+cd ..
+
+# copy hardened-chromium patches to the build dir
 cd patches/
 patches=(*.patch)
 for ((i=0; i<${#patches[@]}; i++)); do
@@ -13,16 +21,13 @@ for ((i=0; i<${#patches[@]}; i++)); do
 done
 cd ..
 
-# copy vanadium patches to build
+# copy Vanadium patches to the build dir
 cd vanadium_patches/
 patches=(*.patch)
 for ((i=0; i<${#patches[@]}; i++)); do
 	cp ${patches[i]} ../build/vanadium-$((i+3000)).patch
 done
 cd ..
-
-# copy fedora patches to the build dir
-cp fedora_patches/*.patch ./build/
 
 # download and clean chromium source
 cd build
