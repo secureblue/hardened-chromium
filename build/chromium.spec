@@ -78,6 +78,7 @@ License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND G
     end
     rpm.define("_vanadiumPatchCount "..count-1)
 
+    os.execute("echo 'Autopatch F: "..macros['_fedoraPatchCount'].."'")
     os.execute("echo 'Autopatch H: "..macros['_hardeningPatchCount'].."'")
     os.execute("echo 'Autopatch V: "..macros['_vanadiumPatchCount'].."'")
 }
@@ -88,7 +89,6 @@ License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND G
 # If you want to include the ffmpeg arm sources append the --ffmpegarm switch
 # https://commondatastorage.googleapis.com/chromium-browser-official/chromium-%%{version}.tar.xz
 Source0: chromium-%{version}-clean.tar.xz
-Source1: README.fedora
 Source2: chromium.conf
 Source3: chromium-browser.sh
 Source4: %{chromium_browser_channel}.desktop
