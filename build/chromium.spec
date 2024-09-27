@@ -31,57 +31,44 @@ Summary: A WebKit (Blink) powered web browser that Google doesn't want you to us
 Url: http://www.chromium.org/Home
 License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND GPL-2.0-or-later AND ISC AND OpenSSL AND (MPL-1.1 OR GPL-2.0-only OR LGPL-2.0-only)
 
-### Chromium Fedora Patches ###
-Patch0: chromium-70.0.3538.67-sandbox-pie.patch
-
-# Use /etc/chromium for initial_prefs
-Patch1: chromium-115-initial_prefs-etc-path.patch
-
-# debian patches
-# disable font-test 
-Patch20: chromium-disable-font-tests.patch
-# don't download binary blob
-Patch21: chromium-123-screen-ai-service.patch
-
-# patch for using system brotli
-Patch89: chromium-125-system-brotli.patch
-
-# patch for using system opus
-Patch91: chromium-108-system-opus.patch
-
-# fix tab crash with SIGTRAP error when using system ffmpeg
-Patch132: chromium-118-sigtrap_system_ffmpeg.patch
-# disable FFmpegAllowLists by default to allow external ffmpeg
-Patch134: chromium-125-disable-FFmpegAllowLists.patch
-# revert, it causes build error: use of undeclared identifier 'AVFMT_FLAG_NOH264PARSE'            
-Patch135: chromium-129-disable-H.264-video-parser-during-demuxing.patch            
-
-# add correct path for Qt6Gui header and libs
-Patch150: chromium-124-qt6.patch
-
-# enable fstack-protector-strong
-Patch312: chromium-123-fstack-protector-strong.patch
-
-# add -ftrivial-auto-var-init=zero and -fwrapv
-Patch316: chromium-122-clang-build-flags.patch
-
-# set clang_lib path
-Patch358: chromium-127-rust-clanglib.patch
-
-# hardening patches
+### Patches ###
 %{lua:
     rpm.execute("pwd")
     os.execute("echo 'Current home: $HOME'")
     if posix.getenv("HOME") == "/builddir" then
-        hpatches = rpm.glob('/builddir/build/SOURCES/hardened-chromium-*.patch')
+        fpatches = rpm.glob('/builddir/build/SOURCES/fedora-*.patch')
         vpatches = rpm.glob('/builddir/build/SOURCES/vanadium-*.patch')
+        hpatches = rpm.glob('/builddir/build/SOURCES/hardened-chromium-*.patch')
     else
-        hpatches = rpm.glob(macros['_sourcedir']..'/hardened-chromium-*.patch')
+        fpatches = rpm.glob(macros['_sourcedir']..'/fedora-*.patch')
         vpatches = rpm.glob(macros['_sourcedir']..'/vanadium-*.patch')
+        hpatches = rpm.glob(macros['_sourcedir']..'/hardened-chromium-*.patch')
     end
 
-    local count = 2000
+    local count = 1000
     local printPatch = ""
+    for p in ipairs(fpatches) do
+        os.execute("echo 'Patching in "..fpatches[p].."'")
+        printPatch = "Patch"..count..": fedora-"..count..".patch"
+        rpm.execute("echo", printPatch)
+        print(printPatch.."\n")
+        count = count + 1
+    end
+    rpm.define("_fedoraPatchCount "..count-1)
+
+    count = 2000
+    printPatch = ""
+    for p in ipairs(vpatches) do
+        os.execute("echo 'Patching in "..vpatches[p].."'")
+        printPatch = "Patch"..count..": vanadium-"..count..".patch"
+        rpm.execute("echo", printPatch)
+        print(printPatch.."\n")
+        count = count + 1
+    end
+    rpm.define("_vanadiumPatchCount "..count-1)
+
+    count = 3000
+    printPatch = ""
     for p in ipairs(hpatches) do
         os.execute("echo 'Patching in "..hpatches[p].."'")
         printPatch = "Patch"..count..": hardened-chromium-"..count..".patch"
@@ -91,20 +78,9 @@ Patch358: chromium-127-rust-clanglib.patch
     end
     rpm.define("_hardeningPatchCount "..count-1)
 
-    count = 3000
-    printPatch = ""
-    for p in ipairs(vpatches) do
-        os.execute("echo 'Patching in "..vpatches[p].."'")
-        printPatch = "Patch"..count..": vanadium-"..count..".patch"
-        rpm.execute("echo", printPatch)
-        print(printPatch.."\n")
-        count = count + 1
-    end
-
-    rpm.define("_vanadiumPatchCount "..count-1)
-
-    os.execute("echo 'Autopatch H: "..macros['_hardeningPatchCount'].."'")
+    os.execute("echo 'Autopatch F: "..macros['_fedoraPatchCount'].."'")
     os.execute("echo 'Autopatch V: "..macros['_vanadiumPatchCount'].."'")
+    os.execute("echo 'Autopatch H: "..macros['_hardeningPatchCount'].."'")
 }
 
 # Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
@@ -113,7 +89,6 @@ Patch358: chromium-127-rust-clanglib.patch
 # If you want to include the ffmpeg arm sources append the --ffmpegarm switch
 # https://commondatastorage.googleapis.com/chromium-browser-official/chromium-%%{version}.tar.xz
 Source0: chromium-%{version}-clean.tar.xz
-Source1: README.fedora
 Source2: chromium.conf
 Source3: chromium-browser.sh
 Source4: %{chromium_browser_channel}.desktop
@@ -307,23 +282,10 @@ Qt6 UI for chromium.
 %prep
 %setup -q -n chromium-%{version}
 
-### Chromium Fedora Patches ###
-%patch -P0 -p1 -b .sandboxpie
-%patch -P1 -p1 -b .etc
-%patch -P20 -p1 -b .disable-font-test
-%patch -P21 -p1 -b .screen-ai-service
-%patch -P89 -p1 -b .system-brotli
-%patch -P91 -p1 -b .system-opus
-%patch -P132 -p1 -b .sigtrap_system_ffmpeg
-%patch -P134 -p1 -b .disable-FFmpegAllowLists
-%patch -P135 -p1 -b .disable-H.264-video-parser-during-demuxing
-%patch -P150 -p1 -b .qt6
-%patch -P312 -p1 -b .fstack-protector-strong
-%patch -P316 -p1 -b .clang-build-flags
-%patch -P358 -p1 -b .rust-clang_lib
-
-%autopatch -p1 -m 2000 -M %{_hardeningPatchCount}
-%autopatch -p1 -m 3000 -M %{_vanadiumPatchCount}
+### Patches ###
+%autopatch -p1 -m 1000 -M %{_fedoraPatchCount}
+%autopatch -p1 -m 2000 -M %{_vanadiumPatchCount}
+%autopatch -p1 -m 3000 -M %{_hardeningPatchCount}
 
 # Change shebang in all relevant files in this directory and all subdirectories
 # See `man find` for how the `-exec command {} +` syntax works
@@ -565,9 +527,6 @@ appstream-util validate-relax --nonet ${RPM_BUILD_ROOT}%{_datadir}/metainfo/%{ch
 mkdir -p %{buildroot}%{_datadir}/gnome-control-center/default-apps/
 cp -a %{SOURCE9} %{buildroot}%{_datadir}/gnome-control-center/default-apps/
 
-# README.fedora
-cp %{SOURCE1} .
-
 %post
 # Set SELinux labels - semanage itself will adjust the lib directory naming
 # But only do it when selinux is enabled, otherwise, it gets noisy.
@@ -579,7 +538,7 @@ if selinuxenabled; then
 fi
 
 %files
-%doc AUTHORS README.fedora
+%doc AUTHORS
 %doc chrome_policy_list.html *.json
 %license LICENSE
 %config(noreplace) %{_sysconfdir}/chromium/chromium.conf
