@@ -1,0 +1,63 @@
+diff --git a/components/lens/lens_features.cc b/components/lens/lens_features.cc
+index 6a9137e68f2f3..c6c5a032dac98 100644
+--- a/components/lens/lens_features.cc
++++ b/components/lens/lens_features.cc
+@@ -12,7 +12,7 @@ namespace lens::features {
+ 
+ BASE_FEATURE(kLensStandalone,
+              "LensStandalone",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kLensSearchOptimizations,
+              "LensSearchOptimizations",
+@@ -20,7 +20,7 @@ BASE_FEATURE(kLensSearchOptimizations,
+ 
+ BASE_FEATURE(kEnableLatencyLogging,
+              "LensImageLatencyLogging",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kEnableRegionSearchKeyboardShortcut,
+              "LensEnableRegionSearchKeyboardShortcut",
+@@ -32,7 +32,7 @@ BASE_FEATURE(kEnableImageTranslate,
+ 
+ BASE_FEATURE(kEnableImageSearchSidePanelFor3PDse,
+              "EnableImageSearchSidePanelFor3PDse",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kLensRegionSearchStaticPage,
+              "LensRegionSearchStaticPage",
+@@ -40,16 +40,11 @@ BASE_FEATURE(kLensRegionSearchStaticPage,
+ 
+ BASE_FEATURE(kEnableContextMenuInLensSidePanel,
+              "EnableContextMenuInLensSidePanel",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kLensOverlay,
+              "LensOverlay",
+-#if BUILDFLAG(IS_ANDROID) || BUILDFLAG(IS_IOS)
+-             base::FEATURE_DISABLED_BY_DEFAULT
+-#else
+-             base::FEATURE_ENABLED_BY_DEFAULT
+-#endif
+-);
++             base::FEATURE_DISABLED_BY_DEFAULT);
+ 
+ BASE_FEATURE(kLensOverlayTranslateButton,
+              "LensOverlayTranslateButton",
+diff --git a/components/lens/lens_overlay_permission_utils.cc b/components/lens/lens_overlay_permission_utils.cc
+index 8aae55f869e7f..7b34be31d4195 100644
+--- a/components/lens/lens_overlay_permission_utils.cc
++++ b/components/lens/lens_overlay_permission_utils.cc
+@@ -17,7 +17,7 @@ namespace prefs {
+ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
+   registry->RegisterIntegerPref(
+       kLensOverlaySettings,
+-      static_cast<int>(LensOverlaySettingsPolicyValue::kEnabled));
++      static_cast<int>(LensOverlaySettingsPolicyValue::kDisabled));
+ 
+   registry->RegisterBooleanPref(kLensSharingPageScreenshotEnabled, false);
+ }
