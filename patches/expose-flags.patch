@@ -1,8 +1,8 @@
 diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
-index 96370d4ac35a9..6429e45f5013e 100644
+index 9d0181f447a1a..f362603d31caf 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
-@@ -4190,6 +4190,36 @@ const FeatureEntry kFeatureEntries[] = {
+@@ -4220,6 +4220,41 @@ const FeatureEntry kFeatureEntries[] = {
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
  #include "chrome/browser/unexpire_flags_gen.inc"
@@ -36,6 +36,11 @@ index 96370d4ac35a9..6429e45f5013e 100644
 +     "Shows punycode for IDN domains to mitigate IDN homograph attacks. "
 +     "Defaults to disabled. This feature is provided by hardened-chromium.",
 +     kOsAll, FEATURE_VALUE_TYPE(url::kShowPunycodeDomains)},
++    {"enable-gssapi", "Enable GSSAPI Authentication",
++     "Enables GSSAPI for authentication. WARNING! This can cause the "
++     "network service sandbox to become persistently disabled, enable only "
++     "if absolutely necessary. This flag is provided by hardened-chromium.",
++     kOsLinux, SINGLE_DISABLE_VALUE_TYPE("enable-gssapi")},
      {variations::switches::kEnableBenchmarking,
       flag_descriptions::kEnableBenchmarkingName,
       flag_descriptions::kEnableBenchmarkingDescription, kOsAll,
