@@ -40,7 +40,7 @@ index 9d0181f447a1a..f362603d31caf 100644
 +     "Enables GSSAPI for authentication. WARNING! This can cause the "
 +     "network service sandbox to become persistently disabled, enable only "
 +     "if absolutely necessary. This flag is provided by hardened-chromium.",
-+     kOsLinux, SINGLE_DISABLE_VALUE_TYPE("enable-gssapi")},
++     kOsLinux, SINGLE_VALUE_TYPE("enable-gssapi")},
      {variations::switches::kEnableBenchmarking,
       flag_descriptions::kEnableBenchmarkingName,
       flag_descriptions::kEnableBenchmarkingDescription, kOsAll,
