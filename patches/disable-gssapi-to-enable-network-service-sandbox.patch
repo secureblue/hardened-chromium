@@ -20,16 +20,14 @@ diff --git a/services/network/public/mojom/network_service.mojom b/services/netw
 index 3f3dac717be42..29a9946052308 100644
 --- a/services/network/public/mojom/network_service.mojom
 +++ b/services/network/public/mojom/network_service.mojom
-@@ -95,7 +95,11 @@ struct HttpAuthDynamicParams {
+@@ -95,7 +95,9 @@ struct HttpAuthDynamicParams {
  
    // Indicates whether the GSSAPI library should be loaded. Only supported on
    // Chrome OS and Linux.
 -  bool allow_gssapi_library_load = true;
 +  // GSSAPI will disable the Network Service Sandbox when websites try to load
 +  // it, not desirable from a security perspective.
-+  bool allow_gssapi_library_load = base::CommandLine::
-+                                   ForCurrentProcess()->HasSwitch(
-+                                                        "enable-gssapi"));
++  bool allow_gssapi_library_load = false;
  
    // True if Basic authentication challenges should be allowed for non-secure
    // HTTP responses.
