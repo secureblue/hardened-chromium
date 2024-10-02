@@ -1,8 +1,8 @@
 diff --git a/chrome/browser/ui/browser_ui_prefs.cc b/chrome/browser/ui/browser_ui_prefs.cc
-index c91763f863401..f06d9625ed85a 100644
+index dc3191190654b..0be79c7d5dba7 100644
 --- a/chrome/browser/ui/browser_ui_prefs.cc
 +++ b/chrome/browser/ui/browser_ui_prefs.cc
-@@ -91,10 +91,10 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+@@ -97,10 +97,10 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
    registry->RegisterBooleanPref(prefs::kWebAppCreateInAppsMenu, true);
    registry->RegisterBooleanPref(prefs::kWebAppCreateInQuickLaunchBar, true);
    registry->RegisterBooleanPref(
@@ -15,7 +15,7 @@ index c91763f863401..f06d9625ed85a 100644
    registry->RegisterDictionaryPref(prefs::kBrowserWindowPlacement);
    registry->RegisterDictionaryPref(prefs::kBrowserWindowPlacementPopup);
    registry->RegisterDictionaryPref(prefs::kAppWindowPlacement);
-@@ -103,19 +103,19 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+@@ -109,19 +109,19 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
                                  false);
  #endif
    registry->RegisterStringPref(prefs::kWebRTCIPHandlingPolicy,
@@ -39,7 +39,7 @@ index c91763f863401..f06d9625ed85a 100644
  #endif  // BUILDFLAG(ENABLE_CLICK_TO_CALL)
  
  #if BUILDFLAG(IS_MAC)
-@@ -164,7 +164,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+@@ -170,7 +170,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
  #endif
  
    registry->RegisterBooleanPref(
@@ -47,4 +47,4 @@ index c91763f863401..f06d9625ed85a 100644
 +      prefs::kHttpsOnlyModeEnabled, true,
        user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
    registry->RegisterBooleanPref(
-       prefs::kHttpsFirstModeIncognito, true,
+       prefs::kHttpsFirstBalancedMode, false,

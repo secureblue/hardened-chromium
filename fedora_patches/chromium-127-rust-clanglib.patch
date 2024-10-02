@@ -46,7 +46,7 @@ diff -up chromium-121.0.6167.57/build/config/clang/BUILD.gn.rust-clang_lib chrom
 +          assert(false)  # Unhandled cpu type
 +        }
 +        # different clang lib dir in fedora/epel
-+        if (clang_version == "17" || clang_version == "18") {
++        if (clang_version == "17" || clang_version == "18" || clang_version == "19") {
 +          _suffix = ""
 +        } else if (clang_version == "14" || clang_version == "15" || clang_version == "16") {
 +          _libprefix = "64"
