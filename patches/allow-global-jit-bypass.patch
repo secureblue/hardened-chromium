@@ -1,0 +1,17 @@
+diff --git a/content/browser/renderer_host/render_process_host_impl.cc b/content/browser/renderer_host/render_process_host_impl.cc
+index ba9f41f010a37..28571feba231e 100644
+--- a/content/browser/renderer_host/render_process_host_impl.cc
++++ b/content/browser/renderer_host/render_process_host_impl.cc
+@@ -3192,6 +3192,12 @@ void RenderProcessHostImpl::AppendRendererCommandLine(
+   } else if (AreV8OptimizationsDisabled()) {
+     command_line->AppendSwitchASCII(blink::switches::kJavaScriptFlags,
+                                     "--disable-optimizing-compilers");
++  } else {
++    // Allow for per-site exceptions even when JIT is globally disabled,
++    // the "dummy value" here just enables WASM which should already be
++    // enabled so no harm done
++    command_line->AppendSwitchASCII(blink::switches::kJavaScriptFlags,
++                                    "--expose-wasm");
+   }
+ 
+   if (features::IsTouchTextEditingRedesignEnabled()) {
