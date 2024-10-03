@@ -10,7 +10,7 @@ index 9d0181f447a1a..d5e24d5bdbdee 100644
  #include "gpu/config/gpu_finch_features.h"
  #include "gpu/config/gpu_switches.h"
  #include "media/audio/audio_features.h"
-@@ -4220,6 +4221,41 @@ const FeatureEntry kFeatureEntries[] = {
+@@ -4220,6 +4221,40 @@ const FeatureEntry kFeatureEntries[] = {
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
  #include "chrome/browser/unexpire_flags_gen.inc"
@@ -21,12 +21,11 @@ index 9d0181f447a1a..d5e24d5bdbdee 100644
 +    {"extensions-support", "Extensions Support",
 +     "Toggle extensions support. This switch is exposed by hardened-chromium.",
 +     kOsAll, SINGLE_DISABLE_VALUE_TYPE(switches::kDisableExtensions)},
-+    {"disable-v8-jit-globally", "Disable V8 JIT Globally",
-+     "Disable V8 JIT for JavaScript and Webassembly on all pages. This does "
++    {"disable-v8-jit-locally", "Disable V8 JIT Locally",
++     "Disable V8 JIT for JavaScript and Webassembly on local pages. This does "
 +     "not affect regular webpages, use the V8 optimizer toggle in site "
 +     "settings. Defaults to enabled. This feature is provided by "
-+     "hardened-chromium.", kOsAll,
-+     FEATURE_VALUE_TYPE(features::kDisableV8JIT)},
++     "hardened-chromium.", kOsAll, FEATURE_VALUE_TYPE(features::kDisableV8JIT)},
 +    {"disable-cross-origin-referrers", "Clear cross-origin referrers",
 +     "Clears referrers when navigating across origins. Defaults to disabled. "
 +     "This feature is provided by hardened-chromium.", kOsAll,
