@@ -36,7 +36,7 @@ index ae743c8c4194f..9143c07ba973e 100644
  inline constexpr base::FeatureState kFeatureDefaultStateControlledByV8 =
      base::FEATURE_DISABLED_BY_DEFAULT;
  
-+GIN_EXPORT BASE_DECLARE_FEATIRE(kDisableV8JIT);
++GIN_EXPORT BASE_DECLARE_FEATURE(kDisableV8JIT);
 +
  GIN_EXPORT BASE_DECLARE_FEATURE(kV8CompactCodeSpaceWithStack);
  GIN_EXPORT BASE_DECLARE_FEATURE(kV8CompactWithStack);
