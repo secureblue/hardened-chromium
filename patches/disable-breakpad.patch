@@ -1,0 +1,16 @@
+diff --git a/chrome/browser/chrome_content_browser_client.cc b/chrome/browser/chrome_content_browser_client.cc
+index ac83f5229cea0..cbf3ab27c08e9 100644
+--- a/chrome/browser/chrome_content_browser_client.cc
++++ b/chrome/browser/chrome_content_browser_client.cc
+@@ -2765,9 +2765,10 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
+   }
+   switch_value.push_back(',');
+   switch_value.append(chrome::GetChannelName(chrome::WithExtendedStable(true)));
+-  command_line->AppendSwitchASCII(switches::kEnableCrashReporter, switch_value);
+ #endif
+ 
++  command_line->AppendSwitchASCII(switches::kDisableBreakpad);
++
+   if (logging::DialogsAreSuppressed())
+     command_line->AppendSwitch(switches::kNoErrorDialogs);
+ 

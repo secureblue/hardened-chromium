@@ -30,7 +30,7 @@ diff --git a/chrome/browser/chrome_content_browser_client.cc b/chrome/browser/ch
 index ac83f5229cea0..c03e287ceee20 100644
 --- a/chrome/browser/chrome_content_browser_client.cc
 +++ b/chrome/browser/chrome_content_browser_client.cc
-@@ -2740,6 +2740,11 @@ void MaybeAppendBlinkSettingsSwitchForFieldTrial(
+@@ -2740,6 +2740,10 @@ void MaybeAppendBlinkSettingsSwitchForFieldTrial(
  void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
      base::CommandLine* command_line,
      int child_process_id) {
@@ -38,19 +38,9 @@ index ac83f5229cea0..c03e287ceee20 100644
 +    command_line->AppendSwitchASCII(blink::switches::kJavaScriptFlags,
 +                                                     "--jitless");
 +  }
-+  command_line->AppendSwitchASCII(switches::kDisableBreakpad);
    crash_keys::AppendStringAnnotationsCommandLineSwitch(command_line);
  #if BUILDFLAG(IS_MAC)
    std::unique_ptr<metrics::ClientInfo> client_info =
-@@ -2765,7 +2770,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
-   }
-   switch_value.push_back(',');
-   switch_value.append(chrome::GetChannelName(chrome::WithExtendedStable(true)));
--  command_line->AppendSwitchASCII(switches::kEnableCrashReporter, switch_value);
-+  //command_line->AppendSwitchASCII(switches::kEnableCrashReporter, switch_value);
- #endif
- 
-   if (logging::DialogsAreSuppressed())
 diff --git a/content/browser/renderer_host/render_process_host_impl.cc b/content/browser/renderer_host/render_process_host_impl.cc
 index ba9f41f010a37..97e0c8fb83ecb 100644
 --- a/content/browser/renderer_host/render_process_host_impl.cc
