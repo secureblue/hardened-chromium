@@ -34,7 +34,7 @@ index ac83f5229cea0..c03e287ceee20 100644
  void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
      base::CommandLine* command_line,
      int child_process_id) {
-+  if (base::FeatureList::isEnabled(kDisableV8JIT)) {
++  if (base::FeatureList::isEnabled(features::kDisableV8JIT)) {
 +    command_line->AppendSwitchASCII(blink::switches::kJavaScriptFlags,
 +                                                     "--jitless");
 +  }
