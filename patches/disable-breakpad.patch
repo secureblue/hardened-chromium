@@ -9,7 +9,7 @@ index ac83f5229cea0..cbf3ab27c08e9 100644
 -  command_line->AppendSwitchASCII(switches::kEnableCrashReporter, switch_value);
  #endif
  
-+  command_line->AppendSwitchASCII(switches::kDisableBreakpad);
++  command_line->AppendSwitch(switches::kDisableBreakpad);
 +
    if (logging::DialogsAreSuppressed())
      command_line->AppendSwitch(switches::kNoErrorDialogs);
