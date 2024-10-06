@@ -27,20 +27,22 @@ index 18c5d790e8413..acd6e8626cb04 100644
  // alongside the definition of their values in the .cc file.
  
 diff --git a/chrome/browser/chrome_content_browser_client.cc b/chrome/browser/chrome_content_browser_client.cc
-index ac83f5229cea0..c03e287ceee20 100644
+index ac83f5229cea0..3e8d121b12325 100644
 --- a/chrome/browser/chrome_content_browser_client.cc
 +++ b/chrome/browser/chrome_content_browser_client.cc
-@@ -2740,6 +2740,10 @@ void MaybeAppendBlinkSettingsSwitchForFieldTrial(
- void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
-     base::CommandLine* command_line,
-     int child_process_id) {
+@@ -3108,6 +3108,12 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
+     command_line->AppendSwitchASCII(switches::kChangeStackGuardOnFork,
+                                     switches::kChangeStackGuardOnForkEnabled);
+   }
++
++  // We want to disable all JIT instances by default
 +  if (base::FeatureList::IsEnabled(features::kDisableV8JIT)) {
 +    command_line->AppendSwitchASCII(blink::switches::kJavaScriptFlags,
 +                                                     "--jitless");
 +  }
-   crash_keys::AppendStringAnnotationsCommandLineSwitch(command_line);
- #if BUILDFLAG(IS_MAC)
-   std::unique_ptr<metrics::ClientInfo> client_info =
+ #endif  // BUILDFLAG(IS_LINUX) || BUILDFLAG(IS_CHROMEOS)
+ 
+ #if BUILDFLAG(IS_ANDROID)
 diff --git a/content/browser/renderer_host/render_process_host_impl.cc b/content/browser/renderer_host/render_process_host_impl.cc
 index ba9f41f010a37..97e0c8fb83ecb 100644
 --- a/content/browser/renderer_host/render_process_host_impl.cc
