@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-version="129.0.6668.89"
+version="129.0.6668.100"
 
 git clone --depth 1 https://github.com/secureblue/hardened-chromium.git
 cd hardened-chromium

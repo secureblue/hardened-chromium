@@ -35,6 +35,14 @@ export GNOME_DISABLE_CRASH_DIALOG=SET_BY_GOOGLE_CHROME
 [[ -f /etc/chromium/chromium.conf ]] && . /etc/chromium/chromium.conf
 CHROMIUM_FLAGS=${CHROMIUM_USER_FLAGS:-$CHROMIUM_FLAGS}
 
+# Check if hardened-chromium's subresource filter is installed,
+# if so runs the installer
+if [ -f /etc/chromium/filter/hardened-chromium-blocklist ] && 
+   [ -f /etc/chromium/filter/hardened-chromium-blocklist-version.txt ] &&
+   [ -f /usr/lib64/chromium-browser/install_filter.sh ]; then
+   ./usr/lib64/chromium-browser/install_filter.sh
+fi
+
 # Sanitize std{in,out,err} because they'll be shared with untrusted child
 # processes (http://crbug.com/376567).
 exec < /dev/null
