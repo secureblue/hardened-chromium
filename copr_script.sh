@@ -2,7 +2,6 @@
 
 version="129.0.6668.100"
 
-git clone --depth 1 https://github.com/secureblue/hardened-chromium.git
 cd hardened-chromium
 
 # copy Fedora patches to the build dir
