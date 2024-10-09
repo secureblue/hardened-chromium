@@ -21,6 +21,14 @@ A hardened chromium for desktop Linux inspired by [Vanadium](https://github.com/
 
 Official support is only provided via [secureblue](https://github.com/secureblue/secureblue/). Unsupported installation is also possible [via COPR](https://copr.fedorainfracloud.org/coprs/secureblue/hardened-chromium/).
 
+## Post-install
+
+The following flags are available that provide additional hardening but may cause breakage:
+
+- `chrome://flags/#enable-network-service-sandbox`
+- `chrome://flags/#show-punycode-domains`
+- `chrome://flags/#disable-cross-origin-referrers`
+
 ## Contributing
 
 Follow the [contributing documentation](CONTRIBUTING.md), and make sure to respect the [CoC](CODE_OF_CONDUCT.md).
