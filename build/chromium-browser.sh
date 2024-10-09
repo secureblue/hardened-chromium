@@ -40,7 +40,7 @@ CHROMIUM_FLAGS=${CHROMIUM_USER_FLAGS:-$CHROMIUM_FLAGS}
 if [ -f /etc/chromium/filter/hardened-chromium-blocklist ] && 
    [ -f /etc/chromium/filter/hardened-chromium-blocklist-version.txt ] &&
    [ -f /usr/lib64/chromium-browser/install_filter.sh ]; then
-   ./usr/lib64/chromium-browser/install_filter.sh
+   /bin/bash /usr/lib64/chromium-browser/install_filter.sh
 fi
 
 # Sanitize std{in,out,err} because they'll be shared with untrusted child
