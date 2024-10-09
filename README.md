@@ -29,6 +29,11 @@ The following flags are available that provide additional hardening but may caus
 - `chrome://flags/#show-punycode-domains`
 - `chrome://flags/#disable-cross-origin-referrers`
 
+The following flags are also provided for convenience if you need them:
+
+- `chrome://flags/#incognito-launch`
+- `chrome://flags/#extensions-support`
+
 ## Contributing
 
 Follow the [contributing documentation](CONTRIBUTING.md), and make sure to respect the [CoC](CODE_OF_CONDUCT.md).
