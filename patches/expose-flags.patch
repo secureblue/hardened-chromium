@@ -28,7 +28,7 @@ index 9d0181f447a1a..8e10017c678f9 100644
 +     "Defaults to disabled. This feature is provided by hardened-chromium.",
 +     kOsAll, FEATURE_VALUE_TYPE(url::kShowPunycodeDomains)},
 +    {"extensions-support", "Extensions Support",
-+     "Toggle extensions support. This switch is exposed by hardened-chromium.",
++     "Toggle extensions support. This switch is provided by hardened-chromium.",
 +     kOsAll, SINGLE_VALUE_TYPE("enable-extensions")},
 +    {"enable-gssapi", "Enable GSSAPI Authentication",
 +     "Enables GSSAPI for authentication. WARNING! This can cause the "
