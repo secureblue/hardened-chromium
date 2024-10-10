@@ -1,5 +1,5 @@
 diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
-index 9d0181f447a1a..f362603d31caf 100644
+index 9d0181f447a1a..8e10017c678f9 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
 @@ -4220,6 +4220,35 @@ const FeatureEntry kFeatureEntries[] = {
@@ -10,9 +10,6 @@ index 9d0181f447a1a..f362603d31caf 100644
 +     "Launch external links and open new sessions in Incognito. Disabled by "
 +     "default. This flag is provided by hardened-chromium.",
 +     kOsAll, FEATURE_VALUE_TYPE(features::kIncognitoLaunch)},
-+    {"extensions-support", "Extensions Support",
-+     "Toggle extensions support. This switch is exposed by hardened-chromium.",
-+     kOsAll, SINGLE_DISABLE_VALUE_TYPE(switches::kDisableExtensions)},
 +    {"disable-cross-origin-referrers", "Clear cross-origin referrers",
 +     "Clears referrers when navigating across origins. Defaults to disabled. "
 +     "This feature is provided by hardened-chromium.", kOsAll,
@@ -30,6 +27,9 @@ index 9d0181f447a1a..f362603d31caf 100644
 +     "Shows punycode for IDN domains to mitigate IDN homograph attacks. "
 +     "Defaults to disabled. This feature is provided by hardened-chromium.",
 +     kOsAll, FEATURE_VALUE_TYPE(url::kShowPunycodeDomains)},
++    {"extensions-support", "Extensions Support",
++     "Toggle extensions support. This switch is exposed by hardened-chromium.",
++     kOsAll, SINGLE_VALUE_TYPE("enable-extensions")},
 +    {"enable-gssapi", "Enable GSSAPI Authentication",
 +     "Enables GSSAPI for authentication. WARNING! This can cause the "
 +     "network service sandbox to become persistently disabled, enable only "
