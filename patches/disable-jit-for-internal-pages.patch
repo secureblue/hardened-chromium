@@ -7,7 +7,7 @@ index 0a6be043ddffe..a9a0f7ef62e1e 100644
    // PDF content should live in JIT-less processes because it is inherently less
    // trusted.
 -  bool is_jitless = url_info.is_pdf;
-+  bool is_jitless = true;
++  bool is_jitless = url_info.is_pdf || !(site_url.SchemeIsHTTPOrHTTPS());
    bool are_v8_optimizations_disabled = false;
  
    std::optional<StoragePartitionConfig> storage_partition_config =
