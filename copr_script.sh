@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-version="129.0.6668.100"
+version="130.0.6723.58"
 
 cd hardened-chromium
 
