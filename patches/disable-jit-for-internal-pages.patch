@@ -1,13 +1,41 @@
 diff --git a/content/browser/site_info.cc b/content/browser/site_info.cc
-index 0a6be043ddffe..a9a0f7ef62e1e 100644
+index 0a6be043ddffe..91e310cc673de 100644
 --- a/content/browser/site_info.cc
 +++ b/content/browser/site_info.cc
-@@ -229,7 +229,7 @@ SiteInfo SiteInfo::CreateInternal(const IsolationContext& isolation_context,
- 
+@@ -230,6 +230,9 @@ SiteInfo SiteInfo::CreateInternal(const IsolationContext& isolation_context,
    // PDF content should live in JIT-less processes because it is inherently less
    // trusted.
--  bool is_jitless = url_info.is_pdf;
-+  bool is_jitless = url_info.is_pdf || !(site_url.SchemeIsHTTPOrHTTPS());
+   bool is_jitless = url_info.is_pdf;
++  if ( base::FeatureList::IsEnabled(features::kDisableInternalPageJit) ) {
++    is_jitless = true;
++  }
    bool are_v8_optimizations_disabled = false;
  
    std::optional<StoragePartitionConfig> storage_partition_config =
+diff --git a/content/public/common/content_features.cc b/content/public/common/content_features.cc
+index 521e81fc7abd9..bf264039d8400 100644
+--- a/content/public/common/content_features.cc
++++ b/content/public/common/content_features.cc
+@@ -16,6 +16,9 @@
+ 
+ namespace features {
+ 
++BASE_FEATURE(kDisableInternalPageJit, "DisableInternalPageJit",
++             base::FEATURE_ENABLED_BY_DEFAULT);
++
+ // All features in alphabetical order.
+ 
+ // Kill switch to guard additional security checks performed by the browser
+diff --git a/content/public/common/content_features.h b/content/public/common/content_features.h
+index d58771df476d2..499b5fc41e671 100644
+--- a/content/public/common/content_features.h
++++ b/content/public/common/content_features.h
+@@ -21,6 +21,8 @@
+ 
+ namespace features {
+ 
++CONTENT_EXPORT BASE_DECLARE_FEATURE(kDisableInternalPageJit);
++
+ // BEFORE MODIFYING THIS FILE: If your feature is only used inside content/, add
+ // your feature in `content/common/features.h` instead.
+ 

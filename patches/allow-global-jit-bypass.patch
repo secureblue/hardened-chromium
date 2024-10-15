@@ -9,7 +9,7 @@ index ba9f41f010a37..97e0c8fb83ecb 100644
 +  } else {
 +    // Allow for per-site exceptions even when JIT is globally disabled,
 +    // the "dummy value" here allows the override
-+    command_line->AppendSwitchASCII(blink::switches::kJavaScriptFlags, "");
++    command_line->RemoveSwitch(blink::switches::kJavaScriptFlags);
    }
  
    if (features::IsTouchTextEditingRedesignEnabled()) {
