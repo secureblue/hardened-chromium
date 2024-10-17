@@ -8,7 +8,7 @@ index 3a7d5b3d4a6ab..13cce26bec510 100644
      "profile.default_content_setting_values.fedcm_active_session";
  
 -#if !BUILDFLAG(IS_IOS)
-+#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
  // This setting was accidentally bound to a UI surface intended for a different
  // setting (https://crbug.com/364820109). It should not have been settable
  // except via enterprise policy, so it is temporarily cleaned up here to revert
@@ -17,7 +17,7 @@ index 3a7d5b3d4a6ab..13cce26bec510 100644
  constexpr char kBug364820109AlreadyWorkedAroundPref[] =
      "profile.did_work_around_bug_364820109_default";
 -#endif  // !BUILDFLAG(IS_IOS)
-+#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
  
  ContentSetting GetDefaultValue(const WebsiteSettingsInfo* info) {
    const base::Value& initial_default = info->initial_default_value();
@@ -26,11 +26,11 @@ index 3a7d5b3d4a6ab..13cce26bec510 100644
    registry->RegisterIntegerPref(kObsoleteFederatedIdentityDefaultPref, 0);
  
 -#if !BUILDFLAG(IS_IOS)
-+#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
    // TODO(https://crbug.com/367181093): clean this up.
    registry->RegisterBooleanPref(kBug364820109AlreadyWorkedAroundPref, false);
 -#endif  // !BUILDFLAG(IS_IOS)
-+#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
  }
  
  DefaultProvider::DefaultProvider(PrefService* prefs,
@@ -39,14 +39,14 @@ index 3a7d5b3d4a6ab..13cce26bec510 100644
    prefs_->ClearPref(kObsoleteFederatedIdentityDefaultPref);
  
 -#if !BUILDFLAG(IS_IOS)
-+#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
    // TODO(https://crbug.com/367181093): clean this up.
    if (!prefs_->GetBoolean(kBug364820109AlreadyWorkedAroundPref)) {
      prefs_->ClearPref(kBug364820109DefaultSettingToClear);
      prefs_->SetBoolean(kBug364820109AlreadyWorkedAroundPref, true);
    }
 -#endif  // !BUILDFLAG(IS_IOS)
-+#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
  }
  
  void DefaultProvider::RecordHistogramMetrics() {
@@ -59,7 +59,7 @@ index 58d8b0db8fd7e..98cdc365086bc 100644
      "profile.content_settings.exceptions.fedcm_active_session";
  
 -#if !BUILDFLAG(IS_IOS)
-+#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
  // This setting was accidentally bound to a UI surface intended for a different
  // setting (https://crbug.com/364820109). It should not have been settable
  // except via enterprise policy, so it is temporarily cleaned up here to revert
@@ -68,7 +68,7 @@ index 58d8b0db8fd7e..98cdc365086bc 100644
  constexpr char kBug364820109AlreadyWorkedAroundPref[] =
      "profile.did_work_around_bug_364820109_exceptions";
 -#endif  // !BUILDFLAG(IS_IOS)
-+#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
  
  }  // namespace
  
@@ -77,11 +77,11 @@ index 58d8b0db8fd7e..98cdc365086bc 100644
    registry->RegisterListPref(
        kObsoleteFederatedIdentityActiveSesssionExceptionsPref);
 -#if !BUILDFLAG(IS_IOS)
-+#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
    // TODO(https://crbug.com/367181093): clean this up.
    registry->RegisterBooleanPref(kBug364820109AlreadyWorkedAroundPref, false);
 -#endif  // !BUILDFLAG(IS_IOS)
-+#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
  }
  
  PrefProvider::PrefProvider(PrefService* prefs,
@@ -90,14 +90,14 @@ index 58d8b0db8fd7e..98cdc365086bc 100644
    prefs_->ClearPref(kObsoleteFederatedIdentityActiveSesssionExceptionsPref);
  
 -#if !BUILDFLAG(IS_IOS)
-+#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#if !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
    // TODO(https://crbug.com/367181093): clean this up.
    if (!prefs_->GetBoolean(kBug364820109AlreadyWorkedAroundPref)) {
      prefs_->ClearPref(kBug364820109ExceptionSettingToClear);
      prefs_->SetBoolean(kBug364820109AlreadyWorkedAroundPref, true);
    }
 -#endif  // !BUILDFLAG(IS_IOS)
-+#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(is_ANDROID) && !BUILDFLAG(IS_LINUX)
++#endif  // !BUILDFLAG(IS_IOS) && !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_LINUX)
  }
  
  void PrefProvider::SetClockForTesting(const base::Clock* clock) {
