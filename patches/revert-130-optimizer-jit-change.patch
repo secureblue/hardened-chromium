@@ -59,4 +59,25 @@ index f41407671c3aa..dbd118d942f34 100644
        case ContentSettingsTypes.MIXEDSCRIPT:
        case ContentSettingsTypes.PAYMENT_HANDLER:
        case ContentSettingsTypes.POPUPS:
-
+diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.html b/chrome/browser/resources/settings/privacy_page/privacy_page.html
+index 3edf3a7f14612..1003e54c4ca38 100644
+--- a/chrome/browser/resources/settings/privacy_page/privacy_page.html
++++ b/chrome/browser/resources/settings/privacy_page/privacy_page.html
+@@ -117,7 +117,7 @@
+             $i18n{siteSettingsJavascriptOptimizerDescription}
+           </div>
+           <settings-category-default-radio-group
+-              category="[[contentSettingsTypesEnum_.JAVASCRIPT_OPTIMIZER]]"
++              category="[[contentSettingsTypesEnum_.JAVASCRIPT_JIT]]"
+               allow-option-label=
+                   "$i18n{siteSettingsJavascriptOptimizerAllowed}"
+               allow-option-sub-label=
+@@ -127,7 +127,7 @@
+                   "$i18n{siteSettingsJavascriptOptimizerBlockedSubLabel}">
+           </settings-category-default-radio-group>
+           <category-setting-exceptions
+-              category="[[contentSettingsTypesEnum_.JAVASCRIPT_OPTIMIZER]]"
++              category="[[contentSettingsTypesEnum_.JAVASCRIPT_JIT]]"
+               allow-header="$i18n{siteSettingsJavascriptOptimizerAllowedExceptions}"
+               block-header="$i18n{siteSettingsJavascriptOptimizerBlockedExceptions}"
+               search-filter="[[searchFilter_]]">
