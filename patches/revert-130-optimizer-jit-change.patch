@@ -46,3 +46,17 @@ index ee83684be5439..dce066b5988b6 100644
      case ContentSettingsTypes.PDF_DOCUMENTS:
      case ContentSettingsTypes.PERFORMANCE:
      case ContentSettingsTypes.PRIVATE_NETWORK_DEVICES:
+diff --git a/chrome/browser/resources/settings/site_settings/settings_category_default_radio_group.ts b/chrome/browser/resources/settings/site_settings/settings_category_default_radio_group.ts
+index f41407671c3aa..dbd118d942f34 100644
+--- a/chrome/browser/resources/settings/site_settings/settings_category_default_radio_group.ts
++++ b/chrome/browser/resources/settings/site_settings/settings_category_default_radio_group.ts
+@@ -132,7 +132,7 @@ export class SettingsCategoryDefaultRadioGroupElement extends
+       case ContentSettingsTypes.FEDERATED_IDENTITY_API:
+       case ContentSettingsTypes.IMAGES:
+       case ContentSettingsTypes.JAVASCRIPT:
+-      case ContentSettingsTypes.JAVASCRIPT_OPTIMIZER:
++      case ContentSettingsTypes.JAVASCRIPT_JIT:
+       case ContentSettingsTypes.MIXEDSCRIPT:
+       case ContentSettingsTypes.PAYMENT_HANDLER:
+       case ContentSettingsTypes.POPUPS:
+
