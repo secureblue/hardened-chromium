@@ -1,13 +1,46 @@
 diff --git a/chrome/browser/chrome_content_browser_client.cc b/chrome/browser/chrome_content_browser_client.cc
-index e5ce608907f72..8c0dd3c55b8e9 100644
+index e5ce608907f72..e2515c9d90e6e 100644
 --- a/chrome/browser/chrome_content_browser_client.cc
 +++ b/chrome/browser/chrome_content_browser_client.cc
-@@ -8015,7 +8015,7 @@ bool ChromeContentBrowserClient::IsJitDisabledForSite(
+@@ -8013,9 +8013,12 @@ bool ChromeContentBrowserClient::IsJitDisabledForSite(
+                                          nullptr) == CONTENT_SETTING_BLOCK;
+   }
  
-   // Only disable JIT for web schemes.
-   if (!site_url.SchemeIsHTTPOrHTTPS())
--    return false;
-+    return true;
+-  // Only disable JIT for web schemes.
+-  if (!site_url.SchemeIsHTTPOrHTTPS())
++  // Disable JIT for non-web schemes.
++  if (!site_url.SchemeIsHTTPOrHTTPS()) {
++    if (base::FeatureList:IsEnabled(features::kDisableInternalPageJit))
++      return true;
+     return false;
++  }
  
    return (map && map->GetContentSetting(site_url, site_url,
                                          ContentSettingsType::JAVASCRIPT_JIT) ==
+diff --git a/content/public/common/content_features.cc b/content/public/common/content_features.cc
+index 2d95d5e1df911..97b226a44cc0a 100644
+--- a/content/public/common/content_features.cc
++++ b/content/public/common/content_features.cc
+@@ -16,6 +16,9 @@
+ 
+ namespace features {
+ 
++BASE_FEATURE(kDisableInternalPageJit, "DisableInternalPageJit",
++             base::FEATURE_ENABLED_BY_DEFAULT);
++
+ // All features in alphabetical order.
+ 
+ // Kill switch to guard additional security checks performed by the browser
+diff --git a/content/public/common/content_features.h b/content/public/common/content_features.h
+index a69dcd3b24015..2f6f3d9265bbf 100644
+--- a/content/public/common/content_features.h
++++ b/content/public/common/content_features.h
+@@ -21,6 +21,8 @@
+ 
+ namespace features {
+ 
++CONTENT_EXPORT BASE_DECLARE_FEATURE(kDisableInternalPageJit);
++
+ // BEFORE MODIFYING THIS FILE: If your feature is only used inside content/, add
+ // your feature in `content/common/features.h` instead.
+ 
