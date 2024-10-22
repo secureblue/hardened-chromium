@@ -10,7 +10,7 @@ index e5ce608907f72..e2515c9d90e6e 100644
 -  if (!site_url.SchemeIsHTTPOrHTTPS())
 +  // Disable JIT for non-web schemes.
 +  if (!site_url.SchemeIsHTTPOrHTTPS()) {
-+    if (base::FeatureList:IsEnabled(features::kDisableInternalPageJit))
++    if (base::FeatureList::IsEnabled(features::kDisableInternalPageJit))
 +      return true;
      return false;
 +  }
