@@ -37,7 +37,25 @@ cd chromium
 fetch --nohooks chromium
 cd src
 git checkout "$version"
-tar -cJf "chromium-$version.tar.xz" .
+
+# clean
+junk_dirs=(
+    "build/linux/debian_bullseye_amd64-sysroot"
+    "build/linux/debian_bullseye_i386-sysroot"
+    "third_party/node/linux/node-linux-x64"
+    "third_party/rust-toolchain"
+    "third_party/rust-src"
+)
+
+for directory in "${junk_dirs[@]}"; do
+    rm -rf "$directory"
+    echo "Deleted: $directory"
+done
+
+./clean_ffmpeg.sh . 0
+find %s/third_party/openh264/src -type f -not -name '*.h' -delete
+
+tar --exclude=\\.svn -cf - chromium-$version | xz -9 -T 0 -f > chromium-$version-clean.tar.xz
 cp chromium-*.tar.xz ../..
 cd ../..
 python3 ./chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
