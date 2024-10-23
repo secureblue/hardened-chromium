@@ -30,6 +30,16 @@ cd ..
 
 # download and clean chromium source
 cd build
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+export PATH="$(pwd)/depot_tools:$PATH"
+mkdir chromium
+cd chromium
+fetch --nohooks chromium
+cd src
+git checkout "$version"
+tar -cJf "chromium-$version.tar.xz" .
+cp chromium-*.tar.xz ../..
+cd ../..
 python3 ./chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
 rm chromium-${version}.tar.xz
 rm -rf ./chromium-${version}

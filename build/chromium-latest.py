@@ -122,40 +122,42 @@ def download_file_and_compare_hashes(file_to_download):
   if os.path.isfile(tarball_local_file):
     print("%s already exists!" % file_to_download)
   else:
-    path = '%s%s' % (chromium_url, file_to_download)
-    print("Downloading %s" % path)
-    # Perhaps look at using python-progressbar at some point?
-    info=urllib.request.urlretrieve(path, file_to_download, reporthook=dlProgress)[1]
-    urllib.request.urlcleanup()
-    print("")
-    if (info["Content-Type"] != "application/x-tar"):
-      print('Chromium tarballs for %s are not on servers.' % file_to_download)
-      remove_file_if_exists (file_to_download)
-      sys.exit(1)
+    print("%s not found!" % file_to_download)
+    sys.exit(1)
+    # path = '%s%s' % (chromium_url, file_to_download)
+    # print("Downloading %s" % path)
+    # # Perhaps look at using python-progressbar at some point?
+    # info=urllib.request.urlretrieve(path, file_to_download, reporthook=dlProgress)[1]
+    # urllib.request.urlcleanup()
+    # print("")
+    # if (info["Content-Type"] != "application/x-tar"):
+    #   print('Chromium tarballs for %s are not on servers.' % file_to_download)
+    #   remove_file_if_exists (file_to_download)
+    #   sys.exit(1)
 
-  hashes_local_file = "./%s" % hashes_file
-  if not os.path.isfile(hashes_local_file):
-    path = '%s%s' % (chromium_url, hashes_file)
-    print("Downloading %s" % path)
-    # Perhaps look at using python-progressbar at some point?
-    info=urllib.request.urlretrieve(path, hashes_file, reporthook=dlProgress)[1]
-    urllib.request.urlcleanup()
-    print("")
+  # hashes_local_file = "./%s" % hashes_file
+  # if not os.path.isfile(hashes_local_file):
+  #   path = '%s%s' % (chromium_url, hashes_file)
+  #   print("Downloading %s" % path)
+  #   # Perhaps look at using python-progressbar at some point?
+  #   info=urllib.request.urlretrieve(path, hashes_file, reporthook=dlProgress)[1]
+  #   urllib.request.urlcleanup()
+  #   print("")
 
-  if os.path.isfile(hashes_local_file):
-    with open(hashes_local_file, "r") as input_file:
-      md5sum = input_file.readline().split()[1]
-      md5 = hashlib.md5()
-      with open(tarball_local_file, "rb") as f:
-        for block in iter(lambda: f.read(65536), b""):
-          md5.update(block)
-        if (md5sum == md5.hexdigest()):
-          print("MD5 matches for %s!" % file_to_download)
-        else:
-          print("MD5 mismatch for %s!" % file_to_download)
-          sys.exit(1)
-  else:
-    print("Cannot compare hashes for %s!" % file_to_download)
+  # if os.path.isfile(hashes_local_file):
+  #   with open(hashes_local_file, "r") as input_file:
+  #     md5sum = input_file.readline().split()[1]
+  #     md5 = hashlib.md5()
+  #     with open(tarball_local_file, "rb") as f:
+  #       for block in iter(lambda: f.read(65536), b""):
+  #         md5.update(block)
+  #       if (md5sum == md5.hexdigest()):
+  #         print("MD5 matches for %s!" % file_to_download)
+  #       else:
+  #         print("MD5 mismatch for %s!" % file_to_download)
+  #         sys.exit(1)
+  # else:
+  #   print("Cannot compare hashes for %s!" % file_to_download)
 
 
 def download_version(version):
