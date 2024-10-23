@@ -34,34 +34,21 @@ git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 export PATH="$(pwd)/depot_tools:$PATH"
 mkdir chromium
 cd chromium
-fetch --nohooks chromium
+fetch --nohooks --no-history chromium
 cd src
+gclient runhooks
 git checkout "$version"
 
 # clean
-junk_dirs=(
-    "build/linux/debian_bullseye_amd64-sysroot"
-    "build/linux/debian_bullseye_i386-sysroot"
-    "third_party/node/linux/node-linux-x64"
-    "third_party/rust-toolchain"
-    "third_party/rust-src"
-)
-
-for directory in "${junk_dirs[@]}"; do
-    rm -rf "$directory"
-    echo "Deleted: $directory"
-done
+rm -rf ./build/linux/debian_bullseye_amd64-sysroot ./build/linux/debian_bullseye_i386-sysroot ./third_party/node/linux/node-linux-x64 ./third_party/rust-toolchain ./third_party/rust-src
 
 ./clean_ffmpeg.sh . 0
-find %s/third_party/openh264/src -type f -not -name '*.h' -delete
+find ./third_party/openh264/src -type f -not -name '*.h' -delete
 
-tar --exclude=\\.svn -cf - chromium-$version | xz -9 -T 0 -f > chromium-$version-clean.tar.xz
+tar -cJf "chromium-$version-clean.tar.xz" .
+
 cp chromium-*.tar.xz ../..
-cd ../..
-python3 ./chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
-rm chromium-${version}.tar.xz
-rm -rf ./chromium-${version}
-cd ..
+cd ../../..
 
 # Move all the source files into the parent directory for the COPR build system to find them
 mv ./build/* ../
