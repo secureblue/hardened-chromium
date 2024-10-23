@@ -42,12 +42,12 @@ git checkout "$version"
 # clean
 rm -rf ./build/linux/debian_bullseye_amd64-sysroot ./build/linux/debian_bullseye_i386-sysroot ./third_party/node/linux/node-linux-x64 ./third_party/rust-toolchain ./third_party/rust-src
 
-./clean_ffmpeg.sh . 0
+./../../clean_ffmpeg.sh . 0
 find ./third_party/openh264/src -type f -not -name '*.h' -delete
 
 tar -cJf "chromium-$version-clean.tar.xz" .
 
-cp chromium-*.tar.xz ../..
+cp chromium-$version-clean.tar.xz ../..
 cd ../../..
 
 # Move all the source files into the parent directory for the COPR build system to find them
