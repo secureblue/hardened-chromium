@@ -92,8 +92,6 @@ Source0: chromium-%{version}-clean.tar.xz
 Source2: chromium.conf
 Source3: chromium-browser.sh
 Source4: %{chromium_browser_channel}.desktop
-Source5: clean_ffmpeg.sh
-Source6: chromium-latest.py
 Source9: chromium-browser.xml
 Source11: master_preferences
 

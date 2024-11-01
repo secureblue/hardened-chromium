@@ -28,12 +28,6 @@ for ((i=0; i<${#patches[@]}; i++)); do
 done
 cd ..
 
-# download and clean chromium source
-cd build
-python3 ./chromium-latest.py --version $version --stable --ffmpegclean --ffmpegarm --cleansources
-rm chromium-${version}.tar.xz
-rm -rf ./chromium-${version}
-cd ..
-
 # Move all the source files into the parent directory for the COPR build system to find them
+cp /usr/src/chromium/chromium-$version-clean.tar.xz .
 mv ./build/* ../
