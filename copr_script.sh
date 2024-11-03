@@ -34,4 +34,8 @@ mv ./build/* ../
 
 # Debug
 cd ../
+pwd
 ls -l
+if [ -f "$(pwd)/chromium-$version-clean.tar.xz" ]; then
+	echo "Yes, here"
+fi
