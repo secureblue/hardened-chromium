@@ -29,7 +29,7 @@ done
 cd ..
 
 # Move all the source files into the parent directory for the COPR build system to find them
-ln /usr/src/chromium/chromium-$version-clean.tar.xz ../chromium-$version-clean.tar.xz
+ln -s /usr/src/chromium/chromium-$version-clean.tar.xz ../chromium-$version-clean.tar.xz
 mv ./build/* ../
 
 # Debug
