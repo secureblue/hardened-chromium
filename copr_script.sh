@@ -1,7 +1,5 @@
 #! /bin/bash -x
 
-version="130.0.6723.91"
-
 cd hardened-chromium
 
 # copy Fedora patches to the build dir
@@ -29,5 +27,5 @@ done
 cd ..
 
 # Move all the source files into the parent directory for the COPR build system to find them
-cp /usr/src/chromium/chromium-$version-clean.tar.xz ../
+cp /usr/src/chromium/chromium-*-clean.tar.xz ../
 mv ./build/* ../
