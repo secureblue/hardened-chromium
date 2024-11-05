@@ -25,8 +25,8 @@
 
 
 Name:	hardened-chromium%{chromium_channel}
-Version: 130.0.6723.91
-Release: 2%{?dist}
+Version: 130.0.6723.116
+Release: 1%{?dist}
 Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
 Url: http://www.chromium.org/Home
 License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND GPL-2.0-or-later AND ISC AND OpenSSL AND (MPL-1.1 OR GPL-2.0-only OR LGPL-2.0-only)
