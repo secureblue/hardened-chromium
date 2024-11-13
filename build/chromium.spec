@@ -396,7 +396,6 @@ CHROMIUM_GN_DEFINES+=' use_system_libopenjpeg2=true'
 CHROMIUM_GN_DEFINES+=' use_system_lcms2=true'
 CHROMIUM_GN_DEFINES+=' use_system_libtiff=true'
 CHROMIUM_GN_DEFINES+=' use_system_libffi=true'
-CHROMIUM_GN_DEFINES+=' enable_freetype=true'
 export CHROMIUM_GN_DEFINES
 
 # use system libraries
@@ -425,7 +424,9 @@ system_libs+=(flac)
 system_libs+=(zstd)
 system_libs+=(openh264)
 
+sed -i '/use_system_freetype = true/a\  enable_freetype = true' build/linux/unbundle/freetype.gn
 build/linux/unbundle/replace_gn_files.py --system-libraries ${system_libs[@]}
+
 
 # Check that there is no system 'google' module, shadowing bundled ones:
 if python3 -c 'import google ; print google.__path__' 2> /dev/null ; then \
