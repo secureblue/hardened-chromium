@@ -1,8 +1,8 @@
 diff --git a/chrome/browser/resources/settings/basic_page/basic_page.html b/chrome/browser/resources/settings/basic_page/basic_page.html
-index f44cde44ed34f..5789ec59b6879 100644
+index e33e49405479b..000fb0e66d237 100644
 --- a/chrome/browser/resources/settings/basic_page/basic_page.html
 +++ b/chrome/browser/resources/settings/basic_page/basic_page.html
-@@ -17,7 +17,7 @@
+@@ -27,7 +27,7 @@
            </settings-reset-profile-banner>
          </template>
          <template is="dom-if" if="[[showPage_(pageVisibility.people)]]" restamp>
@@ -12,10 +12,10 @@ index f44cde44ed34f..5789ec59b6879 100644
              <settings-people-page prefs="{{prefs}}"
                  page-visibility="[[pageVisibility]]">
 diff --git a/chrome/browser/resources/settings/basic_page/basic_page.ts b/chrome/browser/resources/settings/basic_page/basic_page.ts
-index 1024f4f8206f6..a3f1a384030c2 100644
+index 06ed8d7e28bc0..165fdeea5c3e6 100644
 --- a/chrome/browser/resources/settings/basic_page/basic_page.ts
 +++ b/chrome/browser/resources/settings/basic_page/basic_page.ts
-@@ -339,8 +339,7 @@ export class SettingsBasicPageElement extends SettingsBasicPageElementBase {
+@@ -350,8 +350,7 @@ export class SettingsBasicPageElement extends SettingsBasicPageElementBase {
    }
  
    private showSafetyCheckPage_(visibility?: boolean): boolean {
@@ -26,7 +26,7 @@ index 1024f4f8206f6..a3f1a384030c2 100644
  
    private showSafetyHubEntryPointPage_(visibility?: boolean): boolean {
 diff --git a/chrome/browser/resources/settings/people_page/people_page.html b/chrome/browser/resources/settings/people_page/people_page.html
-index 6297480d4f357..16514e7c58c5e 100644
+index ca51e9017e5bc..3f290596b8576 100644
 --- a/chrome/browser/resources/settings/people_page/people_page.html
 +++ b/chrome/browser/resources/settings/people_page/people_page.html
 @@ -107,12 +107,6 @@ shown on non-ChromeOS platforms -->
@@ -43,10 +43,10 @@ index 6297480d4f357..16514e7c58c5e 100644
  <if expr="not chromeos_ash">
          <template is="dom-if" if="[[signinAllowed_]]">
 diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.html b/chrome/browser/resources/settings/privacy_page/privacy_page.html
-index 8216af356f4f9..c261e27ba322e 100644
+index cbc13c12082ec..65e66ec1cf441 100644
 --- a/chrome/browser/resources/settings/privacy_page/privacy_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/privacy_page.html
-@@ -85,8 +85,8 @@
+@@ -87,8 +87,8 @@
            </cr-link-row>
          </template>
          <cr-link-row id="securityLinkRow" start-icon="privacy:lock"
@@ -57,7 +57,7 @@ index 8216af356f4f9..c261e27ba322e 100644
              on-click="onSecurityPageClick_"
              role-description="$i18n{subpageArrowRoleDescription}"></cr-link-row>
          <cr-link-row id="permissionsLinkRow" start-icon="privacy:page-info"
-@@ -185,7 +185,7 @@
+@@ -189,7 +189,7 @@
        </template>
  
        <template is="dom-if" route-path="/security">
@@ -67,10 +67,10 @@ index 8216af356f4f9..c261e27ba322e 100644
              learn-more-url="$i18n{safeBrowsingHelpCenterURL}">
            <settings-security-page prefs="{{prefs}}"
 diff --git a/chrome/browser/resources/settings/privacy_page/privacy_page.ts b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
-index 08f0d0f564d64..4bc022f1f5149 100644
+index 130e9e9b38a68..16a37c0200ecd 100644
 --- a/chrome/browser/resources/settings/privacy_page/privacy_page.ts
 +++ b/chrome/browser/resources/settings/privacy_page/privacy_page.ts
-@@ -609,8 +609,7 @@ export class SettingsPrivacyPageElement extends SettingsPrivacyPageElementBase {
+@@ -634,8 +634,7 @@ export class SettingsPrivacyPageElement extends SettingsPrivacyPageElementBase {
    }
  
    private shouldShowAdPrivacy_(): boolean {
@@ -79,12 +79,12 @@ index 08f0d0f564d64..4bc022f1f5149 100644
 +    return false;
    }
  
-   private shouldShowManageTopics_(): boolean {
+   private shouldShowComposeProactiveNudge_(): boolean {
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
-index f3323f9a9ffa2..d54888d0e712f 100644
+index 4b09d7e1e9cb3..d54888d0e712f 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.html
-@@ -77,142 +77,6 @@
+@@ -77,143 +77,6 @@
          pointer-events: auto;
        }
      </style>
@@ -105,7 +105,8 @@ index f3323f9a9ffa2..d54888d0e712f 100644
 -            name="[[safeBrowsingSettingEnum_.ENHANCED]]"
 -            pref="[[prefs.generated.safe_browsing]]"
 -            label="$i18n{safeBrowsingEnhanced}"
--            sub-label="$i18n{safeBrowsingEnhancedDesc}"
+-            sub-label="[[getSafeBrowsingEnhancedSubLabel_(
+-                        enableEsbAiStringUpdate_)]]"
 -            indicator-aria-label="$i18n{controlledSettingPolicy}"
 -            expand-aria-label="$i18n{safeBrowsingEnhancedExpandA11yLabel}"
 -            on-expand-clicked="onEnhancedProtectionExpandButtonClicked_"
@@ -227,7 +228,7 @@ index f3323f9a9ffa2..d54888d0e712f 100644
      <template is="dom-if" if="[[enableHttpsFirstModeNewSettings_]]" restamp>
        <div id="secureConnectionsSection">
          <h2 class="cr-title-text">$i18n{secureConnectionsSectionTitle}</h2>
-@@ -253,7 +117,7 @@
+@@ -254,7 +117,7 @@
        </cr-collapse>
      </template>
      <div class="cr-row first">
@@ -236,7 +237,7 @@ index f3323f9a9ffa2..d54888d0e712f 100644
      </div>
      <template is="dom-if" if="[[!enableHttpsFirstModeNewSettings_]]" restamp>
        <settings-toggle-button id="httpsOnlyModeToggle"
-@@ -363,18 +227,3 @@
+@@ -364,18 +227,3 @@
            on-click="onChromeCertificatesClick_">
        </cr-link-row>
  </if>
@@ -256,10 +257,10 @@ index f3323f9a9ffa2..d54888d0e712f 100644
 -      </settings-simple-confirmation-dialog>
 -    </template>
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.ts b/chrome/browser/resources/settings/privacy_page/security_page.ts
-index b422f7b637bd7..a09257fa8e9f2 100644
+index 335c735439b24..b0371a95c7dbe 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.ts
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.ts
-@@ -323,10 +323,6 @@ export class SettingsSecurityPageElement extends
+@@ -333,10 +333,6 @@ export class SettingsSecurityPageElement extends
        }
      });
  
@@ -271,7 +272,7 @@ index b422f7b637bd7..a09257fa8e9f2 100644
      this.lastFocusTime_ = HatsBrowserProxyImpl.getInstance().now();
    }
 diff --git a/chrome/browser/resources/settings/settings_menu/settings_menu.html b/chrome/browser/resources/settings/settings_menu/settings_menu.html
-index 96ddd88091481..bce374e07e562 100644
+index 5f0ac710c3a63..30d076f0127e3 100644
 --- a/chrome/browser/resources/settings/settings_menu/settings_menu.html
 +++ b/chrome/browser/resources/settings/settings_menu/settings_menu.html
 @@ -54,7 +54,7 @@
@@ -284,10 +285,10 @@ index 96ddd88091481..bce374e07e562 100644
          </a>
          <a role="menuitem" id="autofill" href="/autofill"
 diff --git a/chrome/browser/ui/webui/settings/settings_ui.cc b/chrome/browser/ui/webui/settings/settings_ui.cc
-index bf6cfc8c3ef48..bbec5979dc4f2 100644
+index 1d51499e5f1a4..2953b0d365232 100644
 --- a/chrome/browser/ui/webui/settings/settings_ui.cc
 +++ b/chrome/browser/ui/webui/settings/settings_ui.cc
-@@ -364,10 +364,7 @@ SettingsUI::SettingsUI(content::WebUI* web_ui)
+@@ -362,10 +362,7 @@ SettingsUI::SettingsUI(content::WebUI* web_ui)
    html_source->AddBoolean("userCannotManuallyEnterPassword", false);
  #endif  // !BUILDFLAG(IS_CHROMEOS_LACROS)
  
@@ -300,10 +301,10 @@ index bf6cfc8c3ef48..bbec5979dc4f2 100644
    html_source->AddBoolean(
        "enableCbdTimeframeRequired",
 diff --git a/chrome/common/chrome_features.cc b/chrome/common/chrome_features.cc
-index 5a0d96490be18..d1639d9c7251d 100644
+index b27e1ead33dc9..b36b34c9a9f8a 100644
 --- a/chrome/common/chrome_features.cc
 +++ b/chrome/common/chrome_features.cc
-@@ -1110,11 +1110,7 @@ BASE_FEATURE(kSafetyHubExtensionsOffStoreTrigger,
+@@ -1074,11 +1074,7 @@ BASE_FEATURE(kSafetyHubExtensionsOffStoreTrigger,
  // Enables Safety Hub feature.
  BASE_FEATURE(kSafetyHub,
               "SafetyHub",
