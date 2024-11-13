@@ -312,8 +312,6 @@ sed -i 's/getenv("CHROME_VERSION_EXTRA")/"hardened-chromium"/' chrome/common/cha
 # bz#2265957, add correct platform
 sed -i "s/Linux x86_64/Linux %{_arch}/" content/common/user_agent.cc
 
-cp -a third_party/dav1d/version/version.h third_party/dav1d/libdav1d/include/dav1d/
-
 %build
 
 # reduce warnings
