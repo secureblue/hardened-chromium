@@ -396,6 +396,7 @@ CHROMIUM_GN_DEFINES+=' use_system_libopenjpeg2=true'
 CHROMIUM_GN_DEFINES+=' use_system_lcms2=true'
 CHROMIUM_GN_DEFINES+=' use_system_libtiff=true'
 CHROMIUM_GN_DEFINES+=' use_system_libffi=true'
+CHROMIUM_GN_DEFINES+=' enable_freetype=true'
 export CHROMIUM_GN_DEFINES
 
 # use system libraries
