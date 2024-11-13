@@ -1,24 +1,16 @@
 diff --git a/chrome/browser/profiles/profile.cc b/chrome/browser/profiles/profile.cc
-index e2db3688e3e0b..c825e075431d6 100644
+index 89254771117da..411ef3dfa5908 100644
 --- a/chrome/browser/profiles/profile.cc
 +++ b/chrome/browser/profiles/profile.cc
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
  #include "content/public/browser/web_contents.h"
  #include "content/public/browser/web_ui.h"
  #include "extensions/buildflags/buildflags.h"
 +#include "base/command_line.h"
  
  #if BUILDFLAG(IS_CHROMEOS)
- #include "chromeos/constants/pref_names.h"
-@@ -51,7 +52,6 @@
- 
- #if BUILDFLAG(IS_CHROMEOS_ASH)
  #include "ash/constants/ash_switches.h"
--#include "base/command_line.h"
- #endif
- 
- #if BUILDFLAG(IS_ANDROID)
-@@ -331,7 +331,9 @@ void Profile::RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
+@@ -321,7 +322,9 @@ void Profile::RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
    registry->RegisterIntegerPref(prefs::kContextualSearchPromoCardShownCount, 0);
  #endif  // BUILDFLAG(IS_ANDROID)
    registry->RegisterStringPref(prefs::kSessionExitType, std::string());
