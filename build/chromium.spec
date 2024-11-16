@@ -26,7 +26,11 @@
 Source0: chromium-version.txt
 
 Name:	hardened-chromium%{chromium_channel}
-Version: %{lua: print(os.execute("cat %{SOURCE0}").."\n")}
+%{lua:
+       local f = io.open(macros['_sourcedir']..'/chromium-version.txt', 'r')
+       local content = f:read "*all"
+       print("Version: "..content.."\n")
+}
 Release: %autorelease
 Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
 Url: http://www.chromium.org/Home
