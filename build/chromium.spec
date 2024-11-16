@@ -23,7 +23,7 @@
 %global __provides_exclude_from ^(%{chromium_path}/.*\\.so|%{chromium_path}/.*\\.so.*)$
 %global __requires_exclude ^(%{chromium_path}/.*\\.so|%{chromium_path}/.*\\.so.*)$
 
-Source0: chromium-version.txt
+Source69: chromium-version.txt
 
 Name:	hardened-chromium%{chromium_channel}
 %{lua:
@@ -36,7 +36,7 @@ Summary: A WebKit (Blink) powered web browser that Google doesn't want you to us
 Url: http://www.chromium.org/Home
 License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND GPL-2.0-or-later AND ISC AND OpenSSL AND (MPL-1.1 OR GPL-2.0-only OR LGPL-2.0-only)
 
-Source1: chromium-%{version}-clean.tar.xz
+Source0: chromium-%{version}-clean.tar.xz
 Source2: chromium.conf
 Source3: chromium-browser.sh
 Source4: %{chromium_browser_channel}.desktop
