@@ -23,13 +23,21 @@
 %global __provides_exclude_from ^(%{chromium_path}/.*\\.so|%{chromium_path}/.*\\.so.*)$
 %global __requires_exclude ^(%{chromium_path}/.*\\.so|%{chromium_path}/.*\\.so.*)$
 
+Source0: chromium-version.txt
 
 Name:	hardened-chromium%{chromium_channel}
-Version: 131.0.6778.69
-Release: 1%{?dist}
+Version: %{lua: print(os.execute("cat %{SOURCE0}").."\n")}
+Release: %autorelease
 Summary: A WebKit (Blink) powered web browser that Google doesn't want you to use
 Url: http://www.chromium.org/Home
 License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND GPL-2.0-or-later AND ISC AND OpenSSL AND (MPL-1.1 OR GPL-2.0-only OR LGPL-2.0-only)
+
+Source1: chromium-%{version}-clean.tar.xz
+Source2: chromium.conf
+Source3: chromium-browser.sh
+Source4: %{chromium_browser_channel}.desktop
+Source9: chromium-browser.xml
+Source11: master_preferences
 
 ### Patches ###
 %{lua:
@@ -82,18 +90,6 @@ License: BSD-3-Clause AND LGPL-2.1-or-later AND Apache-2.0 AND IJG AND MIT AND G
     os.execute("echo 'Autopatch V: "..macros['_vanadiumPatchCount'].."'")
     os.execute("echo 'Autopatch H: "..macros['_hardeningPatchCount'].."'")
 }
-
-# Use chromium-latest.py to generate clean tarball from released build tarballs, found here:
-# http://build.chromium.org/buildbot/official/
-# For Chromium Fedora use chromium-latest.py --stable --ffmpegclean --ffmpegarm
-# If you want to include the ffmpeg arm sources append the --ffmpegarm switch
-# https://commondatastorage.googleapis.com/chromium-browser-official/chromium-%%{version}.tar.xz
-Source0: chromium-%{version}-clean.tar.xz
-Source2: chromium.conf
-Source3: chromium-browser.sh
-Source4: %{chromium_browser_channel}.desktop
-Source9: chromium-browser.xml
-Source11: master_preferences
 
 BuildRequires: golang-github-evanw-esbuild
 BuildRequires: clang
