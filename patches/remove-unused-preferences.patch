@@ -316,3 +316,16 @@ index b27e1ead33dc9..b36b34c9a9f8a 100644
  );
  
  #if BUILDFLAG(IS_ANDROID)
+diff --git a/components/security_interstitials/core/browser/resources/interstitial_large.js b/components/security_interstitials/core/browser/resources/interstitial_large.js
+index 69992131be6df..9f7e15f55bc0a 100644
+--- a/components/security_interstitials/core/browser/resources/interstitial_large.js
++++ b/components/security_interstitials/core/browser/resources/interstitial_large.js
+@@ -298,8 +298,6 @@ function setupEvents() {
+   }
+ 
+   preventDefaultOnPoundLinkClicks();
+-  setupExtendedReportingCheckbox();
+-  setupEnhancedProtectionMessage();
+   setupSSLDebuggingInfo();
+   document.addEventListener('keypress', handleKeypress);
+ 
