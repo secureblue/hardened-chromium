@@ -316,3 +316,29 @@ index b27e1ead33dc9..b36b34c9a9f8a 100644
  );
  
  #if BUILDFLAG(IS_ANDROID)
+diff --git a/components/security_interstitials/core/browser/resources/interstitial_large.html b/components/security_interstitials/core/browser/resources/interstitial_large.html
+index 385aa33583d97..3e857960cf1c3 100644
+--- a/components/security_interstitials/core/browser/resources/interstitial_large.html
++++ b/components/security_interstitials/core/browser/resources/interstitial_large.html
+@@ -44,21 +44,6 @@
+         <p id="blocked-site-message-header"></p>
+         <p id="blocked-site-message-reason"></p>
+       </div>
+-      <div id="extended-reporting-opt-in" class="hidden">
+-        <label>
+-          <div class="checkboxes">
+-            <input type="checkbox" id="opt-in-checkbox">
+-            <span class="checkbox"></span>
+-          </div>
+-          <span id="opt-in-label">$i18nRaw{optInLink}</span>
+-        </label>
+-      </div>
+-      <div id="enhanced-protection-message" class="hidden">
+-        <label>
+-          <div class="icon"></div>
+-          <div>$i18nRaw{enhancedProtectionMessage}</div>
+-        </label>
+-      </div>
+     </div>
+     <div class="nav-wrapper">
+       <button id="primary-button">$i18n{primaryButtonText}</button>
