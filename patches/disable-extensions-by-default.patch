@@ -2,22 +2,12 @@ diff --git a/chrome/browser/profiles/profile.cc b/chrome/browser/profiles/profil
 index 89254771117da..411ef3dfa5908 100644
 --- a/chrome/browser/profiles/profile.cc
 +++ b/chrome/browser/profiles/profile.cc
-@@ -42,6 +42,7 @@
- #include "content/public/browser/web_contents.h"
- #include "content/public/browser/web_ui.h"
- #include "extensions/buildflags/buildflags.h"
-+#include "base/command_line.h"
- 
- #if BUILDFLAG(IS_CHROMEOS)
- #include "ash/constants/ash_switches.h"
-@@ -321,7 +322,9 @@ void Profile::RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
+@@ -321,7 +321,7 @@ void Profile::RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
    registry->RegisterIntegerPref(prefs::kContextualSearchPromoCardShownCount, 0);
  #endif  // BUILDFLAG(IS_ANDROID)
    registry->RegisterStringPref(prefs::kSessionExitType, std::string());
 -  registry->RegisterBooleanPref(prefs::kDisableExtensions, false);
-+  registry->RegisterBooleanPref(prefs::kDisableExtensions, !(base::CommandLine::
-+                                ForCurrentProcess()->HasSwitch(
-+                                                     "enable-extensions")));
++  registry->RegisterBooleanPref(prefs::kDisableExtensions, true);
  #if BUILDFLAG(ENABLE_EXTENSIONS)
    registry->RegisterBooleanPref(extensions::pref_names::kAlertsInitialized,
                                  false);

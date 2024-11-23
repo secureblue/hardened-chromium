@@ -1,0 +1,87 @@
+diff --git a/chrome/browser/extensions/api/settings_private/prefs_util.cc b/chrome/browser/extensions/api/settings_private/prefs_util.cc
+index 9be2589cac759..be53fe96dd397 100644
+--- a/chrome/browser/extensions/api/settings_private/prefs_util.cc
++++ b/chrome/browser/extensions/api/settings_private/prefs_util.cc
+@@ -172,6 +172,16 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetAllowlistedKeys() {
+   }
+   s_allowlist = new PrefsUtil::TypedPrefMap();
+ 
++  // hardened-chromium
++  (*s_allowlist)[::prefs::kWebRTCIPHandlingPolicy] =
++      settings_api::PrefType::kString;
++  (*s_allowlist)[::prefs::kDisable3DAPIs] =
++      settings_api::PrefType::kBoolean;
++  (*s_allowlist)[::prefs::kWebKitForceDarkModeEnabled] =
++      settings_api::PrefType::kBoolean;
++  (*s_allowlist)[::prefs::kDisableExtensions] =
++      settings_api::PrefType::kBoolean;
++
+   // Miscellaneous
+   (*s_allowlist)[::embedder_support::kAlternateErrorPagesEnabled] =
+       settings_api::PrefType::kBoolean;
+diff --git a/chrome/browser/resources/settings/appearance_page/appearance_page.html b/chrome/browser/resources/settings/appearance_page/appearance_page.html
+index 47120511edffd..acbcbfc8e4c1a 100644
+--- a/chrome/browser/resources/settings/appearance_page/appearance_page.html
++++ b/chrome/browser/resources/settings/appearance_page/appearance_page.html
+@@ -250,6 +250,11 @@
+             inverted>
+         </settings-toggle-button>
+ </if>
++        <div class="hr"></div>
++        <settings-toggle-button
++            pref="{{prefs.webkit.webprefs.force_dark_mode_enabled}}"
++            label="Website Dark Mode">
++        </settings-toggle-button>
+         <div class="cr-row">
+           <div class="flex cr-padded-text" aria-hidden="true">
+             $i18n{fontSize}
+diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
+index d54888d0e712f..00f7c8c080bce 100644
+--- a/chrome/browser/resources/settings/privacy_page/security_page.html
++++ b/chrome/browser/resources/settings/privacy_page/security_page.html
+@@ -77,6 +77,23 @@
+         pointer-events: auto;
+       }
+     </style>
++    <div class="cr-row first">
++      <h2 class="cr-title-text">Privacy</h2>
++    </div>
++    <settings-toggle-button class="cr-row first"
++      pref="{{prefs.disable_3d_apis}}"
++      label="Disable 3D APIs"
++      sub-label="Disable features like WebGL and Pepper 3D"
++    </settings-toggle-button>
++    <settings-toggle-button class="cr-row"
++      pref="{{prefs.extensions.disabled}}"
++      label="Disable Extensions"
++    </settings-toggle-button>
++    <settings-dropdown-menu id="webrtcHandlingPolicy"
++      label="WebRTC Handling Policy"
++      pref="{{prefs.webrtc.ip_handling_policy}}"
++      menu-options="[[webrtcHandlingPolicyOptions_]]">
++    </settings-dropdown-menu>
+     <template is="dom-if" if="[[enableHttpsFirstModeNewSettings_]]" restamp>
+       <div id="secureConnectionsSection">
+         <h2 class="cr-title-text">$i18n{secureConnectionsSectionTitle}</h2>
+diff --git a/chrome/browser/resources/settings/privacy_page/security_page.ts b/chrome/browser/resources/settings/privacy_page/security_page.ts
+index b0371a95c7dbe..7e0062f524084 100644
+--- a/chrome/browser/resources/settings/privacy_page/security_page.ts
++++ b/chrome/browser/resources/settings/privacy_page/security_page.ts
+@@ -111,6 +111,17 @@ export class SettingsSecurityPageElement extends
+       },
+       // </if>
+ 
++      referersPolicyOptions_: {
++        readOnly: true,
++        type: Array,
++        value() {
++          return [
++            {value: "default", name: loadTimeData.getString('default')},
++            {value: "disable_non_proxied_udp", name: loadTimeData.getString('disableNonProxiedUdp')},
++          ];
++        },
++      },
++
+       /**
+        * Whether the secure DNS setting should be displayed.
+        */
