@@ -55,7 +55,7 @@ index d54888d0e712f..00f7c8c080bce 100644
 +      pref="{{prefs.extensions.disabled}}"
 +      label="Disable Extensions"
 +    </settings-toggle-button>
-+    <settings-dropdown-menu id="webrtcHandlingPolicy"
++    <settings-dropdown-menu
 +      label="WebRTC Handling Policy"
 +      pref="{{prefs.webrtc.ip_handling_policy}}"
 +      menu-options="[[webrtcHandlingPolicyOptions_]]">
@@ -71,7 +71,7 @@ index b0371a95c7dbe..7e0062f524084 100644
        },
        // </if>
  
-+      referersPolicyOptions_: {
++      webrtcHandlingPolicyOptions_: {
 +        readOnly: true,
 +        type: Array,
 +        value() {
