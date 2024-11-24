@@ -49,11 +49,11 @@ index d54888d0e712f..00f7c8c080bce 100644
 +    <settings-toggle-button class="cr-row first"
 +      pref="{{prefs.disable_3d_apis}}"
 +      label="Disable 3D APIs"
-+      sub-label="Disable features like WebGL and Pepper 3D"
++      sub-label="Disable features like WebGL and Pepper 3D">
 +    </settings-toggle-button>
 +    <settings-toggle-button class="cr-row"
 +      pref="{{prefs.extensions.disabled}}"
-+      label="Disable Extensions"
++      label="Disable Extensions">
 +    </settings-toggle-button>
 +    <settings-dropdown-menu
 +      label="WebRTC Handling Policy"
