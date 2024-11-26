@@ -39,14 +39,12 @@ diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b
 index d54888d0e712f..00f7c8c080bce 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.html
-@@ -77,6 +77,30 @@
+@@ -77,6 +77,28 @@
          pointer-events: auto;
        }
      </style>
-+    <div>
-+      <div class="cr-row first">
-+        <h2 class="cr-title-text">Privacy</h2>
-+      </div>
++    <div id="privacySection">
++      <h2 class="cr-title-text">Privacy</h2>
 +      <settings-toggle-button class="cr-row"
 +        pref="{{prefs.disable_3d_apis}}"
 +        label="Disable 3D APIs"
