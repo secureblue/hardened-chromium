@@ -49,7 +49,7 @@ index d54888d0e712f..2dbeb7b8b444b 100644
  
        .bullet-line {
          align-items: center;
-@@ -227,3 +230,26 @@
+@@ -227,3 +230,27 @@
            on-click="onChromeCertificatesClick_">
        </cr-link-row>
  </if>
@@ -64,6 +64,7 @@ index d54888d0e712f..2dbeb7b8b444b 100644
 +      <settings-toggle-button class="cr-row"
 +        pref="{{prefs.extensions.disabled}}"
 +        label="Disable Extensions">
++        sub-label="Changes to this setting requires a restart">
 +      </settings-toggle-button>
 +      <div class="cr-row">
 +        <div id="webrtcLabel" class="flex cr-padded-text" aria-hidden="true">
