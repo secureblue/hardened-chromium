@@ -36,17 +36,27 @@ index 47120511edffd..53f2330898dd9 100644
              class="hr"
              hidden="[[!showHr_(
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
-index d54888d0e712f..a3e86c5beefd6 100644
+index d54888d0e712f..2dbeb7b8b444b 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.html
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.html
-@@ -227,3 +227,32 @@
+@@ -7,6 +7,9 @@
+         padding: 0 var(--cr-section-padding);
+       }
+ 
++      #webrtcLabel {
++        flex: 1;
++      }
+ 
+       .bullet-line {
+         align-items: center;
+@@ -227,3 +230,26 @@
            on-click="onChromeCertificatesClick_">
        </cr-link-row>
  </if>
 +
 +    <div id="hardeningSection">
-+      <h2 class="cr-title-text">Hardening</h2>
-+      <settings-toggle-button class="cr-row"
++      <div class="cr-row first"><h2 class="cr-title-text">Hardening</h2></div>
++      <settings-toggle-button class="cr-row first"
 +        pref="{{prefs.disable_3d_apis}}"
 +        label="Disable 3D APIs"
 +        sub-label="Disable features like WebGL and Pepper 3D">
@@ -54,15 +64,9 @@ index d54888d0e712f..a3e86c5beefd6 100644
 +      <settings-toggle-button class="cr-row"
 +        pref="{{prefs.extensions.disabled}}"
 +        label="Disable Extensions">
-+        <template is="dom-if" if="[[shouldShowRestart_(
-+            prefs.extensions.disabled.value)]]">
-+          <cr-button on-click="onRestartClick_" slot="more-actions">
-+            $i18n{restart}
-+          </cr-button>
-+        </template>
 +      </settings-toggle-button>
 +      <div class="cr-row">
-+        <div aria-hidden="true">
++        <div id="webrtcLabel" class="flex cr-padded-text" aria-hidden="true">
 +          WebRTC Handling Policy
 +        </div>
 +        <settings-dropdown-menu
@@ -73,7 +77,7 @@ index d54888d0e712f..a3e86c5beefd6 100644
 +      </div>
 +    </div>
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.ts b/chrome/browser/resources/settings/privacy_page/security_page.ts
-index b0371a95c7dbe..7e0062f524084 100644
+index b0371a95c7dbe..60857ef0ee296 100644
 --- a/chrome/browser/resources/settings/privacy_page/security_page.ts
 +++ b/chrome/browser/resources/settings/privacy_page/security_page.ts
 @@ -111,6 +111,19 @@ export class SettingsSecurityPageElement extends
