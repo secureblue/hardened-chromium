@@ -1,0 +1,103 @@
+diff --git a/chrome/browser/extensions/api/settings_private/prefs_util.cc b/chrome/browser/extensions/api/settings_private/prefs_util.cc
+index 9be2589cac759..be53fe96dd397 100644
+--- a/chrome/browser/extensions/api/settings_private/prefs_util.cc
++++ b/chrome/browser/extensions/api/settings_private/prefs_util.cc
+@@ -172,6 +172,16 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetAllowlistedKeys() {
+   }
+   s_allowlist = new PrefsUtil::TypedPrefMap();
+ 
++  // hardened-chromium
++  (*s_allowlist)[::prefs::kWebRTCIPHandlingPolicy] =
++      settings_api::PrefType::kString;
++  (*s_allowlist)[::prefs::kDisable3DAPIs] =
++      settings_api::PrefType::kBoolean;
++  (*s_allowlist)[::prefs::kWebKitForceDarkModeEnabled] =
++      settings_api::PrefType::kBoolean;
++  (*s_allowlist)[::prefs::kDisableExtensions] =
++      settings_api::PrefType::kBoolean;
++
+   // Miscellaneous
+   (*s_allowlist)[::embedder_support::kAlternateErrorPagesEnabled] =
+       settings_api::PrefType::kBoolean;
+diff --git a/chrome/browser/resources/settings/appearance_page/appearance_page.html b/chrome/browser/resources/settings/appearance_page/appearance_page.html
+index 47120511edffd..53f2330898dd9 100644
+--- a/chrome/browser/resources/settings/appearance_page/appearance_page.html
++++ b/chrome/browser/resources/settings/appearance_page/appearance_page.html
+@@ -119,6 +119,11 @@
+             </template>
+           </select>
+         </div>
++        <div class="hr"></div>
++        <settings-toggle-button
++            pref="{{prefs.webkit.webprefs.force_dark_mode_enabled}}"
++            label="Website Dark Mode">
++        </settings-toggle-button>
+         <div
+             class="hr"
+             hidden="[[!showHr_(
+diff --git a/chrome/browser/resources/settings/privacy_page/security_page.html b/chrome/browser/resources/settings/privacy_page/security_page.html
+index d54888d0e712f..2dbeb7b8b444b 100644
+--- a/chrome/browser/resources/settings/privacy_page/security_page.html
++++ b/chrome/browser/resources/settings/privacy_page/security_page.html
+@@ -7,6 +7,9 @@
+         padding: 0 var(--cr-section-padding);
+       }
+ 
++      #webrtcLabel {
++        flex: 1;
++      }
+ 
+       .bullet-line {
+         align-items: center;
+@@ -227,3 +230,27 @@
+           on-click="onChromeCertificatesClick_">
+       </cr-link-row>
+ </if>
++
++    <div id="hardeningSection">
++      <div class="cr-row first"><h2 class="cr-title-text">Hardening</h2></div>
++      <settings-toggle-button class="cr-row first"
++        pref="{{prefs.disable_3d_apis}}"
++        label="Disable 3D APIs"
++        sub-label="Disable features like WebGL and Pepper 3D">
++      </settings-toggle-button>
++      <div class="cr-row">
++        <div id="webrtcLabel" class="flex cr-padded-text" aria-hidden="true">
++          WebRTC Handling Policy
++        </div>
++        <settings-dropdown-menu
++          label="WebRTC Handling Policy"
++          pref="{{prefs.webrtc.ip_handling_policy}}"
++          menu-options="[[webrtcHandlingPolicyOptions_]]">
++        </settings-dropdown-menu>
++      </div>
++      <settings-toggle-button class="cr-row"
++        pref="{{prefs.extensions.disabled}}"
++        label="Disable Extensions">
++        sub-label="Changes to this setting requires a restart">
++      </settings-toggle-button>
++    </div>
+diff --git a/chrome/browser/resources/settings/privacy_page/security_page.ts b/chrome/browser/resources/settings/privacy_page/security_page.ts
+index b0371a95c7dbe..60857ef0ee296 100644
+--- a/chrome/browser/resources/settings/privacy_page/security_page.ts
++++ b/chrome/browser/resources/settings/privacy_page/security_page.ts
+@@ -111,6 +111,19 @@ export class SettingsSecurityPageElement extends
+       },
+       // </if>
+ 
++      webrtcHandlingPolicyOptions_: {
++        readOnly: true,
++        type: Array,
++        value() {
++          return [
++            {value: "default", name: "Default"},
++            {value: "default_public_and_private_interfaces", name: "Default Public and Private Interfaces"},
++            {value: "default_public_interface_only", name: "Default Public Interface Only"},
++            {value: "disable_non_proxied_udp", name: "Disable Non-Proxied UDP"},
++          ];
++        },
++      },
++
+       /**
+        * Whether the secure DNS setting should be displayed.
+        */
