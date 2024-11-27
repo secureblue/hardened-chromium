@@ -61,11 +61,6 @@ index d54888d0e712f..2dbeb7b8b444b 100644
 +        label="Disable 3D APIs"
 +        sub-label="Disable features like WebGL and Pepper 3D">
 +      </settings-toggle-button>
-+      <settings-toggle-button class="cr-row"
-+        pref="{{prefs.extensions.disabled}}"
-+        label="Disable Extensions">
-+        sub-label="Changes to this setting requires a restart">
-+      </settings-toggle-button>
 +      <div class="cr-row">
 +        <div id="webrtcLabel" class="flex cr-padded-text" aria-hidden="true">
 +          WebRTC Handling Policy
@@ -76,6 +71,11 @@ index d54888d0e712f..2dbeb7b8b444b 100644
 +          menu-options="[[webrtcHandlingPolicyOptions_]]">
 +        </settings-dropdown-menu>
 +      </div>
++      <settings-toggle-button class="cr-row"
++        pref="{{prefs.extensions.disabled}}"
++        label="Disable Extensions">
++        sub-label="Changes to this setting requires a restart">
++      </settings-toggle-button>
 +    </div>
 diff --git a/chrome/browser/resources/settings/privacy_page/security_page.ts b/chrome/browser/resources/settings/privacy_page/security_page.ts
 index b0371a95c7dbe..60857ef0ee296 100644
