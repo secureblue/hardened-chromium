@@ -2,18 +2,18 @@ diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
 index 9d0181f447a1a..8e10017c678f9 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
-@@ -4220,6 +4220,39 @@ const FeatureEntry kFeatureEntries[] = {
+@@ -4220,6 +4220,36 @@ const FeatureEntry kFeatureEntries[] = {
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
  #include "chrome/browser/unexpire_flags_gen.inc"
-+    {"disable-internal-page-jit", "Disable Internal Page Jit",
-+     "Disable JIT for JavaScript and WASM on internal pages. Enabled by "
-+     "default. This feature is provided by hardened-chromium.",
-+     kOsAll, FEATURE_VALUE_TYPE(features::kDisableInternalPageJit)},
 +    {"incognito-launch", "Incognito Launch",
 +     "Launch external links and open new sessions in Incognito. Disabled by "
 +     "default. This feature is provided by hardened-chromium.",
 +     kOsAll, FEATURE_VALUE_TYPE(features::kIncognitoLaunch)},
++    {"show-punycode-domains", "Show punycode for IDN domains",
++     "Shows punycode for IDN domains to mitigate IDN homograph attacks. "
++     "Defaults to disabled. This feature is provided by hardened-chromium.",
++     kOsAll, FEATURE_VALUE_TYPE(url::kShowPunycodeDomains)},
 +    {"disable-cross-origin-referrers", "Clear cross-origin referrers",
 +     "Clears referrers when navigating across origins. Defaults to disabled. "
 +     "This feature is provided by hardened-chromium.", kOsAll,
@@ -27,13 +27,10 @@ index 9d0181f447a1a..8e10017c678f9 100644
 +     "Hides the profile icon in the toolbar in regular profiles. Defaults "
 +     "to enabled. This feature is provided by hardened-chromium." , kOsAll,
 +     FEATURE_VALUE_TYPE(features::kHideProfileIcon)},
-+    {"show-punycode-domains", "Show punycode for IDN domains",
-+     "Shows punycode for IDN domains to mitigate IDN homograph attacks. "
-+     "Defaults to disabled. This feature is provided by hardened-chromium.",
-+     kOsAll, FEATURE_VALUE_TYPE(url::kShowPunycodeDomains)},
-+    {"extensions-support", "Extensions Support",
-+     "Toggle extensions support. This switch is provided by hardened-chromium.",
-+     kOsAll, SINGLE_VALUE_TYPE("enable-extensions")},
++    {"disable-internal-page-jit", "Disable Internal Page Jit",
++     "Disable JIT for JavaScript and WASM on internal pages & extensions. "
++     "Enabled by default. This feature is provided by hardened-chromium.",
++     kOsAll, FEATURE_VALUE_TYPE(features::kDisableInternalPageJit)},
 +    {"enable-gssapi", "Enable GSSAPI Authentication",
 +     "Enables GSSAPI for authentication. WARNING! This can cause the "
 +     "network service sandbox to become persistently disabled, enable only "
