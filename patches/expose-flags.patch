@@ -2,7 +2,7 @@ diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
 index 9d0181f447a1a..8e10017c678f9 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
-@@ -4220,6 +4220,36 @@ const FeatureEntry kFeatureEntries[] = {
+@@ -4220,6 +4220,40 @@ const FeatureEntry kFeatureEntries[] = {
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
  #include "chrome/browser/unexpire_flags_gen.inc"
@@ -23,6 +23,10 @@ index 9d0181f447a1a..8e10017c678f9 100644
 +     "Defaults to enabled. This feature is exposed by hardened-chromium.",
 +     kOsAll,
 +     FEATURE_VALUE_TYPE(net::features::kCapReferrerToOriginOnCrossOrigin)},
++    {"strict-popup-blocking", "Strict Popup Blocking",
++     "Controls the strictness of the popup blocker. This switch is provided "
++     "by hardened-chromium.", kOsAll,
++     SINGLE_DISABLE_VALUE_TYPE("disable-strict-popup-blocking"},
 +    {"hide-profile-icon", "Hide profile icon in toolbar",
 +     "Hides the profile icon in the toolbar in regular profiles. Defaults "
 +     "to enabled. This feature is provided by hardened-chromium." , kOsAll,
