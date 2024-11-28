@@ -26,7 +26,7 @@ index 9d0181f447a1a..8e10017c678f9 100644
 +    {"strict-popup-blocking", "Strict Popup Blocking",
 +     "Controls the strictness of the popup blocker. This switch is provided "
 +     "by hardened-chromium.", kOsAll,
-+     SINGLE_DISABLE_VALUE_TYPE("disable-strict-popup-blocking"},
++     SINGLE_DISABLE_VALUE_TYPE("disable-strict-popup-blocking")},
 +    {"hide-profile-icon", "Hide profile icon in toolbar",
 +     "Hides the profile icon in the toolbar in regular profiles. Defaults "
 +     "to enabled. This feature is provided by hardened-chromium." , kOsAll,
