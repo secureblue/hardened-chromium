@@ -73,7 +73,7 @@ index d54888d0e712f..2dbeb7b8b444b 100644
 +      </div>
 +      <settings-toggle-button class="cr-row"
 +        pref="{{prefs.extensions.disabled}}"
-+        label="Disable Extensions">
++        label="Disable Extensions"
 +        sub-label="Changes to this setting requires a restart">
 +      </settings-toggle-button>
 +    </div>
