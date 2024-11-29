@@ -47,11 +47,28 @@ We will then take care of the issue as soon as possible.
 > When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project license.
 
 ### Building locally
-#### Setup
-Download and run copr_script.sh:
 
-`wget https://raw.githubusercontent.com/secureblue/hardened-chromium/master/copr_script.sh`
-`./copr_script.sh`
+> [!NOTE]
+> These steps can also be done in a distrobox (or any other container software) if preferred
+
+#### Setup
+Enable the COPR repository (as root):
+
+`dnf copr enable secureblue/hardened-chromium`
+
+Install the `chromium-clean-source` package (as root):
+
+`dnf install chromium-clean-source`
+
+> This command can take a while especially on a slow network, the package is over 3 gigabytes
+
+Clone the repository:
+
+`git clone https://github.com/secureblue/hardened-chromium.git`
+
+Then run the COPR script:
+
+`/bin/bash ./hardened-chromium/copr_script.sh`
 
 #### Build RPM
 Build the patched chromium source from the spec file:
@@ -69,7 +86,7 @@ Install the built rpm...
 
 A good pull request should be ready for review before it is even created. For all pull requests, ensure:
 
-- Your changes passes all the checks
-- Your commit is signed
+- Your changes passes all checks
+- Your commits are signed
 - You have no unnecessary changes, including whitespace changes
 - For substantive changes, you include evidence of proper functionality in the pull request in addition to the build results.
