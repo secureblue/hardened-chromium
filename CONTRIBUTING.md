@@ -47,6 +47,10 @@ We will then take care of the issue as soon as possible.
 > When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project license.
 
 ### Building locally
+
+> [!NOTE]
+> These steps can also be done in a distrobox (or any other container software) if preferred
+
 #### Setup
 Enable the COPR repository (as root):
 
