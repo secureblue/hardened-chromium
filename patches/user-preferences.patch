@@ -61,12 +61,12 @@ index d54888d0e712f..82ddb98c12256 100644
 +    <div id="hardeningSection">
 +      <div class="cr-row first"><h2 class="cr-title-text">Hardening</h2></div>
 +      <settings-toggle-button class="cr-row first"
-+        pref="{{prefs.incognito.launch_mode"}}"
++        pref="{{prefs.incognito.launch_mode}}"
 +        label="Incognito Launch"
 +        sub-label="Opens new sessions and external links in Incognito tabs">
 +      </settings-toggle-button>
 +      <settings-toggle-button class="cr-row"
-+        pref="{{prefs.net.network_service_sandbox"}}"
++        pref="{{prefs.net.network_service_sandbox}}"
 +        label="Enable Network Service Sandbox"
 +        sub-label="Changes to this setting requires a restart, note that this may cause issues relating to cookie persistence">
 +      </settings-toggle-button>
