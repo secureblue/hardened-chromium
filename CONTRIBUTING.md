@@ -48,10 +48,23 @@ We will then take care of the issue as soon as possible.
 
 ### Building locally
 #### Setup
-Download and run copr_script.sh:
+Enable the COPR repository (as root):
 
-`wget https://raw.githubusercontent.com/secureblue/hardened-chromium/master/copr_script.sh`
-`./copr_script.sh`
+`dnf copr enable secureblue/hardened-chromium`
+
+Install the `chromium-clean-source` package (as root):
+
+`dnf install chromium-clean-source`
+
+> This command can take a while especially on a slow network, the package is over 3 gigabytes
+
+Clone the repository:
+
+`git clone https://github.com/secureblue/hardened-chromium.git`
+
+Then run the COPR script:
+
+`/bin/bash ./hardened-chromium/copr_script.sh`
 
 #### Build RPM
 Build the patched chromium source from the spec file:
@@ -69,7 +82,7 @@ Install the built rpm...
 
 A good pull request should be ready for review before it is even created. For all pull requests, ensure:
 
-- Your changes passes all the checks
-- Your commit is signed
+- Your changes passes all checks
+- Your commits are signed
 - You have no unnecessary changes, including whitespace changes
 - For substantive changes, you include evidence of proper functionality in the pull request in addition to the build results.
