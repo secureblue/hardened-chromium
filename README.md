@@ -23,16 +23,15 @@ Official support is only provided via [secureblue](https://github.com/secureblue
 
 ## Post-install
 
-The following flags are available that provide additional hardening but may cause breakage:
+Some additions preferences are added to `chrome://settings/security`, these provide addition security and privacy controls should they be needed. There is also a Website Dark Mode preference added to `chrome://settings/appearance`.
+\
+\
+Additionally, the following flags are available that provide extra hardening but may cause breakage or usability issues:
 
-- `chrome://flags/#enable-network-service-sandbox`
 - `chrome://flags/#show-punycode-domains`
 - `chrome://flags/#disable-cross-origin-referrers`
 
-The following flags are also provided for convenience if you need them:
-
-- `chrome://flags/#incognito-launch`
-- `chrome://flags/#extensions-support`
+Other flags are also provided for compatibility should you experience an issue related to some of the hardening enabled by default.
 
 ## Contributing
 
