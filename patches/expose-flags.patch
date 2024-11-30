@@ -2,7 +2,7 @@ diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
 index 9d0181f447a1a..8e10017c678f9 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
-@@ -4220,6 +4220,36 @@ const FeatureEntry kFeatureEntries[] = {
+@@ -4220,6 +4220,41 @@ const FeatureEntry kFeatureEntries[] = {
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
  #include "chrome/browser/unexpire_flags_gen.inc"
@@ -10,6 +10,11 @@ index 9d0181f447a1a..8e10017c678f9 100644
 +     "Shows punycode for IDN domains to mitigate IDN homograph attacks. "
 +     "Defaults to disabled. This feature is provided by hardened-chromium.",
 +     kOsAll, FEATURE_VALUE_TYPE(url::kShowPunycodeDomains)},
++    {"network-service-sandbox", "Enable the network service sandbox",
++     "Enables restrictions on the Network Service process. Enabling this "
++     "flag may cause cookies persistence issues. This feature is exposed by "
++     "hardened-chromium", kOsLinux,
++     FEATURE_VALUE_TYPE(sandbox::policy::features::kNetworkServiceSandbox)},
 +    {"disable-cross-origin-referrers", "Clear cross-origin referrers",
 +     "Clears referrers when navigating across origins. Defaults to disabled. "
 +     "This feature is provided by hardened-chromium.", kOsAll,

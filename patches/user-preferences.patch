@@ -15,7 +15,7 @@ index 9be2589cac759..50562fe458d7c 100644
 +      settings_api::PrefType::kBoolean;
 +  (*s_allowlist)[::prefs::kDisableExtensions] =
 +      settings_api::PrefType::kBoolean;
-+  (*s_allowlist)[::prefs::kNetworkServiceSandboxEnabled] =
++  (*s_allowlist)[::prefs::kManagedPrivateNetworkAccessRestrictionsEnabled] =
 +      settings_api::PrefType::kBoolean;
 +  (*s_allowlist)[::prefs::kIncognitoLaunch] =
 +      settings_api::PrefType::kBoolean;
@@ -66,9 +66,9 @@ index d54888d0e712f..82ddb98c12256 100644
 +        sub-label="Opens new sessions and external links in Incognito tabs">
 +      </settings-toggle-button>
 +      <settings-toggle-button class="cr-row"
-+        pref="{{prefs.net.network_service_sandbox}}"
-+        label="Enable Network Service Sandbox"
-+        sub-label="Changes to this setting requires a restart, note that this may cause issues relating to cookie persistence">
++        pref="{{prefs.managed_private_network_access_restrictions_enabled}}"
++        label="Private Network Access Restrictions"
++        sub-label="Prevents websites from freely accessing private (LAN) addresses">
 +      </settings-toggle-button>
 +      <settings-toggle-button class="cr-row"
 +        pref="{{prefs.disable_3d_apis}}"
