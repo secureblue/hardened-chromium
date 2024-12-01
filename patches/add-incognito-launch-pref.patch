@@ -1,0 +1,38 @@
+diff --git a/chrome/browser/prefs/incognito_mode_prefs.cc b/chrome/browser/prefs/incognito_mode_prefs.cc
+index 252de88cbf948..56b816ea68dde 100644
+--- a/chrome/browser/prefs/incognito_mode_prefs.cc
++++ b/chrome/browser/prefs/incognito_mode_prefs.cc
+@@ -163,6 +163,7 @@ bool IncognitoModePrefs::ShouldLaunchIncognitoInternal(
+   }
+   bool should_use_incognito =
+       forced_by_switch ||
++      (prefs->GetBoolean(prefs::kIncognitoLaunch) && !for_subsequent_browsers) ||
+       GetAvailabilityInternal(prefs, DONT_CHECK_PARENTAL_CONTROLS) ==
+           IncognitoModeAvailability::kForced;
+   return should_use_incognito &&
+diff --git a/chrome/browser/profiles/profile.cc b/chrome/browser/profiles/profile.cc
+index 89254771117da..3154d48f383de 100644
+--- a/chrome/browser/profiles/profile.cc
++++ b/chrome/browser/profiles/profile.cc
+@@ -306,6 +306,7 @@ const char Profile::kProfileKey[] = "__PROFILE__";
+ 
+ // static
+ void Profile::RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
++  registry->RegisterBooleanPref(prefs::kIncognitoLaunch, false);
+   registry->RegisterBooleanPref(
+       prefs::kSearchSuggestEnabled,
+       true,
+diff --git a/chrome/common/pref_names.h b/chrome/common/pref_names.h
+index d094b283d332f..58886f9396708 100644
+--- a/chrome/common/pref_names.h
++++ b/chrome/common/pref_names.h
+@@ -25,6 +25,9 @@ namespace prefs {
+ // *************** PROFILE PREFS ***************
+ // These are attached to the user profile
+ 
++// Launch sessions and open external links in Incognito
++inline constexpr char kIncognitoLaunch[] = "incognito.launch_mode";
++
+ // This preference determines if the browser will use the Compact Mode UI.
+ inline constexpr char kCompactModeEnabled[] = "compact_mode";
+ 

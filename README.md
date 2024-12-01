@@ -28,6 +28,7 @@ Some additions preferences are added to `chrome://settings/security`, these prov
 \
 Additionally, the following flags are available that provide extra hardening but may cause breakage or usability issues:
 
+- `chrome://flags/#network-service-sandbox`
 - `chrome://flags/#show-punycode-domains`
 - `chrome://flags/#disable-cross-origin-referrers`
 
