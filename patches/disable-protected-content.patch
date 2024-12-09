@@ -1,0 +1,13 @@
+diff --git a/chrome/browser/ui/prefs/prefs_tab_helper.cc b/chrome/browser/ui/prefs/prefs_tab_helper.cc
+index e06062eed220e..2a50bfc2b4260 100644
+--- a/chrome/browser/ui/prefs/prefs_tab_helper.cc
++++ b/chrome/browser/ui/prefs/prefs_tab_helper.cc
+@@ -375,7 +375,7 @@ void PrefsTabHelper::RegisterProfilePrefs(
+   registry->RegisterBooleanPref(
+       prefs::kEnableReferrers,
+       !base::FeatureList::IsEnabled(features::kNoReferrers));
+-  registry->RegisterBooleanPref(prefs::kEnableEncryptedMedia, true);
++  registry->RegisterBooleanPref(prefs::kEnableEncryptedMedia, false);
+   registry->RegisterStringPref(prefs::kPrefixedVideoFullscreenApiAvailability,
+                                "runtime-enabled");
+   registry->RegisterBooleanPref(prefs::kScrollToTextFragmentEnabled, true);
