@@ -23,7 +23,7 @@ Official support is only provided via [secureblue](https://github.com/secureblue
 
 ## Post-install
 
-Some additions preferences are added to `chrome://settings/security`, these provide addition security and privacy controls should they be needed. There is also a Website Dark Mode preference added to `chrome://settings/appearance`.
+Some additional preferences are added to `chrome://settings/security`, these provide additional security and privacy controls should they be needed. There is also a Website Dark Mode preference added to `chrome://settings/appearance`.
 \
 \
 Additionally, the following flags are available that provide extra hardening but may cause breakage or usability issues:
