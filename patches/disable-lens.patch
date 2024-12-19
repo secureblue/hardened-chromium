@@ -1,8 +1,8 @@
 diff --git a/components/lens/lens_features.cc b/components/lens/lens_features.cc
-index 6a9137e68f2f3..c6c5a032dac98 100644
+index d029f6f7242b4..bf1a8c24e5d2d 100644
 --- a/components/lens/lens_features.cc
 +++ b/components/lens/lens_features.cc
-@@ -12,7 +12,7 @@ namespace lens::features {
+@@ -13,7 +13,7 @@ namespace lens::features {
  
  BASE_FEATURE(kLensStandalone,
               "LensStandalone",
@@ -11,7 +11,7 @@ index 6a9137e68f2f3..c6c5a032dac98 100644
  
  BASE_FEATURE(kLensSearchOptimizations,
               "LensSearchOptimizations",
-@@ -20,7 +20,7 @@ BASE_FEATURE(kLensSearchOptimizations,
+@@ -21,7 +21,7 @@ BASE_FEATURE(kLensSearchOptimizations,
  
  BASE_FEATURE(kEnableLatencyLogging,
               "LensImageLatencyLogging",
@@ -20,7 +20,7 @@ index 6a9137e68f2f3..c6c5a032dac98 100644
  
  BASE_FEATURE(kEnableRegionSearchKeyboardShortcut,
               "LensEnableRegionSearchKeyboardShortcut",
-@@ -32,7 +32,7 @@ BASE_FEATURE(kEnableImageTranslate,
+@@ -33,7 +33,7 @@ BASE_FEATURE(kEnableImageTranslate,
  
  BASE_FEATURE(kEnableImageSearchSidePanelFor3PDse,
               "EnableImageSearchSidePanelFor3PDse",
@@ -29,7 +29,7 @@ index 6a9137e68f2f3..c6c5a032dac98 100644
  
  BASE_FEATURE(kLensRegionSearchStaticPage,
               "LensRegionSearchStaticPage",
-@@ -40,16 +40,11 @@ BASE_FEATURE(kLensRegionSearchStaticPage,
+@@ -41,16 +41,11 @@ BASE_FEATURE(kLensRegionSearchStaticPage,
  
  BASE_FEATURE(kEnableContextMenuInLensSidePanel,
               "EnableContextMenuInLensSidePanel",
@@ -49,7 +49,7 @@ index 6a9137e68f2f3..c6c5a032dac98 100644
  BASE_FEATURE(kLensOverlayTranslateButton,
               "LensOverlayTranslateButton",
 diff --git a/components/lens/lens_overlay_permission_utils.cc b/components/lens/lens_overlay_permission_utils.cc
-index 8aae55f869e7f..7b34be31d4195 100644
+index f707b2c4d1991..6e864faf60c78 100644
 --- a/components/lens/lens_overlay_permission_utils.cc
 +++ b/components/lens/lens_overlay_permission_utils.cc
 @@ -17,7 +17,7 @@ namespace prefs {
@@ -60,4 +60,4 @@ index 8aae55f869e7f..7b34be31d4195 100644
 +      static_cast<int>(LensOverlaySettingsPolicyValue::kDisabled));
  
    registry->RegisterBooleanPref(kLensSharingPageScreenshotEnabled, false);
- }
+   registry->RegisterBooleanPref(kLensSharingPageContentEnabled, false);
