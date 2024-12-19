@@ -3,7 +3,7 @@ index cd4fd8104866c..757d919d6496d 100644
 --- a/chrome/browser/profiles/profile.cc
 +++ b/chrome/browser/profiles/profile.cc
 @@ -318,7 +318,7 @@ const char Profile::kProfileKey[] = "__PROFILE__";
- void Profile::RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
+   registry->RegisterBooleanPref(prefs::kIncognitoLaunch, false);
    registry->RegisterBooleanPref(
        prefs::kSearchSuggestEnabled,
 -      true,
