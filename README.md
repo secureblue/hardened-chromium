@@ -31,7 +31,7 @@ Additionally, the following flags are available that provide extra hardening but
 - `chrome://flags/#show-punycode-domains`
 - `chrome://flags/#disable-cross-origin-referrers`
 
-Other flags are also provided for compatibility should you experience an issue related to some of the hardening enabled by default.
+Other flags are also provided for compatibility should you experience an issue related to some of the hardening enabled by default. For example, if you experience cookies being cleared on each run of chromium, disable `chrome://flags/#network-service-sandbox`.
 
 ## Contributing
 
