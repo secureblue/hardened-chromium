@@ -251,6 +251,30 @@ Provides: bundled(woff2) = 445f541996fe8376f3976d35692fd2b9a6eedf2d
 Provides: bundled(xdg-mime)
 Provides: bundled(xdg-user-dirs)
 
+Provides: bundled(brotli)
+Provides: bundled(crc32c)
+Provides: bundled(dav1d)
+Provides: bundled(highway)
+Provides: bundled(fontconfig)
+Provides: bundled(ffmpeg)
+Provides: bundled(freetype)
+Provides: bundled(harfbuzz-ng)
+Provides: bundled(libdrm)
+Provides: bundled(libevent)
+Provides: bundled(libjpeg)
+Provides: bundled(libpng)
+Provides: bundled(libusb)
+Provides: bundled(libwebp)
+Provides: bundled(libxml)
+Provides: bundled(libxslt)
+Provides: bundled(opus)
+Provides: bundled(double-conversion)
+Provides: bundled(libsecret)
+Provides: bundled(libXNVCtrl)
+Provides: bundled(flac)
+Provides: bundled(zstd)
+Provides: bundled(openh264)
+
 # For selinux scriptlet
 Requires(post): /usr/sbin/semanage
 Requires(post): /usr/sbin/restorecon
@@ -390,43 +414,7 @@ CHROMIUM_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
 CHROMIUM_GN_DEFINES+=' enable_widevine=true'
 CHROMIUM_GN_DEFINES+=' use_vaapi=true'
 CHROMIUM_GN_DEFINES+=' rtc_use_pipewire=true rtc_link_pipewire=true'
-CHROMIUM_GN_DEFINES+=' use_system_libjpeg=true'
-CHROMIUM_GN_DEFINES+=' use_system_libpng=true'
-CHROMIUM_GN_DEFINES+=' use_system_libopenjpeg2=true'
-CHROMIUM_GN_DEFINES+=' use_system_lcms2=true'
-CHROMIUM_GN_DEFINES+=' use_system_libtiff=true'
-CHROMIUM_GN_DEFINES+=' use_system_libffi=true'
 export CHROMIUM_GN_DEFINES
-
-# use system libraries
-system_libs=()
-system_libs+=(brotli)
-system_libs+=(crc32c)
-system_libs+=(dav1d)
-system_libs+=(highway)
-system_libs+=(fontconfig)
-system_libs+=(ffmpeg)
-system_libs+=(freetype)
-system_libs+=(harfbuzz-ng)
-system_libs+=(libdrm)
-system_libs+=(libevent)
-system_libs+=(libjpeg)
-system_libs+=(libpng)
-system_libs+=(libusb)
-system_libs+=(libwebp)
-system_libs+=(libxml)
-system_libs+=(libxslt)
-system_libs+=(opus)
-system_libs+=(double-conversion)
-system_libs+=(libsecret)
-system_libs+=(libXNVCtrl)
-system_libs+=(flac)
-system_libs+=(zstd)
-system_libs+=(openh264)
-
-sed -i '/use_system_freetype = true/a\  enable_freetype = true' build/linux/unbundle/freetype.gn
-build/linux/unbundle/replace_gn_files.py --system-libraries ${system_libs[@]}
-
 
 # Check that there is no system 'google' module, shadowing bundled ones:
 if python3 -c 'import google ; print google.__path__' 2> /dev/null ; then \
