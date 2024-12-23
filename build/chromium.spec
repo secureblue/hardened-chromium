@@ -412,8 +412,6 @@ CHROMIUM_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
 CHROMIUM_GN_DEFINES+=' enable_widevine=true'
 CHROMIUM_GN_DEFINES+=' use_vaapi=true'
 CHROMIUM_GN_DEFINES+=' rtc_use_pipewire=true rtc_link_pipewire=true'
-# use a Rust-based alternative
-CHROMIUM_GN_DEFINES+=' enable_freetype=false'
 export CHROMIUM_GN_DEFINES
 
 system_libs=()
