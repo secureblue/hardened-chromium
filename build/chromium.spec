@@ -272,7 +272,6 @@ Provides: bundled(libsecret)
 Provides: bundled(libXNVCtrl)
 Provides: bundled(flac)
 Provides: bundled(zstd)
-Provides: bundled(openh264)
 
 # For selinux scriptlet
 Requires(post): /usr/sbin/semanage
@@ -419,7 +418,7 @@ export CHROMIUM_GN_DEFINES
 
 system_libs=()
 system_libs+=(ffmpeg)
-
+system_libs+=(openh264)
 build/linux/unbundle/replace_gn_files.py --system-libraries ${system_libs[@]}
 
 # Check that there is no system 'google' module, shadowing bundled ones:
