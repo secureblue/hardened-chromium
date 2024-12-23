@@ -256,7 +256,6 @@ Provides: bundled(crc32c)
 Provides: bundled(dav1d)
 Provides: bundled(highway)
 Provides: bundled(fontconfig)
-Provides: bundled(ffmpeg)
 Provides: bundled(freetype)
 Provides: bundled(harfbuzz-ng)
 Provides: bundled(libdrm)
@@ -414,7 +413,14 @@ CHROMIUM_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
 CHROMIUM_GN_DEFINES+=' enable_widevine=true'
 CHROMIUM_GN_DEFINES+=' use_vaapi=true'
 CHROMIUM_GN_DEFINES+=' rtc_use_pipewire=true rtc_link_pipewire=true'
+# use a Rust-based alternative
+CHROMIUM_GN_DEFINES+=' enable_freetype=false'
 export CHROMIUM_GN_DEFINES
+
+system_libs=()
+system_libs+=(ffmpeg)
+
+build/linux/unbundle/replace_gn_files.py --system-libraries ${system_libs[@]}
 
 # Check that there is no system 'google' module, shadowing bundled ones:
 if python3 -c 'import google ; print google.__path__' 2> /dev/null ; then \
@@ -427,7 +433,6 @@ mkdir -p %{chromebuilddir} && cp -a %{_bindir}/gn %{chromebuilddir}/
 %{chromebuilddir}/gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
 
 %build_target %{chromebuilddir} chrome
-%build_target %{chromebuilddir} chrome_sandbox
 %build_target %{chromebuilddir} policy_templates
 
 %install
@@ -460,7 +465,6 @@ pushd %{chromebuilddir}
   cp -a libvulkan.so.1 %{buildroot}%{chromium_path}
   cp -a vk_swiftshader_icd.json %{buildroot}%{chromium_path}
 	cp -a chrome %{buildroot}%{chromium_path}/%{chromium_browser_channel}
-	cp -a chrome_sandbox %{buildroot}%{chromium_path}/chrome-sandbox
 	cp -a chrome_crashpad_handler %{buildroot}%{chromium_path}/chrome_crashpad_handler
 	cp -a ../../chrome/app/resources/manpage.1.in %{buildroot}%{_mandir}/man1/%{chromium_browser_channel}.1
 	sed -i "s|@@PACKAGE@@|%{chromium_browser_channel}|g" %{buildroot}%{_mandir}/man1/%{chromium_browser_channel}.1
@@ -477,7 +481,7 @@ pushd %{chromebuilddir}
 popd
 
 pushd %{buildroot}%{chromium_path}/
-for f in *.so *.so.1 chrome_crashpad_handler chrome-sandbox chromium-browser headless_shell chromedriver ; do
+for f in *.so *.so.1 chrome_crashpad_handler chromium-browser headless_shell chromedriver ; do
    [ -f $f ] && strip $f
 done
 popd
@@ -519,7 +523,6 @@ cp -a %{SOURCE9} %{buildroot}%{_datadir}/gnome-control-center/default-apps/
 if selinuxenabled; then
 	semanage fcontext -a -t bin_t /usr/lib/%{chromium_browser_channel} &>/dev/null || :
 	semanage fcontext -a -t bin_t /usr/lib/%{chromium_browser_channel}/%{chromium_browser_channel}.sh &>/dev/null || :
-	semanage fcontext -a -t chrome_sandbox_exec_t /usr/lib/chrome-sandbox &>/dev/null || :
 	restorecon -R -v %{chromium_path}/%{chromium_browser_channel} &>/dev/null || :
 fi
 
@@ -537,7 +540,6 @@ fi
 %{chromium_path}/resources.pak
 %{chromium_path}/%{chromium_browser_channel}
 %{chromium_path}/%{chromium_browser_channel}.sh
-%attr(4755, root, root) %{chromium_path}/chrome-sandbox
 %{_mandir}/man1/%{chromium_browser_channel}.*
 %{_datadir}/icons/hicolor/*/apps/%{chromium_browser_channel}.png
 %{_datadir}/applications/*.desktop
