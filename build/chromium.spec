@@ -135,6 +135,7 @@ BuildRequires:	libusb-compat-0.1-devel
 BuildRequires:	libutempter-devel
 BuildRequires:	libXdamage-devel
 BuildRequires:	libXtst-devel
+BuildRequires:	xcb-proto
 BuildRequires:	mesa-libgbm-devel
 BuildRequires: nodejs
 BuildRequires: gn
@@ -165,6 +166,7 @@ BuildRequires: %{chromium_pybin}
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires: python3-jinja2
 BuildRequires: yasm
+BuildRequires: zlib-devel
 BuildRequires:	systemd
 BuildRequires: ninja-build
 BuildRequires: libevdev-devel
@@ -245,12 +247,8 @@ Provides: bundled(usrsctp)
 Provides: bundled(v8)
 Provides: bundled(webrtc)
 Provides: bundled(woff2)
- # test
-Provides: bundled(xcb-proto)
 Provides: bundled(xdg-mime)
 Provides: bundled(xdg-user-dirs)
- # test (zlib-devel)
-Provides: bundled(zlib)
 Provides: bundled(zstd)
 
 # For selinux scriptlet
