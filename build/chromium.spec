@@ -134,6 +134,7 @@ BuildRequires:	libutempter-devel
 BuildRequires:	libXdamage-devel
 BuildRequires:	libXtst-devel
 BuildRequires:	mesa-libgbm-devel
+BuildRequires: nodejs
 BuildRequires: gn
 BuildRequires:	nss-devel >= 3.26
 BuildRequires:	pciutils-devel
@@ -227,8 +228,6 @@ Provides: bundled(lzma)
 Provides: bundled(mesa)
 Provides: bundled(NSBezierPath)
 Provides: bundled(mozc)
- # test
-Provides: bundled(nodejs)
 Provides: bundled(opus)
 Provides: bundled(ots)
 Provides: bundled(protobuf)
@@ -291,6 +290,10 @@ Qt6 UI for chromium.
 # Change shebang in all relevant files in this directory and all subdirectories
 # See `man find` for how the `-exec command {} +` syntax works
 find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
+
+# Add correct path for nodejs binary
+mkdir -p third_party/node/linux/node-linux-x64/bin
+ln -s %{_bindir}/node third_party/node/linux/node-linux-x64/bin/node
 
 # Get rid of the bundled esbuild
 ln -sf %{_bindir}/esbuild third_party/devtools-frontend/src/third_party/esbuild/esbuild
