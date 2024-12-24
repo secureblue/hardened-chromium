@@ -25,7 +25,7 @@ index 2d95d5e1df911..e7a29a6687a07 100644
  
  namespace features {
  
-+BASE_FEATURE(kDisableInternalPageJit, "EnableInternalPageJit",
++BASE_FEATURE(kEnableInternalPageJit, "EnableInternalPageJit",
 +             base::FEATURE_DISBLED_BY_DEFAULT);
 +
  // All features in alphabetical order.
