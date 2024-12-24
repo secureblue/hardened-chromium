@@ -138,7 +138,7 @@ BuildRequires: gn
 BuildRequires:	nss-devel >= 3.26
 BuildRequires:	pciutils-devel
 BuildRequires:	pulseaudio-libs-devel
-BuildRequires:	pipewire
+BuildRequires:	pipewire-devel
 BuildRequires: libappstream-glib
 
 # Fedora tries to use system libs whenever it can.
