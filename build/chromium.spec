@@ -273,6 +273,11 @@ Provides: bundled(libXNVCtrl)
 Provides: bundled(flac)
 Provides: bundled(zstd)
 
+Provides: bundled(libopenjpeg2)
+Provides: bundled(lcms2)
+Provides: bundled(libffi)
+Provides: bundled(libtiff)
+
 # For selinux scriptlet
 Requires(post): /usr/sbin/semanage
 Requires(post): /usr/sbin/restorecon
