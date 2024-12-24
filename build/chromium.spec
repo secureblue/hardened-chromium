@@ -102,7 +102,6 @@ BuildRequires: llvm
 BuildRequires: lld
 BuildRequires: rustc
 BuildRequires: bindgen-cli
-BuildRequires: libzstd-devel
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(libavformat)
@@ -118,7 +117,6 @@ BuildRequires:	dbus-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	expat-devel
 BuildRequires:	flex
-BuildRequires:	fontconfig-devel
 BuildRequires:	glib2-devel
 BuildRequires:	glibc-devel
 BuildRequires:	gperf
@@ -127,11 +125,9 @@ BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: compiler-rt
-BuildRequires:	harfbuzz-devel >= 2.4.0
 BuildRequires: libatomic
 BuildRequires:	libcap-devel
 BuildRequires:	libcurl-devel
-BuildRequires:	libdrm-devel
 BuildRequires:	libgcrypt-devel
 BuildRequires:	libudev-devel
 BuildRequires:	libuuid-devel
@@ -155,38 +151,21 @@ BuildRequires:	dbus-glib-devel
 # For eu-strip
 BuildRequires:	elfutils
 BuildRequires:	elfutils-libelf-devel
-BuildRequires:	flac-devel
-BuildRequires:	freetype-devel
-BuildRequires: google-crc32c-devel
-BuildRequires: libdav1d-devel
-BuildRequires: highway-devel
-BuildRequires: libsecret-devel
-BuildRequires: double-conversion-devel
-BuildRequires: libXNVCtrl-devel
 # One of the python scripts invokes git to look for a hash. So helpful.
 BuildRequires:	/usr/bin/git
 BuildRequires:	hwdata
 BuildRequires:	kernel-headers
 BuildRequires:	libevent-devel
-BuildRequires:	libffi-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	libpng-devel
-BuildRequires: openjpeg2-devel
-BuildRequires: lcms2-devel
-BuildRequires: libtiff-devel
 BuildRequires:	libudev-devel
 Requires: libusbx >= 1.0.21-0.1.git448584a
 BuildRequires: libusbx-devel >= 1.0.21-0.1.git448584a
 BuildRequires:	libva-devel
-BuildRequires:	libwebp-devel
-BuildRequires:	libxslt-devel
 BuildRequires:	libxshmfence-devel
+BuildRequires: highway-devel
 BuildRequires:	mesa-libGL-devel
-BuildRequires:	opus-devel
 BuildRequires: %{chromium_pybin}
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires: python3-jinja2
-BuildRequires: brotli-devel
 BuildRequires: speech-dispatcher-devel
 BuildRequires: yasm
 BuildRequires: zlib-devel
@@ -259,7 +238,6 @@ Provides: bundled(fontconfig)
 Provides: bundled(freetype)
 Provides: bundled(harfbuzz-ng)
 Provides: bundled(libdrm)
-Provides: bundled(libevent)
 Provides: bundled(libjpeg)
 Provides: bundled(libpng)
 Provides: bundled(libusb)
