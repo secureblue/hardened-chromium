@@ -155,7 +155,7 @@ BuildRequires:	elfutils-libelf-devel
 BuildRequires:	/usr/bin/git
 BuildRequires:	hwdata
 BuildRequires:	kernel-headers
-BuildRequires:	libevent-devel
+BuildRequires:	libffi-devel
 BuildRequires:	libudev-devel
 Requires: libusbx >= 1.0.21-0.1.git448584a
 BuildRequires: libusbx-devel >= 1.0.21-0.1.git448584a
@@ -172,13 +172,6 @@ BuildRequires:	systemd
 BuildRequires: ninja-build
 BuildRequires: libevdev-devel
 
-BuildRequires:	libffi-devel
-
-Provides: bundled(libopenjpeg2)
-Provides: bundled(lcms2)
-#Provides: bundled(libffi)
-Provides: bundled(libtiff)
-
 Requires: nss%{_isa} >= 3.26
 Requires: nss-mdns%{_isa}
 Requires: libcanberra-gtk3%{_isa}
@@ -187,74 +180,76 @@ Requires: hardened-chromium-common%{_isa} = %{version}-%{release}
 
 ExclusiveArch: x86_64
 
-Provides: bundled(angle) = 2422
-Provides: bundled(bintrees) = 1.0.1
+Provides: bundled(angle)
+Provides: bundled(bintrees)
 Provides: bundled(boringssl)
-Provides: bundled(bspatch)
-Provides: bundled(cacheinvalidation) = 20150720
-Provides: bundled(colorama) = 799604a104
-Provides: bundled(crashpad)
-Provides: bundled(dmg_fp)
-Provides: bundled(expat) = 2.2.0
-Provides: bundled(fdmlibm) = 5.3
-Provides: bundled(libaom)
-Provides: bundled(fips181) = 2.2.3
-Provides: bundled(gperftools) = svn144
-Provides: bundled(hunspell) = 1.6.0
-Provides: bundled(iccjpeg)
-Provides: bundled(icu) = 58.1
-Provides: bundled(kitchensink) = 1
-Provides: bundled(leveldb) = 1.20
-Provides: bundled(libaddressinput) = 0
-Provides: bundled(libevent) = 1.4.15
-Provides: bundled(libjingle) = 9564
-Provides: bundled(libphonenumber) = a4da30df63a097d67e3c429ead6790ad91d36cf4
-Provides: bundled(libsrtp) = 2cbd85085037dc7bf2eda48d4cf62e2829056e2d
-Provides: bundled(libvpx) = 1.6.0
-Provides: bundled(libyuv) = 1651
-Provides: bundled(lzma) = 15.14
-Provides: bundled(libudis86) = 1.7.1
-Provides: bundled(mesa) = 9.0.3
-Provides: bundled(NSBezierPath) = 1.0
-Provides: bundled(mozc)
-Provides: bundled(ots) = 8d70cffebbfa58f67a5c3ed0e9bc84dccdbc5bc0
-Provides: bundled(protobuf) = 3.0.0.beta.3
-Provides: bundled(qcms) = 4
-Provides: bundled(re2)
-Provides: bundled(sfntly) = 04740d2600193b14aa3ef24cd9fbb3d5996b9f77
-Provides: bundled(skia)
-Provides: bundled(SMHasher) = 0
-Provides: bundled(snappy) = 1.1.4-head
-Provides: bundled(speech-dispatcher) = 0.7.1
-Provides: bundled(sqlite) = 3.17patched
-Provides: bundled(superfasthash) = 0
-Provides: bundled(talloc) = 2.0.1
-Provides: bundled(usrsctp) = 0
-Provides: bundled(v8) = 5.9.211.31
-Provides: bundled(webrtc) = 90usrsctp
-Provides: bundled(woff2) = 445f541996fe8376f3976d35692fd2b9a6eedf2d
-Provides: bundled(xdg-mime)
-Provides: bundled(xdg-user-dirs)
-
 Provides: bundled(brotli)
+Provides: bundled(bspatch)
+Provides: bundled(cacheinvalidation)
+Provides: bundled(colorama)
+Provides: bundled(crashpad)
 Provides: bundled(crc32c)
 Provides: bundled(dav1d)
-Provides: bundled(highway)
+Provides: bundled(double-conversion)
+Provides: bundled(dmg_fp)
+Provides: bundled(expat)
+Provides: bundled(fdmlibm)
+Provides: bundled(flac)
+Provides: bundled(fips181)
 Provides: bundled(fontconfig)
 Provides: bundled(freetype)
+Provides: bundled(gperftools)
 Provides: bundled(harfbuzz-ng)
+Provides: bundled(highway)
+Provides: bundled(hunspell)
+Provides: bundled(iccjpeg)
+Provides: bundled(icu)
+Provides: bundled(kitchensink)
+Provides: bundled(lcms2)
+Provides: bundled(leveldb)
+Provides: bundled(libaddressinput)
+Provides: bundled(libaom)
 Provides: bundled(libdrm)
+Provides: bundled(libevent)
+Provides: bundled(libjingle)
 Provides: bundled(libjpeg)
+Provides: bundled(libopenjpeg2)
+Provides: bundled(libphonenumber)
 Provides: bundled(libpng)
+Provides: bundled(libsecret)
+Provides: bundled(libsrtp)
+Provides: bundled(libtiff)
+Provides: bundled(libudis86)
 Provides: bundled(libusb)
+Provides: bundled(libvpx)
 Provides: bundled(libwebp)
+Provides: bundled(libyuv)
 Provides: bundled(libxml)
 Provides: bundled(libxslt)
-Provides: bundled(opus)
-Provides: bundled(double-conversion)
-Provides: bundled(libsecret)
 Provides: bundled(libXNVCtrl)
-Provides: bundled(flac)
+Provides: bundled(lzma)
+Provides: bundled(mesa)
+Provides: bundled(NSBezierPath)
+Provides: bundled(mozc)
+Provides: bundled(opus)
+Provides: bundled(ots)
+Provides: bundled(protobuf)
+Provides: bundled(qcms)
+Provides: bundled(re2)
+Provides: bundled(sfntly)
+Provides: bundled(skia)
+Provides: bundled(SMHasher)
+Provides: bundled(snappy)
+Provides: bundled(speech-dispatcher)
+Provides: bundled(sqlite)
+Provides: bundled(superfasthash)
+Provides: bundled(talloc)
+Provides: bundled(usrsctp)
+Provides: bundled(v8)
+Provides: bundled(webrtc)
+Provides: bundled(woff2)
+Provides: bundled(xdg-mime)
+Provides: bundled(xdg-user-dirs)
 Provides: bundled(zstd)
 
 # For selinux scriptlet
