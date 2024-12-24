@@ -115,6 +115,7 @@ BuildRequires:	bison
 BuildRequires:	cups-devel
 BuildRequires:	dbus-devel
 BuildRequires:	desktop-file-utils
+BuildRequires:	expat-devel
 BuildRequires:	flex
 BuildRequires:	glib2-devel
 BuildRequires:	glibc-devel
