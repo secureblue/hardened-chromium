@@ -398,7 +398,6 @@ export CHROMIUM_GN_DEFINES
 system_libs=()
 system_libs+=(ffmpeg)
 system_libs+=(openh264)
-system_libs+=(libffi)
 build/linux/unbundle/replace_gn_files.py --system-libraries ${system_libs[@]}
 
 # Check that there is no system 'google' module, shadowing bundled ones:
