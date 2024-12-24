@@ -113,7 +113,9 @@ BuildRequires:	alsa-lib-devel
 BuildRequires:	atk-devel
 BuildRequires:	bison
 BuildRequires:	cups-devel
+BuildRequires:	dbus-devel
 BuildRequires:	desktop-file-utils
+BuildRequires:	flex
 BuildRequires:	glib2-devel
 BuildRequires:	glibc-devel
 BuildRequires: pkgconfig(Qt5Core)
@@ -136,6 +138,7 @@ BuildRequires: gn
 BuildRequires:	nss-devel >= 3.26
 BuildRequires:	pciutils-devel
 BuildRequires:	pulseaudio-libs-devel
+BuildRequires:	pipewire
 BuildRequires: libappstream-glib
 
 # Fedora tries to use system libs whenever it can.
@@ -250,13 +253,6 @@ Provides: bundled(xdg-user-dirs)
  # test (zlib-devel)
 Provides: bundled(zlib)
 Provides: bundled(zstd)
-
- # test (dbus-devel)
-Provides: bundled(dbus)
- # test
-Provides: bundled(flex)
- # test (pipewire-devel)
-Provides: bundled(pipewire)
 
 # For selinux scriptlet
 Requires(post): /usr/sbin/semanage
