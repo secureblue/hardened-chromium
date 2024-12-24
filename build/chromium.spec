@@ -113,13 +113,9 @@ BuildRequires:	alsa-lib-devel
 BuildRequires:	atk-devel
 BuildRequires:	bison
 BuildRequires:	cups-devel
-BuildRequires:	dbus-devel
 BuildRequires:	desktop-file-utils
-BuildRequires:	expat-devel
-BuildRequires:	flex
 BuildRequires:	glib2-devel
 BuildRequires:	glibc-devel
-BuildRequires:	gperf
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt6Core)
@@ -135,14 +131,11 @@ BuildRequires:	libusb-compat-0.1-devel
 BuildRequires:	libutempter-devel
 BuildRequires:	libXdamage-devel
 BuildRequires:	libXtst-devel
-BuildRequires:	xcb-proto
 BuildRequires:	mesa-libgbm-devel
-BuildRequires: nodejs
 BuildRequires: gn
 BuildRequires:	nss-devel >= 3.26
 BuildRequires:	pciutils-devel
 BuildRequires:	pulseaudio-libs-devel
-BuildRequires:	pipewire-devel
 BuildRequires: libappstream-glib
 
 # Fedora tries to use system libs whenever it can.
@@ -165,9 +158,7 @@ BuildRequires:	mesa-libGL-devel
 BuildRequires: %{chromium_pybin}
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires: python3-jinja2
-BuildRequires: speech-dispatcher-devel
 BuildRequires: yasm
-BuildRequires: zlib-devel
 BuildRequires:	systemd
 BuildRequires: ninja-build
 BuildRequires: libevdev-devel
@@ -198,6 +189,7 @@ Provides: bundled(flac)
 Provides: bundled(fips181)
 Provides: bundled(fontconfig)
 Provides: bundled(freetype)
+Provides: bundled(gperf) # test
 Provides: bundled(gperftools)
 Provides: bundled(harfbuzz-ng)
 Provides: bundled(highway)
@@ -231,6 +223,7 @@ Provides: bundled(lzma)
 Provides: bundled(mesa)
 Provides: bundled(NSBezierPath)
 Provides: bundled(mozc)
+Provides: bundled(nodejs) # test
 Provides: bundled(opus)
 Provides: bundled(ots)
 Provides: bundled(protobuf)
@@ -248,9 +241,15 @@ Provides: bundled(usrsctp)
 Provides: bundled(v8)
 Provides: bundled(webrtc)
 Provides: bundled(woff2)
+Provides: bundled(xcb-proto) # test
 Provides: bundled(xdg-mime)
 Provides: bundled(xdg-user-dirs)
+Provides: bundled(zlib) # test (zlib-devel)
 Provides: bundled(zstd)
+
+Provides: bundled(dbus) # test (dbus-devel)
+Provides: bundled(flex) # test
+Provides: bundled(pipewire) # test (pipewire-devel)
 
 # For selinux scriptlet
 Requires(post): /usr/sbin/semanage
@@ -289,10 +288,6 @@ Qt6 UI for chromium.
 # Change shebang in all relevant files in this directory and all subdirectories
 # See `man find` for how the `-exec command {} +` syntax works
 find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{chromium_pybin}=' {} +
-
-# Add correct path for nodejs binary
-mkdir -p third_party/node/linux/node-linux-x64/bin
-ln -s %{_bindir}/node third_party/node/linux/node-linux-x64/bin/node
 
 # Get rid of the bundled esbuild
 ln -sf %{_bindir}/esbuild third_party/devtools-frontend/src/third_party/esbuild/esbuild
