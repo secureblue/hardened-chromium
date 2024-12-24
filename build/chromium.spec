@@ -119,6 +119,7 @@ BuildRequires:	expat-devel
 BuildRequires:	flex
 BuildRequires:	glib2-devel
 BuildRequires:	glibc-devel
+BuildRequires:	gperf
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt6Core)
@@ -194,8 +195,6 @@ Provides: bundled(flac)
 Provides: bundled(fips181)
 Provides: bundled(fontconfig)
 Provides: bundled(freetype)
- # test
-Provides: bundled(gperf)
 Provides: bundled(gperftools)
 Provides: bundled(harfbuzz-ng)
 Provides: bundled(highway)
