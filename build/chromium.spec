@@ -189,7 +189,8 @@ Provides: bundled(flac)
 Provides: bundled(fips181)
 Provides: bundled(fontconfig)
 Provides: bundled(freetype)
-Provides: bundled(gperf) # test
+ # test
+Provides: bundled(gperf)
 Provides: bundled(gperftools)
 Provides: bundled(harfbuzz-ng)
 Provides: bundled(highway)
@@ -223,7 +224,8 @@ Provides: bundled(lzma)
 Provides: bundled(mesa)
 Provides: bundled(NSBezierPath)
 Provides: bundled(mozc)
-Provides: bundled(nodejs) # test
+ # test
+Provides: bundled(nodejs)
 Provides: bundled(opus)
 Provides: bundled(ots)
 Provides: bundled(protobuf)
@@ -241,15 +243,20 @@ Provides: bundled(usrsctp)
 Provides: bundled(v8)
 Provides: bundled(webrtc)
 Provides: bundled(woff2)
-Provides: bundled(xcb-proto) # test
+ # test
+Provides: bundled(xcb-proto)
 Provides: bundled(xdg-mime)
 Provides: bundled(xdg-user-dirs)
-Provides: bundled(zlib) # test (zlib-devel)
+ # test (zlib-devel)
+Provides: bundled(zlib)
 Provides: bundled(zstd)
 
-Provides: bundled(dbus) # test (dbus-devel)
-Provides: bundled(flex) # test
-Provides: bundled(pipewire) # test (pipewire-devel)
+ # test (dbus-devel)
+Provides: bundled(dbus)
+ # test
+Provides: bundled(flex)
+ # test (pipewire-devel)
+Provides: bundled(pipewire)
 
 # For selinux scriptlet
 Requires(post): /usr/sbin/semanage
