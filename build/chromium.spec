@@ -161,7 +161,6 @@ Requires: libusbx >= 1.0.21-0.1.git448584a
 BuildRequires: libusbx-devel >= 1.0.21-0.1.git448584a
 BuildRequires:	libva-devel
 BuildRequires:	libxshmfence-devel
-BuildRequires: highway-devel
 BuildRequires:	mesa-libGL-devel
 BuildRequires: %{chromium_pybin}
 BuildRequires:	pkgconfig(gtk+-3.0)
