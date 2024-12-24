@@ -173,6 +173,13 @@ BuildRequires:	systemd
 BuildRequires: ninja-build
 BuildRequires: libevdev-devel
 
+BuildRequires:	libffi-devel
+
+Provides: bundled(libopenjpeg2)
+Provides: bundled(lcms2)
+#Provides: bundled(libffi)
+Provides: bundled(libtiff)
+
 Requires: nss%{_isa} >= 3.26
 Requires: nss-mdns%{_isa}
 Requires: libcanberra-gtk3%{_isa}
@@ -251,11 +258,6 @@ Provides: bundled(libXNVCtrl)
 Provides: bundled(flac)
 Provides: bundled(zstd)
 
-Provides: bundled(libopenjpeg2)
-Provides: bundled(lcms2)
-Provides: bundled(libffi)
-Provides: bundled(libtiff)
-
 # For selinux scriptlet
 Requires(post): /usr/sbin/semanage
 Requires(post): /usr/sbin/restorecon
@@ -306,10 +308,6 @@ rm -rf buildtools/third_party/eu-strip/bin/eu-strip
   
 # Replace it with a symlink to the Fedora copy
 ln -s %{_bindir}/eu-strip buildtools/third_party/eu-strip/bin/eu-strip
-
-rm -rf third_party/libusb/src/libusb/libusb.h
-# we _shouldn't need to do this, but it looks like we do.
-cp -a %{_includedir}/libusb-1.0/libusb.h third_party/libusb/src/libusb/libusb.h
 
 # Hard code extra version
 sed -i 's/getenv("CHROME_VERSION_EXTRA")/"hardened-chromium"/' chrome/common/channel_info_posix.cc
@@ -395,11 +393,13 @@ CHROMIUM_GN_DEFINES+=' use_gio=true use_pulseaudio=true'
 CHROMIUM_GN_DEFINES+=' enable_widevine=true'
 CHROMIUM_GN_DEFINES+=' use_vaapi=true'
 CHROMIUM_GN_DEFINES+=' rtc_use_pipewire=true rtc_link_pipewire=true'
+CHROMIUM_GN_DEFINES+=' use_system_libffi=true' # ffi_pic is not found
 export CHROMIUM_GN_DEFINES
 
 system_libs=()
 system_libs+=(ffmpeg)
 system_libs+=(openh264)
+system_libs+=(libffi)
 build/linux/unbundle/replace_gn_files.py --system-libraries ${system_libs[@]}
 
 # Check that there is no system 'google' module, shadowing bundled ones:
