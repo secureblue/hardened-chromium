@@ -10,7 +10,7 @@ index e5ce608907f72..09159a4e83115 100644
 -  if (!site_url.SchemeIsHTTPOrHTTPS())
 +  // Disable JIT for non-web schemes.
 +  if (!site_url.SchemeIsHTTPOrHTTPS()) {
-+    if (base::FeatureList::IsEnabled(features::kDisableInternalPageJit))
++    if (!base::FeatureList::IsEnabled(features::kEnableInternalPageJit))
 +      return true;
      return false;
 +  }
@@ -25,8 +25,8 @@ index 2d95d5e1df911..e7a29a6687a07 100644
  
  namespace features {
  
-+BASE_FEATURE(kDisableInternalPageJit, "DisableInternalPageJit",
-+             base::FEATURE_ENABLED_BY_DEFAULT);
++BASE_FEATURE(kEnableInternalPageJit, "EnableInternalPageJit",
++             base::FEATURE_DISABLED_BY_DEFAULT);
 +
  // All features in alphabetical order.
  
@@ -48,7 +48,7 @@ index a69dcd3b24015..2f6f3d9265bbf 100644
  
  namespace features {
  
-+CONTENT_EXPORT BASE_DECLARE_FEATURE(kDisableInternalPageJit);
++CONTENT_EXPORT BASE_DECLARE_FEATURE(kEnableInternalPageJit);
 +
  // BEFORE MODIFYING THIS FILE: If your feature is only used inside content/, add
  // your feature in `content/common/features.h` instead.
