@@ -1,4 +1,4 @@
-policy_module(trivalent, 1.0.0)
+policy_module(trivalent, 1.0.1)
 
 # SPDX-FileCopyrightText: Copyright 2025-2026 The Secureblue Authors
 #
@@ -379,6 +379,14 @@ seutil_exec_setfiles(trivalent_script_domain)
 seutil_manage_file_contexts(trivalent_script_domain)
 userdom_use_inherited_user_terminals(trivalent_script_domain)
 fs_all_mount_fs_perms_xattr_fs(trivalent_script_domain)
+
+optional_policy(`
+	bubblewrap_exec(trivalent_script_domain)
+')
+
+optional_policy(`
+	bwrap_restricted_exec(trivalent_script_domain)
+')
 
 optional_policy(`
 	gen_require(`
