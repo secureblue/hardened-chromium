@@ -19,7 +19,7 @@ runners:
         "g5",
       ]
     spot: price-capacity-optimized
-    volume: 80gb
+    volume: 120gb
     image: ubuntu24-stepsecurity-x64
     ssh: false
 
@@ -43,6 +43,6 @@ runners:
         "g5",
       ]
     spot: price-capacity-optimized
-    volume: 80gb
+    volume: 120gb
     image: ubuntu24-stepsecurity-arm64
     ssh: false
