@@ -61,8 +61,25 @@ index 94859e1cb8..bc57e3f578 100644
  <!--_html_template_end_-->`;
    // clang-format on
  }
+diff --git a/chrome/browser/resources/settings/autofill_page/collapsible_autofill_settings_card.html b/chrome/browser/resources/settings/autofill_page/collapsible_autofill_settings_card.html
+index ea471ade16..d2bb45f62b 100644
+--- a/chrome/browser/resources/settings/autofill_page/collapsible_autofill_settings_card.html
++++ b/chrome/browser/resources/settings/autofill_page/collapsible_autofill_settings_card.html
+@@ -12,6 +12,7 @@
+   }
+ </style>
+
++<if expr="is_chromeos">
+ <cr-expand-button class="cr-row first" expanded="{{expanded_}}">
+   <div id="header-text">
+     <div>$i18n{yourSavedInfoAutofillSettingsLabel}</div>
+@@ -105,3 +106,4 @@
+     </settings-walletable-pass-detection-toggle>
+   </template>
+ </cr-collapse>
++</if>
 diff --git a/chrome/browser/resources/settings/languages_page/translate_page.html b/chrome/browser/resources/settings/languages_page/translate_page.html
-index 47ee2c73fc..aa8570be48 100644
+index ab5a8c7672..1537190373 100644
 --- a/chrome/browser/resources/settings/languages_page/translate_page.html
 +++ b/chrome/browser/resources/settings/languages_page/translate_page.html
 @@ -1,4 +1,5 @@
@@ -70,13 +87,13 @@ index 47ee2c73fc..aa8570be48 100644
 +<if expr="is_chromeos">
  <settings-section page-title="$i18n{translatePageTitle}">
  <settings-toggle-button id="offerTranslateOtherLanguages"
-     pref="{{prefs.translate.enabled}}"
+     pref-key="translate.enabled"
 @@ -6,6 +7,7 @@
      sub-label="$i18n{offerToEnableTranslateSublabel}"
      on-settings-boolean-control-change="onTranslateToggleChange_">
  </settings-toggle-button>
 +</if>
- <cr-collapse opened="[[prefs.translate.enabled.value]]">
+ <cr-collapse opened="[[translateEnabledPref_.value]]">
    <div class="cr-row continuation">
      <div id="targetLanguageLabel" class="flex cr-padded-text"
 diff --git a/chrome/browser/resources/settings/site_settings/v8_page.html b/chrome/browser/resources/settings/site_settings/v8_page.html
@@ -99,20 +116,3 @@ index 4c9fb387a8..a1182f5726 100644
        <settings-collapse-radio-button
            id="blockForAllSites"
            class="two-line"
-diff --git a/chrome/browser/resources/settings/your_saved_info_page/your_saved_info_page.html b/chrome/browser/resources/settings/your_saved_info_page/your_saved_info_page.html
-index dbc3c7435e..2985e57a06 100644
---- a/chrome/browser/resources/settings/your_saved_info_page/your_saved_info_page.html
-+++ b/chrome/browser/resources/settings/your_saved_info_page/your_saved_info_page.html
-@@ -121,6 +121,7 @@
-   </template>
- </div>
-
-+<if expr="is_chromeos">
- <settings-section page-title="$i18n{yourSavedInfoAutofillSettingsLabel}">
-   <collapsible-autofill-settings-card prefs="{{prefs}}">
-   </collapsible-autofill-settings-card>
-@@ -142,3 +143,4 @@
-     </cr-link-row>
-   </div>
- </settings-section>
-+</if>

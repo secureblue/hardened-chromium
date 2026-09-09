@@ -8,10 +8,10 @@ Subject: [PATCH] enable more Local Network Access coverage checks by default
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/services/network/public/cpp/features.cc b/services/network/public/cpp/features.cc
-index d98ed50d35439..f9051b9722a82 100644
+index 3b5a0cfd11ec0..231b94bff9ca9 100644
 --- a/services/network/public/cpp/features.cc
 +++ b/services/network/public/cpp/features.cc
-@@ -251,7 +251,7 @@ BASE_FEATURE_PARAM(bool,
+@@ -248,7 +248,7 @@ BASE_FEATURE_PARAM(bool,
  //
  // Spec: https://wicg.github.io/local-network-access/
  BASE_FEATURE(kLocalNetworkAccessChecksWebRTC,
@@ -20,7 +20,7 @@ index d98ed50d35439..f9051b9722a82 100644
  
  // Enables the Network Service to use an existing Mojo data pipe producer
  // handle for the response body, instead of creating its own. This is primarily
-@@ -273,7 +273,7 @@ BASE_FEATURE_PARAM(bool,
+@@ -270,7 +270,7 @@ BASE_FEATURE_PARAM(bool,
  //
  // Spec: https://wicg.github.io/local-network-access/
  BASE_FEATURE(kLocalNetworkAccessChecksWebSockets,
@@ -29,7 +29,7 @@ index d98ed50d35439..f9051b9722a82 100644
  
  // Enables Local Network Access checks for WebTransport.
  // Blocks local network requests without user permission to prevent exploitation
-@@ -281,7 +281,7 @@ BASE_FEATURE(kLocalNetworkAccessChecksWebSockets,
+@@ -278,7 +278,7 @@ BASE_FEATURE(kLocalNetworkAccessChecksWebSockets,
  //
  // Spec: https://wicg.github.io/local-network-access/
  BASE_FEATURE(kLocalNetworkAccessChecksWebTransport,
