@@ -56,6 +56,15 @@ index 6997bb36d9..a985a2a3e5 100644
    registry->RegisterBooleanPref(
        prefs::kExternalProtocolDialogShowAlwaysOpenCheckbox, true);
    registry->RegisterBooleanPref(prefs::kScreenCaptureAllowed, true);
+@@ -221,7 +221,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+ #endif
+
+   registry->RegisterBooleanPref(
+-      prefs::kHttpsOnlyModeEnabled, false,
++      prefs::kHttpsOnlyModeEnabled, true,
+       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+   registry->RegisterBooleanPref(
+       prefs::kHttpsFirstBalancedMode, false,
 diff --git a/chrome/browser/download/download_prefs.cc b/chrome/browser/download/download_prefs.cc
 index 0ee8c793a0..68e5df095e 100644
 --- a/chrome/browser/download/download_prefs.cc
