@@ -11,10 +11,10 @@ distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, e
 See the License for the specific language governing permissions and limitations under the License.
 ---
 diff --git a/chrome/browser/ui/browser_ui_prefs.cc b/chrome/browser/ui/browser_ui_prefs.cc
-index 7b0257c24d..969c917511 100644
+index 6997bb36d9..a985a2a3e5 100644
 --- a/chrome/browser/ui/browser_ui_prefs.cc
 +++ b/chrome/browser/ui/browser_ui_prefs.cc
-@@ -139,7 +139,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+@@ -145,7 +145,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
    registry->RegisterBooleanPref(prefs::kWebAppCreateInAppsMenu, true);
    registry->RegisterBooleanPref(prefs::kWebAppCreateInQuickLaunchBar, true);
    registry->RegisterBooleanPref(
@@ -23,7 +23,7 @@ index 7b0257c24d..969c917511 100644
        user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
    registry->RegisterDictionaryPref(prefs::kBrowserWindowPlacement);
    registry->RegisterDictionaryPref(prefs::kBrowserWindowPlacementPopup);
-@@ -152,21 +152,21 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+@@ -158,20 +158,20 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
                                  false);
  #endif
    registry->RegisterStringPref(prefs::kWebRTCIPHandlingPolicy,
@@ -43,13 +43,11 @@ index 7b0257c24d..969c917511 100644
    // We need to register the type of these preferences in order to query
    // them even though they're only typically controlled via policy.
 -  registry->RegisterBooleanPref(policy::policy_prefs::kHideWebStoreIcon, false);
--  registry->RegisterBooleanPref(prefs::kSharedClipboardEnabled, true);
 +  registry->RegisterBooleanPref(policy::policy_prefs::kHideWebStoreIcon, true);
-+  registry->RegisterBooleanPref(prefs::kSharedClipboardEnabled, false);
 
  #if BUILDFLAG(IS_MAC)
    // This really belongs in platform code, but there's no good place to
-@@ -194,7 +194,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
+@@ -199,7 +199,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
 
    registry->RegisterBooleanPref(prefs::kEnterpriseHardwarePlatformAPIEnabled,
                                  false);
@@ -58,15 +56,6 @@ index 7b0257c24d..969c917511 100644
    registry->RegisterBooleanPref(
        prefs::kExternalProtocolDialogShowAlwaysOpenCheckbox, true);
    registry->RegisterBooleanPref(prefs::kScreenCaptureAllowed, true);
-@@ -216,7 +216,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
- #endif
-
-   registry->RegisterBooleanPref(
--      prefs::kHttpsOnlyModeEnabled, false,
-+      prefs::kHttpsOnlyModeEnabled, true,
-       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
-   registry->RegisterBooleanPref(
-       prefs::kHttpsFirstBalancedMode, false,
 diff --git a/chrome/browser/download/download_prefs.cc b/chrome/browser/download/download_prefs.cc
 index 0ee8c793a0..68e5df095e 100644
 --- a/chrome/browser/download/download_prefs.cc
