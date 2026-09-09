@@ -72,38 +72,41 @@ index f70f5d24aa..e20ab1a318 100644
  <if expr="is_win">
    ${this.showProcessIsolationSetting_ ? html`
      <div class="hr"></div>
-diff --git a/chrome/browser/resources/settings/search_page/search_page.html b/chrome/browser/resources/settings/search_page/search_page.html
-index 819dc168bd..460caa8b67 100644
---- a/chrome/browser/resources/settings/search_page/search_page.html
-+++ b/chrome/browser/resources/settings/search_page/search_page.html
-@@ -86,5 +86,11 @@
-           on-click="onManageSearchEnginesClick_"
+diff --git a/chrome/browser/resources/settings/search_page/search_page.html.ts b/chrome/browser/resources/settings/search_page/search_page.html.ts
+index a04498131d..64ab734881 100644
+--- a/chrome/browser/resources/settings/search_page/search_page.html.ts
++++ b/chrome/browser/resources/settings/search_page/search_page.html.ts
+@@ -85,6 +85,13 @@ export function getHtml(this: SettingsSearchPageElement) {
+           @click="${this.onManageSearchEnginesClick_}"
            role-description="$i18n{subpageArrowRoleDescription}"></cr-link-row>
-     </template>
+     ` : ''}
 +
-+    <settings-toggle-button class="cr-row"
-+      pref="{{prefs.search.suggest_enabled}}"
-+      label="$i18n{searchSuggestPref}"
-+      sub-label="$i18n{searchSuggestPrefDesc}">
++    <settings-toggle-button id="searchSuggestToggle"
++        class="hr"
++        pref-key="search.suggest_enabled"
++        label="$i18n{searchSuggestPref}"
++        sub-label="$i18n{searchSuggestPrefDesc}">
 +    </settings-toggle-button>
    </div>
  </settings-section>
+ <!--_html_template_end_-->`;
 diff --git a/chrome/browser/resources/settings/search_page/search_page.ts b/chrome/browser/resources/settings/search_page/search_page.ts
-index 08c747e1df..9a13bf803e 100644
+index d17043c336..7039a41962 100644
 --- a/chrome/browser/resources/settings/search_page/search_page.ts
 +++ b/chrome/browser/resources/settings/search_page/search_page.ts
-@@ -18,12 +18,14 @@ import './search_engine_list_dialog.js';
+@@ -15,6 +15,7 @@ import './extension_controlled_message.js';
+ import './search_engine_icon.js';
+ import './search_engine_list_dialog.js';
  import '../settings_page/settings_section.js';
- import '../settings_shared.css.js';
- import '../settings_vars.css.js';
 +import '../controls/settings_toggle_button.js';
- 
+
+ import {PrefServiceObserverMixinLit} from '/shared/settings/prefs2/pref_service_observer_mixin_lit.js';
  import type {CrToastElement} from 'chrome://resources/cr_elements/cr_toast/cr_toast.js';
- import {I18nMixin} from 'chrome://resources/cr_elements/i18n_mixin.js';
- import {WebUiListenerMixin} from 'chrome://resources/cr_elements/web_ui_listener_mixin.js';
+@@ -23,6 +24,7 @@ import {WebUiListenerMixinLit} from 'chrome://resources/cr_elements/web_ui_liste
  import {assert} from 'chrome://resources/js/assert.js';
- import {PolymerElement} from 'chrome://resources/polymer/v3_0/polymer/polymer_bundled.min.js';
+ import type {PropertyValues} from 'chrome://resources/lit/v3_0/lit.rollup.js';
+ import {CrLitElement} from 'chrome://resources/lit/v3_0/lit.rollup.js';
 +import type {SettingsToggleButtonElement} from '../controls/settings_toggle_button.js';
- 
+
  import {loadTimeData} from '../i18n_setup.js';
  import {routes} from '../route.js';
