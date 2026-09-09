@@ -116,20 +116,3 @@ index 4c9fb387a8..a1182f5726 100644
        <settings-collapse-radio-button
            id="blockForAllSites"
            class="two-line"
-diff --git a/chrome/browser/resources/settings/your_saved_info_page/your_saved_info_page.html b/chrome/browser/resources/settings/your_saved_info_page/your_saved_info_page.html
-index dbc3c7435e..2985e57a06 100644
---- a/chrome/browser/resources/settings/your_saved_info_page/your_saved_info_page.html
-+++ b/chrome/browser/resources/settings/your_saved_info_page/your_saved_info_page.html
-@@ -121,6 +121,7 @@
-   </template>
- </div>
-
-+<if expr="is_chromeos">
- <settings-section page-title="$i18n{yourSavedInfoAutofillSettingsLabel}">
-   <collapsible-autofill-settings-card prefs="{{prefs}}">
-   </collapsible-autofill-settings-card>
-@@ -142,3 +143,4 @@
-     </cr-link-row>
-   </div>
- </settings-section>
-+</if>
