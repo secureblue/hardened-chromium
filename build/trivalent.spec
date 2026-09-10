@@ -213,6 +213,7 @@ BuildRequires: bindgen-cli
 BuildRequires: ninja-build
 BuildRequires: gn
 BuildRequires: nodejs
+BuildRequires: typescript
 %global build_target() \
 	export NINJA_STATUS="[%2:%f/%t] " ; \
 	ninja -j %{numjobs} -C '%1' '%2'
@@ -440,11 +441,20 @@ cp -a %{SOURCE13} chrome/app/theme/default_200_percent/chromium/product_logo_32.
 # See `man find` for how the `-exec command {} +` syntax works
 find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{__python3}=' {} +
 
-# Use system nodejs if desired
 %if %{use_system_toolchain}
-mkdir -p third_party/node/linux/node-linux-x64/bin
-rm third_party/node/linux/node-linux-x64/bin/node
-ln -s $(which node) third_party/node/linux/node-linux-x64/bin/node
+replace_bin_with_system() {
+    local -r bin="${1}"
+    local -r path="${2}"
+
+    mkdir -p "${path}"
+    rm "${path}/${bin}"
+    ln -s $(which "${bin}") "${path}"
+}
+
+# Use system nodejs
+replace_bin_with_system node third_party/node/linux/node-linux-x64/bin
+# Use system typescript
+replace_bin_with_system tsc third_party/typescript/linux-amd64/src/lib
 %endif
 
 %build
@@ -454,8 +464,8 @@ FLAGS=""
 FLAGS+=" -Wno-unknown-warning-option"
 %endif
 
-CFLAGS="$FLAGS"
-CXXFLAGS="$FLAGS"
+CFLAGS="${FLAGS}"
+CXXFLAGS="${FLAGS}"
 
 LDFLAGS=""
 RUSTFLAGS=""
@@ -477,9 +487,9 @@ declare -r clang_version="$(clang --version | sed -n 's/clang version //p' | cut
 declare -r clang_base_path="$(PATH=/usr/bin:/usr/sbin which clang | sed 's#/bin/.*##')"
 declare -r rust_bindgen_root="$(which bindgen | sed 's#/s\?bin/.*##')"
 %else
-declare -r SOURCE_DIR="$PWD/third_party"
+declare -r SOURCE_DIR="${PWD}/third_party"
 # add internal gn to PATH for build
-PATH="$PATH:$PWD/buildtools/linux64"
+PATH="${PATH}:${PWD}/buildtools/linux64"
 export PATH
 %endif
 
@@ -496,12 +506,12 @@ CHROMIUM_GN_DEFINES+=' ffmpeg_branding="Chrome" proprietary_codecs=true enable_w
 %if %{use_system_toolchain}
 CHROMIUM_GN_DEFINES+=" custom_toolchain=\"//build/toolchain/linux/unbundle:default\""
 CHROMIUM_GN_DEFINES+=" host_toolchain=\"//build/toolchain/linux/unbundle:default\""
-CHROMIUM_GN_DEFINES+=" clang_base_path=\"$clang_base_path\""
-CHROMIUM_GN_DEFINES+=" clang_version=$clang_version"
+CHROMIUM_GN_DEFINES+=" clang_base_path=\"${clang_base_path}\""
+CHROMIUM_GN_DEFINES+=" clang_version=${clang_version}"
 CHROMIUM_GN_DEFINES+=" clang_use_chrome_plugins=false"
 CHROMIUM_GN_DEFINES+=" rust_sysroot_absolute=\"$(rustc --print sysroot)\""
-CHROMIUM_GN_DEFINES+=" rust_bindgen_root=\"$rust_bindgen_root\""
-CHROMIUM_GN_DEFINES+=" rustc_version=\"$(rustc --version | awk '{print $2}')\""
+CHROMIUM_GN_DEFINES+=" rust_bindgen_root=\"${rust_bindgen_root}\""
+CHROMIUM_GN_DEFINES+=" rustc_version=\"$(rustc --version | awk '{print ${2}}')\""
 CHROMIUM_GN_DEFINES+=" chrome_pgo_phase=0"
 %endif
 CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
@@ -538,12 +548,12 @@ fi
 
 mkdir -p %{chromebuilddir}
 
-gn --script-executable=%{__python3} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
+gn --script-executable=%{__python3} gen --args="${CHROMIUM_GN_DEFINES}" %{chromebuilddir}
 
 %if %{use_system_toolchain}
 %build_target %{chromebuilddir} chrome
 %else
-%{__python3} $SOURCE_DIR/depot_tools/autoninja.py -C %{chromebuilddir} chrome
+%{__python3} ${SOURCE_DIR}/depot_tools/autoninja.py -C %{chromebuilddir} chrome
 %endif
 
 %install
@@ -562,9 +572,9 @@ export BUILD_TARGET=`cat /etc/redhat-release`
 export CHROMIUM_PATH=%{chromium_path}
 export CHROMIUM_NAME=%{chromium_name}
 
-sed -i "s|@@BUILD_TARGET@@|$BUILD_TARGET|g" %{buildroot}%{chromium_path}/%{chromium_name}.sh
-sed -i "s|@@CHROMIUM_PATH@@|$CHROMIUM_PATH|g" %{buildroot}%{chromium_path}/%{chromium_name}.sh
-sed -i "s|@@CHROMIUM_NAME@@|$CHROMIUM_NAME|g" %{buildroot}%{chromium_path}/%{chromium_name}.sh
+sed -i "s|@@BUILD_TARGET@@|${BUILD_TARGET}|g" %{buildroot}%{chromium_path}/%{chromium_name}.sh
+sed -i "s|@@CHROMIUM_PATH@@|${CHROMIUM_PATH}|g" %{buildroot}%{chromium_path}/%{chromium_name}.sh
+sed -i "s|@@CHROMIUM_NAME@@|${CHROMIUM_NAME}|g" %{buildroot}%{chromium_path}/%{chromium_name}.sh
 
 ln -s ../..%{chromium_path}/%{chromium_name}.sh %{buildroot}%{_bindir}/%{chromium_name}
 mkdir -p %{buildroot}%{_mandir}/man1/
@@ -586,7 +596,7 @@ popd
 %if ! %{enable_debug}
 pushd %{buildroot}%{chromium_path}/
 for f in *.so *.so.1 chrome_crashpad_handler %{chromium_name} headless_shell chromedriver ; do
-   [ -f $f ] && strip $f
+   [ -f ${f} ] && strip ${f}
 done
 popd
 %endif
