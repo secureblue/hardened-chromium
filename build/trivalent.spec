@@ -411,6 +411,10 @@ declare -r SOURCE_DIR="${PWD}/third_party"
 # add internal gn to PATH for build
 PATH="${PATH}:${PWD}/buildtools/linux64"
 export PATH
+ 
+%ifarch aarch64
+unset PKG_CONFIG_PATH
+%endif
 
 CHROMIUM_GN_DEFINES=''
 %ifarch aarch64
