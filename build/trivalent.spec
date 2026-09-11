@@ -424,11 +424,12 @@ CHROMIUM_GN_DEFINES+=' use_vaapi=false'
 # CHROMIUM_GN_DEFINES+=' enable_shadow_call_stack=true'
 %else
 CHROMIUM_GN_DEFINES+=' use_sysroot=false' # we dont use the sysroot on x64
+CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
+CHROMIUM_GN_DEFINES+=' rtc_link_pipewire=true'
 %endif
 %if %{enable_proprietary_codecs}
 CHROMIUM_GN_DEFINES+=' ffmpeg_branding="Chrome" proprietary_codecs=true enable_widevine=true'
 %endif
-CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
 CHROMIUM_GN_DEFINES+=' is_official_build=true'
 CHROMIUM_GN_DEFINES+=' is_cfi=true use_cfi_cast=true'
 CHROMIUM_GN_DEFINES+=' enable_reporting=false'
@@ -449,7 +450,7 @@ CHROMIUM_GN_DEFINES+=' safe_browsing_use_unrar=false'
 CHROMIUM_GN_DEFINES+=' use_kerberos=true'
 CHROMIUM_GN_DEFINES+=' use_qt6=true moc_qt6_path="%{_libdir}/qt6/libexec/"'
 CHROMIUM_GN_DEFINES+=' use_pulseaudio=true'
-CHROMIUM_GN_DEFINES+=' rtc_use_pipewire=true rtc_link_pipewire=true'
+CHROMIUM_GN_DEFINES+=' rtc_use_pipewire=true'
 CHROMIUM_GN_DEFINES+=' v8_enable_drumbrake=true'
 export CHROMIUM_GN_DEFINES
 
