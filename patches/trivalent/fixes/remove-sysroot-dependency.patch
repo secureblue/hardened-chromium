@@ -16,21 +16,21 @@ index 24a1d14395..db1b4d3d18 100644
 +++ b/build/config/BUILDCONFIG.gn
 @@ -581,7 +581,7 @@ foreach(_target_type,
        }
-
+ 
        if (!defined(use_libcxx_modules)) {
 -        use_libcxx_modules = is_clang
 +        use_libcxx_modules = false
        }
-
+ 
        if (filter_include(
 @@ -702,7 +702,7 @@ foreach(_target_type,
        }
-
+ 
        if (!defined(use_libcxx_modules)) {
 -        use_libcxx_modules = is_clang
 +        use_libcxx_modules = false
        }
-
+ 
        if (filter_include(
 diff --git a/build/config/linux/libffi/BUILD.gn b/build/config/linux/libffi/BUILD.gn
 index 6e45f4c226..9965f2bf19 100644
