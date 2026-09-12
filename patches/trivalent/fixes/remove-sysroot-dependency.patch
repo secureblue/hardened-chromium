@@ -11,33 +11,24 @@ distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, e
 See the License for the specific language governing permissions and limitations under the License.
 ---
 diff --git a/build/config/BUILDCONFIG.gn b/build/config/BUILDCONFIG.gn
-index 2bd205bd7e..91efa9fa1b 100644
+index 24a1d14395..db1b4d3d18 100644
 --- a/build/config/BUILDCONFIG.gn
 +++ b/build/config/BUILDCONFIG.gn
-@@ -46,6 +46,8 @@
- # When writing build files, to do something only for the host:
- #   if (current_toolchain == host_toolchain) { ...
-
-+import("//build/toolchain/sysroot.gni")
-+
- if (target_os == "") {
-   target_os = host_os
- }
-@@ -592,7 +594,7 @@ foreach(_target_type,
+@@ -581,7 +581,7 @@ foreach(_target_type,
        }
 
        if (!defined(use_libcxx_modules)) {
 -        use_libcxx_modules = is_clang
-+        use_libcxx_modules = is_clang && use_sysroot
++        use_libcxx_modules = false
        }
 
        if (filter_include(
-@@ -722,7 +724,7 @@ foreach(_target_type,
+@@ -702,7 +702,7 @@ foreach(_target_type,
        }
 
        if (!defined(use_libcxx_modules)) {
 -        use_libcxx_modules = is_clang
-+        use_libcxx_modules = is_clang && use_sysroot
++        use_libcxx_modules = false
        }
 
        if (filter_include(
