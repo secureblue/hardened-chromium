@@ -11,33 +11,24 @@ distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, e
 See the License for the specific language governing permissions and limitations under the License.
 ---
 diff --git a/build/config/BUILDCONFIG.gn b/build/config/BUILDCONFIG.gn
-index 2bd205bd7e85f..9405b9b6743c0 100644
+index 24a1d14395..db1b4d3d18 100644
 --- a/build/config/BUILDCONFIG.gn
 +++ b/build/config/BUILDCONFIG.gn
-@@ -69,6 +69,8 @@ if (current_os == "") {
-   current_os = target_os
- }
- 
-+import("//build/toolchain/sysroot.gni")
-+
- # =============================================================================
- # BUILD FLAGS
- # =============================================================================
-@@ -592,7 +594,7 @@ foreach(_target_type,
+@@ -581,7 +581,7 @@ foreach(_target_type,
        }
  
        if (!defined(use_libcxx_modules)) {
 -        use_libcxx_modules = is_clang
-+        use_libcxx_modules = is_clang && use_sysroot
++        use_libcxx_modules = false
        }
  
        if (filter_include(
-@@ -722,7 +724,7 @@ foreach(_target_type,
+@@ -702,7 +702,7 @@ foreach(_target_type,
        }
  
        if (!defined(use_libcxx_modules)) {
 -        use_libcxx_modules = is_clang
-+        use_libcxx_modules = is_clang && use_sysroot
++        use_libcxx_modules = false
        }
  
        if (filter_include(

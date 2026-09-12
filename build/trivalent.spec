@@ -505,9 +505,9 @@ popd
 
 %if ! %{enable_debug}
 pushd %{buildroot}%{chromium_path}/
-for f in *.so *.so.1 chrome_crashpad_handler %{chromium_name} headless_shell chromedriver ; do
-   [ -f ${f} ] && strip ${f}
-done
+    for f in *.so *.so.1 chrome_crashpad_handler %{chromium_name} ; do
+       [ -f "${f}" && "${f}" != "libqt6_shim.so" ] && strip "${f}"
+    done
 popd
 %endif
 
