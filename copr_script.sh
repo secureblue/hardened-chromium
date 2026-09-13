@@ -58,13 +58,6 @@ pushd patches
 	popd
 
 	pushd third_party/
-		pushd fedora/
-			patches=(*.patch)
-			count=1000
-			for ((i=0; i<${#patches[@]}; i++)); do
-				count="$(mv_patch "${patches[i]}" "fedora" "$((count))")"
-			done
-		popd
 
 		pushd vanadium/
 			patches=(*.patch)

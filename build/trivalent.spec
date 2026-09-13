@@ -31,15 +31,6 @@
 # And prevents downloading proprietary libraries at runtime (Widevine)
 %global enable_proprietary_codecs 1
 
-# The system toolchain is more out-of-date compared to chromium's
-# It also loses out on some performance optimisations that chromium's toolchain can provide (like siso)
-# This is needed for non-x64 arches since the chromium toolchain doesn't support anything but x64
-%ifarch x86_64
-%global use_system_toolchain 0
-%else
-%global use_system_toolchain 1
-%endif
-
 Source69: chromium-version.txt
 
 Name:	%{chromium_name}
@@ -82,10 +73,6 @@ Source18: %{chromium_name}256.png
 Source24: %{chromium_name}-drm-fix-secontexts.conf
 %endif
 
-%if %{use_system_toolchain}
-Patch9999: chromium-148-v8-sanitize-build-error.patch
-%endif
-
 ### Patches ###
 %{lua:
     rpm.execute("pwd")
@@ -101,19 +88,6 @@ Patch9999: chromium-148-v8-sanitize-build-error.patch
 
     local count = 0
     local printPatch = ""
-
-    if macros['use_system_toolchain'] == "1" then
-        count = 1000
-        printPatch = ""
-        for p in ipairs(fpatches) do
-            os.execute("echo 'Patching in "..fpatches[p].."'")
-            printPatch = "Patch"..count..": fedora-"..count..".patch"
-            rpm.execute("echo", printPatch)
-            print(printPatch.."\n")
-            count = count + 1
-        end
-        rpm.define("_fedoraPatchCount "..count-1)
-    end
 
     count = 2000
     printPatch = ""
@@ -137,9 +111,6 @@ Patch9999: chromium-148-v8-sanitize-build-error.patch
     end
     rpm.define("_trivalentPatchCount "..count-1)
 
-	if macros['use_system_toolchain'] == "1" then
-    	os.execute("echo 'Autopatch F: "..macros['_fedoraPatchCount'].."'")
-	end
     os.execute("echo 'Autopatch V: "..macros['_vanadiumPatchCount'].."'")
     os.execute("echo 'Autopatch T: "..macros['_trivalentPatchCount'].."'")
 }
@@ -200,24 +171,6 @@ BuildRequires:  systemd-rpm-macros
 BuildRequires: libevdev-devel
 # One of the python scripts invokes git to look for a hash. So helpful.
 BuildRequires:	git-core
-
-%if %{use_system_toolchain}
-BuildRequires: clang
-BuildRequires: clang-tools-extra
-BuildRequires: compiler-rt
-BuildRequires: llvm
-BuildRequires: lld
-BuildRequires: rustc
-BuildRequires: rustfmt
-BuildRequires: bindgen-cli
-BuildRequires: ninja-build
-BuildRequires: gn
-BuildRequires: nodejs
-BuildRequires: typescript
-%global build_target() \
-	export NINJA_STATUS="[%2:%f/%t] " ; \
-	ninja -j %{numjobs} -C '%1' '%2'
-%endif
 
 Requires: nss%{_isa} >= 3.26
 Requires: nss-mdns%{_isa}
@@ -381,11 +334,6 @@ Provides: bundled(zstd)
 %setup -q -n chromium-%{version}
 
 ### Patches ###
-%if %{use_system_toolchain}
-# License: MIT
-%autopatch -p1 -m 1000 -M %{_fedoraPatchCount}
-%patch -P9999 -p1 -R -b .v8-sanitize-build-error
-%endif
 # License: GPL-2.0-Only
 %autopatch -p1 -m 2000 -M %{_vanadiumPatchCount}
 # License: Apache-2.0
@@ -441,32 +389,9 @@ cp -a %{SOURCE13} chrome/app/theme/default_200_percent/chromium/product_logo_32.
 # See `man find` for how the `-exec command {} +` syntax works
 find -type f \( -iname "*.py" \) -exec sed -i '1s=^#! */usr/bin/\(python\|env python\)[23]\?=#!%{__python3}=' {} +
 
-%if %{use_system_toolchain}
-replace_bin_with_system() {
-    local -r bin="${1}"
-    local -r path="${2}"
-
-    mkdir -p "${path}"
-    rm "${path}/${bin}"
-    ln -s $(which "${bin}") "${path}"
-}
-
-# Use system nodejs
-replace_bin_with_system node third_party/node/linux/node-linux-x64/bin
-# Use system typescript
-replace_bin_with_system tsc third_party/typescript/linux-amd64/src/lib
-%endif
-
 %build
-# reduce warnings
-FLAGS=""
-%if %{use_system_toolchain}
-FLAGS+=" -Wno-unknown-warning-option"
-%endif
-
-CFLAGS="${FLAGS}"
-CXXFLAGS="${FLAGS}"
-
+CFLAGS=""
+CXXFLAGS=""
 LDFLAGS=""
 RUSTFLAGS=""
 
@@ -482,15 +407,13 @@ export RUSTFLAGS
 
 export RUSTC_BOOTSTRAP=1
 
-%if %{use_system_toolchain}
-declare -r clang_version="$(clang --version | sed -n 's/clang version //p' | cut -d. -f1)"
-declare -r clang_base_path="$(PATH=/usr/bin:/usr/sbin which clang | sed 's#/bin/.*##')"
-declare -r rust_bindgen_root="$(which bindgen | sed 's#/s\?bin/.*##')"
-%else
 declare -r SOURCE_DIR="${PWD}/third_party"
 # add internal gn to PATH for build
 PATH="${PATH}:${PWD}/buildtools/linux64"
 export PATH
+ 
+%ifarch aarch64
+unset PKG_CONFIG_PATH
 %endif
 
 CHROMIUM_GN_DEFINES=''
@@ -499,28 +422,19 @@ CHROMIUM_GN_DEFINES+=' target_cpu="arm64"'
 CHROMIUM_GN_DEFINES+=' use_v4l2_codec=true'
 CHROMIUM_GN_DEFINES+=' use_vaapi=false'
 # CHROMIUM_GN_DEFINES+=' enable_shadow_call_stack=true'
+%else
+CHROMIUM_GN_DEFINES+=' use_sysroot=false' # we dont use the sysroot on x64
+CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
+CHROMIUM_GN_DEFINES+=' rtc_link_pipewire=true'
 %endif
 %if %{enable_proprietary_codecs}
 CHROMIUM_GN_DEFINES+=' ffmpeg_branding="Chrome" proprietary_codecs=true enable_widevine=true'
 %endif
-%if %{use_system_toolchain}
-CHROMIUM_GN_DEFINES+=" custom_toolchain=\"//build/toolchain/linux/unbundle:default\""
-CHROMIUM_GN_DEFINES+=" host_toolchain=\"//build/toolchain/linux/unbundle:default\""
-CHROMIUM_GN_DEFINES+=" clang_base_path=\"${clang_base_path}\""
-CHROMIUM_GN_DEFINES+=" clang_version=${clang_version}"
-CHROMIUM_GN_DEFINES+=" clang_use_chrome_plugins=false"
-CHROMIUM_GN_DEFINES+=" rust_sysroot_absolute=\"$(rustc --print sysroot)\""
-CHROMIUM_GN_DEFINES+=" rust_bindgen_root=\"${rust_bindgen_root}\""
-CHROMIUM_GN_DEFINES+=" rustc_version=\"$(rustc --version | awk '{print $2}')\""
-CHROMIUM_GN_DEFINES+=" chrome_pgo_phase=0"
-%endif
-CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
 CHROMIUM_GN_DEFINES+=' is_official_build=true'
 CHROMIUM_GN_DEFINES+=' is_cfi=true use_cfi_cast=true'
 CHROMIUM_GN_DEFINES+=' enable_reporting=false'
 CHROMIUM_GN_DEFINES+=' enable_remoting=false'
 CHROMIUM_GN_DEFINES+=' is_clang=true'
-CHROMIUM_GN_DEFINES+=' use_sysroot=false'
 CHROMIUM_GN_DEFINES+=' target_os="linux"'
 CHROMIUM_GN_DEFINES+=' current_os="linux"'
 CHROMIUM_GN_DEFINES+=' treat_warnings_as_errors=false'
@@ -536,7 +450,7 @@ CHROMIUM_GN_DEFINES+=' safe_browsing_use_unrar=false'
 CHROMIUM_GN_DEFINES+=' use_kerberos=true'
 CHROMIUM_GN_DEFINES+=' use_qt6=true moc_qt6_path="%{_libdir}/qt6/libexec/"'
 CHROMIUM_GN_DEFINES+=' use_pulseaudio=true'
-CHROMIUM_GN_DEFINES+=' rtc_use_pipewire=true rtc_link_pipewire=true'
+CHROMIUM_GN_DEFINES+=' rtc_use_pipewire=true'
 CHROMIUM_GN_DEFINES+=' v8_enable_drumbrake=true'
 export CHROMIUM_GN_DEFINES
 
@@ -550,11 +464,7 @@ mkdir -p %{chromebuilddir}
 
 gn --script-executable=%{__python3} gen --args="${CHROMIUM_GN_DEFINES}" %{chromebuilddir}
 
-%if %{use_system_toolchain}
-%build_target %{chromebuilddir} chrome
-%else
 %{__python3} ${SOURCE_DIR}/depot_tools/autoninja.py -C %{chromebuilddir} chrome
-%endif
 
 %install
 rm -rf %{buildroot}
@@ -595,9 +505,9 @@ popd
 
 %if ! %{enable_debug}
 pushd %{buildroot}%{chromium_path}/
-for f in *.so *.so.1 chrome_crashpad_handler %{chromium_name} headless_shell chromedriver ; do
-   [ -f ${f} ] && strip ${f}
-done
+    for f in *.so *.so.1 chrome_crashpad_handler %{chromium_name} ; do
+       [ -f "${f}" && "${f}" != "libqt6_shim.so" ] && strip "${f}"
+    done
 popd
 %endif
 

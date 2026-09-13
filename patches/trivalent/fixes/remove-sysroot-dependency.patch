@@ -1,4 +1,4 @@
-Copyright 2024-2025 The Trivalent Authors
+Copyright 2024-2026 The Trivalent Authors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,31 +16,43 @@ index 24a1d14395..db1b4d3d18 100644
 +++ b/build/config/BUILDCONFIG.gn
 @@ -581,7 +581,7 @@ foreach(_target_type,
        }
-
+ 
        if (!defined(use_libcxx_modules)) {
 -        use_libcxx_modules = is_clang
 +        use_libcxx_modules = false
        }
-
+ 
        if (filter_include(
 @@ -702,7 +702,7 @@ foreach(_target_type,
        }
-
+ 
        if (!defined(use_libcxx_modules)) {
 -        use_libcxx_modules = is_clang
 +        use_libcxx_modules = false
        }
-
+ 
        if (filter_include(
 diff --git a/build/config/linux/libffi/BUILD.gn b/build/config/linux/libffi/BUILD.gn
-index 6e45f4c226..37bc80a89c 100644
+index 6e45f4c226..9965f2bf19 100644
 --- a/build/config/linux/libffi/BUILD.gn
 +++ b/build/config/linux/libffi/BUILD.gn
-@@ -19,6 +19,6 @@ if (use_system_libffi) {
+@@ -3,6 +3,7 @@
+ # found in the LICENSE file.
+
+ import("//build/config/linux/pkg_config.gni")
++import("//build/toolchain/sysroot.gni")
+
+ declare_args() {
+   # Controls whether the build should use the version of libffi library shipped
+@@ -19,6 +20,10 @@ if (use_system_libffi) {
    }
  } else {
    config("libffi") {
 -    libs = [ "ffi_pic" ]
-+    libs = [ "ffi" ]
++    if (use_sysroot) {
++      libs = [ "ffi_pic" ]
++    } else {
++      libs = [ "ffi" ]
++    }
    }
  }
